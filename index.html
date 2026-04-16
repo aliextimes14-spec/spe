@@ -356,7 +356,7 @@
     <div class="brand-name" data-i18n="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية</div>
     <div class="divider"></div>
     <div class="sub-brand" data-i18n="brandSub">الرياض جاليري</div>
-    <p class="tagline" data-i18n="tagline">🌈رأيك يطوّر خدمتنا ويزيد سعادة أطفالكم </p>
+    <p class="tagline" data-i18n="tagline"> رأيك يصنع تجربة أجمل للأطفال</p>
     <a class="review-btn" href="#" target="_blank" rel="noopener" data-i18n="reviewBtn">
       <span>★</span> تقييم الآن
     </a>
@@ -463,7 +463,7 @@
     
     // التبديل بين E و ع
     const langBtn = document.querySelector('.top-bar-inner button:nth-child(2)');
-    langBtn.innerHTML = currentLang === 'ar' ? '<span style="font-size: 14px;">🌐</span> E' : '<span style="font-size: 14px;">🌐</span> ع';
+    langBtn.innerHTML = currentLang === 'ar' ? '<span style="font-size: 14px;">#</span> E' : '<span style="font-size: 14px;">#</span> ع';
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
@@ -555,8 +555,8 @@
 
   // ── Random Review Generation ──
   const namesAr = {
-    first: ['يوسف', 'ماريا', 'أحمد', 'ليلى', 'جون', 'عمر', 'سارة', 'ديفيد', 'زين', 'آدم', 'صوفيا', 'إيما', 'علي', 'نور'],
-    last: ['حداد', 'سميث', 'خوري', 'جونسون', 'المصري', 'ديفيس', 'براون', 'حسين', 'ميلر', 'ويلسون']
+    first: ['يوسف', 'ملاك', 'أحمد', 'ليلى', 'شجون', 'عمر', 'سارة', 'suz', 'زين', 'آدم', 'صوفيا', 'إيما', 'علي', 'نور'],
+    last: ['حداد', 'الشهري', 'اسماعيلي', 'مشاري', 'المصري', 'الموسى', '~', 'حسين', 'نواف', '']
   };
   const namesEn = {
     first: ['Youssef', 'Maria', 'Ahmed', 'Layla', 'John', 'Omar', 'Sarah', 'David', 'Zain', 'Adam', 'Sophia', 'Emma', 'Ali', 'Nour'],
