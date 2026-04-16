@@ -342,10 +342,10 @@
 <div class="top-bar">
   <div class="top-bar-inner">
     <button class="action-btn" onclick="openModal()" data-i18n="reportBtn">
-      <span>⚑</span> طلب اتصال
+      <span>⚑</span> إبلاغ 
     </button>
     <button class="action-btn" onclick="toggleLanguage()">
-      <span style="font-size: 14px;">🌐</span> E
+      <span style="font-size: 14px;">#</span> E
     </button>
   </div>
 </div>
@@ -356,7 +356,7 @@
     <div class="brand-name" data-i18n="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية</div>
     <div class="divider"></div>
     <div class="sub-brand" data-i18n="brandSub">الرياض جاليري</div>
-    <p class="tagline" data-i18n="tagline">بيئة آمنة ومرحة لطفلك، شاركنا رأيك</p>
+    <p class="tagline" data-i18n="tagline">شارك في صناعة تجربة افضل للأطفال</p>
     <a class="review-btn" href="#" target="_blank" rel="noopener" data-i18n="reviewBtn">
       <span>★</span> تقييم الآن
     </a>
@@ -373,8 +373,8 @@
   <div class="modal">
     <div class="form-content" id="formContent">
       <div class="modal-icon">⚑</div>
-      <div class="modal-title" data-i18n="modalTitle">طلب اتصال</div>
-      <div class="modal-sub" data-i18n="modalSub">يرجى تزويدنا بمعلوماتك للتواصل معك</div>
+      <div class="modal-title" data-i18n="modalTitle">إبلاغ</div>
+      <div class="modal-sub" data-i18n="modalSub">سنتصل بكل خلال دقائق</div>
 
       <div class="field-group">
         <label class="field-label" for="phoneInput" data-i18n="phoneLabel">رقم الجوال</label>
@@ -382,7 +382,7 @@
       </div>
 
       <div class="field-group">
-        <label class="field-label" for="invoiceInput" data-i18n="invoiceLabel">رقم التسجيل / المشترك</label>
+        <label class="field-label" for="invoiceInput" data-i18n="invoiceLabel">أسم الطفل</label>
         <input class="field-input" id="invoiceInput" type="text" placeholder="..." />
       </div>
 
@@ -398,8 +398,8 @@
 
     <div class="success-msg" id="successMsg">
       <div class="success-icon">✓</div>
-      <div class="success-text" data-i18n="successText">تم استلام رسالتك بنجاح</div>
-      <p style="font-size:13px;color:var(--text-muted);" data-i18n="successSub">ستتواصل الإدارة معك قريباً</p>
+      <div class="success-text" data-i18n="successText">سنتصل بك خلال دقائق</div>
+      <p style="font-size:13px;color:var(--text-muted);" data-i18n="successSub">تم تلقي البلاغ</p>
       <button class="btn-submit" style="margin-top:8px;max-width:160px;" onclick="closeModal()" data-i18n="successBtn">حسناً</button>
     </div>
   </div>
@@ -409,7 +409,7 @@
   // ── Dictionaries & Multilingual Setup ──
   const translations = {
     ar: {
-      reportBtn: "<span>⚑</span> طلب اتصال",
+      reportBtn: "<span>⚑</span> إبلاغ",
       brandName: "مركز <span>اي ام سبيشل</span> للضيافة الترفيهية",
       brandSub: "الرياض جاليري",
       tagline: "بيئة آمنة ومرحة لطفلك، شاركنا رأيك",
