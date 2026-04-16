@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="أي ام سبيشل (I am Special) - الخيار الأول لضيافة وحضانة الأطفال داخل المجمعات التجارية في الرياض. تسوقي براحة بينما يستمتع طفلك في بيئة آمنة وحركية.">
+<title>أي ام سبيشل | I am Special</title>
+<link rel="icon" href="2A3521A9-7E2C-47C5-A13C-349CC090A87B.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  @font-face {
+    font-family: 'Hacen Casablanca';
+    src: local('Hacen Casablanca'), local('Hacen-Casablanca');
+    font-weight: bold;
+    font-display: swap;
+  }
+
+  :root {
+    --blue:        #5BB8FF;
+    --blue-dark:   #2E8ED6;
+    --logo-red:    #FF1A33;
+    --logo-yellow: #FFCC00;
+    --green:       #5DD87A;
+    --yellow:      #FFD95A;
+    --white:       #FFFFFF;
+    --text:        #3A3A5C;
+    --muted:       #6C6C8D;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    color: var(--text);
+    font-family: 'Hacen Casablanca', 'Baloo Bhaijaan 2', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-text-size-adjust: 100%;
+    position: relative;
+    background-color: #FAFCFF; /* لون خلفية أساسي فاتح جداً */
+  }
+  img { max-width: 100%; height: auto; }
+
+  /* ===== ANIMATED BLOB BACKGROUND FOR GLASS EFFECT ===== */
+  .glass-bg {
+    position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  }
+  .blob {
+    position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.65;
+    animation: moveBlobs 15s infinite alternate ease-in-out;
+  }
+  .blob-blue { background: #5BB8FF; width: 45vw; height: 45vw; top: -10%; left: -10%; }
+  .blob-yellow { background: #FFD95A; width: 40vw; height: 40vw; top: 20%; right: -10%; animation-delay: -3s; }
+  .blob-green { background: #5DD87A; width: 40vw; height: 40vw; bottom: -10%; left: 15%; animation-delay: -6s; }
+  .blob-light { background: #D6EEFF; width: 35vw; height: 35vw; top: 50%; left: 50%; animation-delay: -9s; }
+
+  @keyframes moveBlobs {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, -40px) scale(1.1); }
+  }
+
+  /* ===== GLASSMORPHISM UTILITY CLASS ===== */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+  }
+
+  /* ===== BRAND LOGO ===== */
+  .brand-logo-container {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; direction: ltr; flex-wrap: nowrap; white-space: nowrap;
+  }
+  .brand-logo-container .cl-ar { font-family: 'Hacen Casablanca', cursive; font-weight: 800; direction: rtl; }
+  .brand-logo-container .cl-en { font-family: 'Baloo Bhaijaan 2', sans-serif; font-weight: 900; }
+  .brand-logo-img { object-fit: contain; animation: pulseLogo 3s ease-in-out infinite; will-change: transform; }
+  .cl-red { color: var(--logo-red); } .cl-yellow { color: var(--logo-yellow); }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 48px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .nav-logo-wrap {
+    text-decoration: none; display: flex; flex-direction: column; align-items: center;
+    background: rgba(255, 255, 255, 0.7); padding: 6px 24px; border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+  .header-tagline { color: var(--blue-dark); font-family: 'Baloo Bhaijaan 2', sans-serif; font-weight: 800; font-size: clamp(16px, 2vw, 20px); }
+
+  /* ===== FLOATING BUTTONS ===== */
+  .floating-btn {
+    position: fixed; bottom: 25px;
+    background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 50px;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000; box-shadow: 0 8px 20px rgba(0,0,0,0.1); cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s; color: var(--text); text-decoration: none; font-weight: bold;
+  }
+  .floating-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+  .btn-maps { left: 25px; width: 65px; height: 65px; border-radius: 50%; }
+  .btn-report { right: 25px; padding: 12px 24px; gap: 8px; font-size: 16px; color: var(--logo-red); }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 48px 80px; overflow: hidden;
+  }
+  .hero-title { font-size: clamp(46px,8vw,110px); line-height: 1.2; position: relative; z-index: 2; margin-top: 30px; }
+  .hero-title .t-blue { color: var(--blue-dark); } .hero-title .t-green { color: var(--green-dark); }
+  .hero-subtitle { font-size: clamp(16px,2vw,24px); font-weight: 700; color: var(--muted); margin-top: 16px; z-index: 2; position: relative; }
+  
+  .hero-actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; z-index: 2; position: relative; }
+  .hero-actions a {
+    padding: 14px 24px; border-radius: 28px; font-size: 17px; font-weight: bold; text-decoration: none;
+    transition: transform 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  }
+  .hero-actions a:hover { transform: translateY(-4px); }
+  .btn-action-1 { color: var(--blue-dark); } .btn-action-2 { color: var(--logo-red); }
+
+  /* ===== RAINBOW BAR ===== */
+  .rainbow-bar { height: 6px; background: linear-gradient(90deg, rgba(91,184,255,0.7), rgba(93,216,122,0.7), rgba(255,204,0,0.7), rgba(255,26,51,0.7), rgba(91,184,255,0.7)); background-size: 200% 100%; animation: rainbowMove 3s linear infinite; }
+  @keyframes rainbowMove { 0%{background-position:0% 0} 100%{background-position:200% 0} }
+
+  /* ===== MARQUEE ===== */
+  .marquee-wrap { overflow: hidden; padding: 14px 0; direction: ltr; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.5); border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+  .marquee-track { display: flex; animation: marqueeLTR 22s linear infinite; white-space: nowrap; width: max-content; }
+  .marquee-item { font-size: 18px; font-weight: bold; color: var(--blue-dark); padding: 0 30px; display: flex; align-items: center; gap: 15px; direction: rtl; }
+  @keyframes marqueeLTR { 0%{transform:translateX(-50%)} 100%{transform:translateX(0%)} }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; padding: 40px 48px; }
+  .stat-item { padding: 30px 20px; text-align: center; border-radius: 24px; }
+  .stat-emoji { font-size: 32px; margin-bottom: 8px; }
+  .stat-num { font-size: 36px; font-weight: bold; line-height: 1; color: var(--text); }
+  .stat-label { font-size: 14px; font-weight: 800; color: var(--muted); margin-top: 6px; }
+
+  /* ===== SECTIONS COMMON ===== */
+  section { padding: 80px 48px; position: relative; z-index: 2; }
+  .section-h2 { font-size: clamp(32px,5vw,50px); line-height: 1.2; margin-bottom: 16px; }
+  .section-p { font-size: 16px; line-height: 1.8; color: var(--muted); margin-bottom: 24px; }
+
+  /* ===== ABOUT ===== */
+  .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-img-wrap { height: 400px; border-radius: 40px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .about-big-emoji { font-size: 100px; }
+  .about-badge-wrap { position: absolute; bottom: 20px; right: 20px; border-radius: 20px; padding: 10px 18px; }
+  .about-badge-wrap span { font-size: 15px; font-weight: bold; color: var(--blue-dark); }
+  .tag-pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 800; margin: 4px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.9); }
+
+  /* ===== BABYSITTER ===== */
+  .babysitter-box { max-width: 700px; margin: 0 auto; border-radius: 30px; padding: 40px; text-align: right; }
+  .babysitter-box p { font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+  .babysitter-list { list-style: none; padding: 0; font-size: 16px; color: var(--text); line-height: 2.2; }
+  .babysitter-list li { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 600; }
+
+  /* ===== PROGRAMS ===== */
+  .programs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+  .program-card { border-radius: 32px; padding: 36px; position: relative; overflow: hidden; text-decoration: none; color: var(--text); transition: transform 0.3s; min-height: 320px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; }
+  .program-card:hover { transform: translateY(-8px); }
+  .program-emoji { font-size: 60px; position: absolute; top: 24px; right: 24px; }
+  .program-title { font-size: clamp(24px,3.5vw,36px); font-weight: bold; }
+  .program-desc { font-size: 15px; font-weight: 700; margin-top: 10px; color: var(--muted); }
+
+  /* ===== ACTIVITIES ===== */
+  .activities-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 40px; }
+  .activity-card { border-radius: 24px; padding: 24px 16px; text-align: center; cursor: pointer; transition: transform 0.25s; }
+  .activity-card:hover { transform: translateY(-6px) scale(1.02); }
+  .activity-emoji { font-size: 40px; margin-bottom: 10px; display: block; }
+  .activity-name { font-size: 18px; font-weight: bold; }
+  .activity-time { font-size: 13px; font-weight: 700; color: var(--muted); margin-top: 4px; }
+
+  /* ===== ENROLLMENT ===== */
+  .enrollment-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .enroll-visual { border-radius: 40px; padding: 40px 30px; text-align: center; }
+
+  /* ===== PARTNERS / BRANCHES ===== */
+  .branches-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 15px; margin-top: 40px; }
+  .branch-card { display: block; text-decoration: none; position: relative; height: 160px; border-radius: 20px; overflow: hidden; background-image: url('2A3521A9-7E2C-47C5-A13C-349CC090A87B.png'); background-size: cover; background-position: center; cursor: pointer; border: 3px solid transparent; transition: transform 0.3s, border-color 0.3s; }
+  .branch-card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.8); }
+  .branch-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,0.9), rgba(255,255,255,0.2)); }
+  .branch-info { position: absolute; bottom: 15px; right: 15px; color: var(--text); text-align: right; z-index: 2; }
+  .branch-name { font-size: 18px; font-weight: bold; color: var(--blue-dark); }
+  .branch-dist { font-size: 13px; color: var(--muted); margin-top: 4px; display: inline-block; font-weight: bold;}
+  .map-container { margin-top: 40px; padding: 20px; border-radius: 30px; display: block; }
+
+  /* ===== TESTIMONIALS ===== */
+  .gm-reviews-container { display: flex; gap: 16px; overflow-x: auto; padding: 20px 0; scroll-snap-type: x mandatory; scrollbar-width: none; margin-top: 20px; }
+  .gm-reviews-container::-webkit-scrollbar { display: none; }
+  .gm-review-card { flex: 0 0 320px; border-radius: 20px; padding: 20px; scroll-snap-align: center; text-align: right; direction: rtl; display: flex; flex-direction: column; align-items: flex-start; }
+  .gm-reviewer { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; width: 100%; }
+  .gm-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; color: white; font-weight: bold; }
+  .gm-name-col { display: flex; flex-direction: column; align-items: flex-start; }
+  .gm-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .gm-meta { font-size: 13px; color: var(--muted); }
+  .gm-rating span { color: #fbbc04; font-size: 16px; }
+  .gm-text { font-size: 15px; color: var(--text); line-height: 1.6; }
+
+  /* ===== GALLERY ===== */
+  .gallery-grid { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(2,180px); gap: 16px; margin-top: 30px; }
+  .gallery-cell { border-radius: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s; font-size: 50px; position: relative; }
+  .gallery-cell:hover { transform: scale(1.03); z-index: 2; }
+  .gallery-cell:nth-child(1){ grid-column:1; grid-row:1; } .gallery-cell:nth-child(2){ grid-column:2/4; grid-row:1; }
+  .gallery-cell:nth-child(3){ grid-column:4; grid-row:1; } .gallery-cell:nth-child(4){ grid-column:1/3; grid-row:2; }
+  .gallery-cell:nth-child(5){ grid-column:3; grid-row:2; } .gallery-cell:nth-child(6){ grid-column:4; grid-row:2; }
+  .gallery-cell-label { position: absolute; bottom: 10px; left: 14px; font-size: 13px; font-weight: 800; color: var(--text); }
+
+  /* ===== FOOTER ===== */
+  footer { padding: 64px 48px 32px; position: relative; margin-top: 40px; }
+  .footer-glass { position: absolute; inset: 0; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-top: 1px solid rgba(255, 255, 255, 0.8); z-index: -1;}
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 20px; }
+  .footer-desc { font-size: 15px; color: var(--muted); line-height: 1.7; font-family: 'Baloo Bhaijaan 2', sans-serif; margin-top: 15px; font-weight: 600;}
+  .footer-col h4 { font-size: 18px; margin-bottom: 14px; color: var(--blue-dark); }
+  .footer-col a { display: block; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; margin-bottom: 10px; transition: color 0.2s; cursor: pointer; }
+  .footer-col a:hover { color: var(--blue-dark); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.4); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+  /* ===== FADE-UP ===== */
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 10px 15px; flex-direction: column; gap: 5px; justify-content: center; }
+    .nav-logo-wrap { width: 100%; background: transparent; border: none; box-shadow: none; padding: 0;}
+    .brand-logo-container .cl-ar, .brand-logo-container .cl-en { font-size: 20px; color: var(--text) !important;}
+    .header-tagline { font-size: 14px; margin-top: 2px; }
+    .hero { padding: 160px 20px 60px; text-align: center; }
+    .stats-bar, .activities-grid, .gallery-grid { grid-template-columns: repeat(2,1fr); padding: 20px; gap: 12px; }
+    .gallery-cell { grid-column: span 1 !important; grid-row: span 1 !important; height: 140px; }
+    .about-section, .programs-grid, .enrollment-section, .footer-grid { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; text-align: center; }
+    .footer-logo .brand-logo-container { justify-content: center; }
+    .footer-bottom { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glass-bg">
+  <div class="blob blob-blue"></div>
+  <div class="blob blob-yellow"></div>
+  <div class="blob blob-green"></div>
+  <div class="blob blob-light"></div>
+</div>
+
+<div class="floating-btn btn-maps" onclick="handleDirectionsClick()" title="الاتجاهات">
+  <img src="IMG_9207.png" alt="خرائط جوجل" style="width:40px;height:40px;object-fit:contain;">
+</div>
+
+<a href="mailto:info@iamspecial.sa" class="floating-btn btn-report" title="ابلاغ">
+  <span style="font-size: 20px;">⚠️</span>
+  <span>ابلاغ</span>
+</a>
+
+<nav>
+  <div class="header-tagline" style="visibility:hidden;position:absolute;">الضيافة الترفيهية للأطفال</div>
+  <a href="#home" class="nav-logo-wrap">
+    <div class="brand-logo-container">
+      <div class="cl-ar" style="font-size:24px;color:var(--text);">
+        <span class="cl-red">أي ام</span> <span class="cl-yellow">سبيشل</span>
+      </div>
+      <img src="2A3521A9-7E2C-47C5-A13C-349CC090A87B.png" alt="Logo" class="brand-logo-img" style="width:50px;height:50px;">
+      <div class="cl-en" style="font-size:24px;color:var(--text);">
+        <span class="cl-red">I</span> <span class="cl-yellow">am</span>
+        <span class="cl-red">S</span><span class="cl-yellow">pe</span><span class="cl-red">c</span><span class="cl-yellow">ia</span><span class="cl-red">l</span>
+      </div>
+    </div>
+  </a>
+  <div class="header-tagline">الضيافة الترفيهية للأطفال</div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-title fade-up">
+    <span class="t-blue">تسوقي</span><br>
+    <span style="color:var(--logo-red)">براحة</span><br>
+    <span class="t-green">بينما يستمتع</span><br>
+    <span style="color:var(--logo-yellow)">طفلك!</span>
+  </div>
+  <div class="hero-subtitle fade-up" style="transition-delay:0.2s">
+    🛍️ الخيار الأول لضيافة الأطفال في أرقى المجمعات التجارية
+  </div>
+  <div class="hero-actions fade-up" style="transition-delay:0.3s">
+    <a onclick="openGalleryModal()" class="btn-action-1">🎮 لعب واستكشاف</a>
+    <a href="#babysitter" class="btn-action-2">👶 جليسة الاطفال</a>
+  </div>
+</section>
+
+<div class="rainbow-bar"></div>
+
+<div class="stats-bar">
+  <div class="stat-item glass-panel fade-up">
+    <div class="stat-emoji">🛍️</div><div class="stat-num">6</div>
+    <div class="stat-label">فروع في كبرى المولات</div>
+  </div>
+  <div class="stat-item glass-panel fade-up" style="transition-delay:0.1s">
+    <div class="stat-emoji">👶🏻</div><div class="stat-num">6 شهور - 10</div>
+    <div class="stat-label">سنوات</div>
+  </div>
+  <div class="stat-item glass-panel fade-up" style="transition-delay:0.2s">
+    <div class="stat-emoji">⏰</div><div class="stat-num">∞</div>
+    <div class="stat-label">وقت لعب مفتوح</div>
+  </div>
+  <div class="stat-item glass-panel fade-up" style="transition-delay:0.3s">
+    <div class="stat-emoji">🎁</div><div class="stat-num">100%</div>
+    <div class="stat-label">هدايا عند الخروج</div>
+  </div>
+</div>
+
+<section class="about-section">
+  <div class="about-img-wrap glass-panel fade-up">
+    <div class="about-big-emoji">🛍️</div>
+    <div class="about-badge-wrap glass-panel"><span>🏅 أمان وثقة</span></div>
+  </div>
+  <div class="fade-up" style="transition-delay:0.15s">
+    <h2 class="section-h2">أنت <span style="color:var(--blue-dark)">تتسوقين</span>.. وهم <span style="color:var(--logo-red)">يستمتعون</span></h2>
+    <p class="section-p">نحن الوجهة المفضلة للأمهات والآباء داخل المجمعات التجارية! نوفر بيئة حركية وترفيهية وحضانة آمنة تتيح للأطفال تفريغ طاقاتهم.</p>
+    <div>
+      <span class="tag-pill">مشرفات مدربات</span>
+      <span class="tag-pill">تواصل مستمر</span>
+      <span class="tag-pill">وقت غير محدود</span>
+      <span class="tag-pill">هدايا مميزة</span>
+    </div>
+  </div>
+</section>
+
+<section class="babysitter-section" id="babysitter">
+  <h2 class="section-h2 fade-up" style="text-align: center; margin-bottom:40px;">جليسة الأطفال 👩‍👧‍👦</h2>
+  <div class="babysitter-box glass-panel fade-up">
+    <p>خدمة مخصصة للأطفال الذين يتطلبون إشرافًا ومراقبة مستمرة</p>
+    <ul class="babysitter-list">
+      <li><span>✅</span> مراقبة مستمرة طوال فترة تواجد الطفل</li>
+      <li><span>🍽️</span> المساعدة في الأكل والنوم والاحتياجات الشخصية</li>
+      <li><span>📝</span> الالتزام بتعليمات ولي الأمر وخطة رعاية الطفل</li>
+      <li><span>📱</span> تواصل فوري مع ولي الأمر عند الحاجة</li>
+    </ul>
+  </div>
+</section>
+
+<section class="programs-section" id="programs">
+  <h2 class="section-h2 fade-up" style="text-align: center;">أركان متنوعة تناسب <span style="color:var(--logo-red)">جميع أعمارهم</span> 🎪</h2>
+  <div class="programs-grid">
+    <a class="program-card glass-panel fade-up">
+      <div class="program-emoji">🏰</div>
+      <span class="program-title">منطقة الرمل</span>
+      <p class="program-desc">مساحة آمنة ونظيفة للاستمتاع بالرمل واللعب</p>
+    </a>
+    <a class="program-card glass-panel fade-up" style="transition-delay:0.1s">
+      <div class="program-emoji">🍳</div>
+      <span class="program-title">ركن المهن والمطبخ</span>
+      <p class="program-desc">ألعاب تخيلية تنمي مهارات التفاعل</p>
+    </a>
+    <a class="program-card glass-panel fade-up" style="transition-delay:0.2s">
+      <div class="program-emoji">🚴</div>
+      <span class="program-title">مضمار الدراجات</span>
+      <p class="program-desc">مساحة مخصصة للحركة وتفريغ الطاقة</p>
+    </a>
+    <a class="program-card glass-panel fade-up" style="transition-delay:0.3s">
+      <div class="program-emoji">🎭</div>
+      <span class="program-title">مسرح الفعاليات</span>
+      <p class="program-desc">فقرات حركية ومسابقات وجوائز</p>
+    </a>
+  </div>
+</section>
+
+<section class="activities-section" id="activities">
+  <h2 class="section-h2 fade-up" style="text-align: center;">مرح <span style="color:var(--green-dark)">لا يتوقف</span> طوال اليوم 🎯</h2>
+  <div class="activities-grid">
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">🎨</span><div class="activity-name">أشغال يدوية</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">💃</span><div class="activity-name">رقص وحركة</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">🏰</span><div class="activity-name">لعب بالرمل</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">🧩</span><div class="activity-name">تركيب الألغاز</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">🚴</span><div class="activity-name">سباق الدراجات</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">🎁</span><div class="activity-name">توزيع هدايا</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">⚽</span><div class="activity-name">ألعاب الكرات</div></div>
+    <div class="activity-card glass-panel fade-up"><span class="activity-emoji">🍳</span><div class="activity-name">المطبخ الصغير</div></div>
+  </div>
+</section>
+
+<section class="partners-section" id="partners">
+  <h2 class="section-h2 fade-up" style="text-align:center;">متواجدون في <span style="color:var(--blue-dark)">كبرى مولات الرياض</span> 📍</h2>
+  <div class="branches-grid fade-up" id="mainBranchesGrid"></div>
+  <div class="map-container glass-panel fade-up" id="mapContainer">
+    <h3 style="margin-bottom:15px;color:var(--blue-dark);font-size:20px; text-align: center;">مواقع فروعنا في الرياض 🗺️</h3>
+    <iframe id="mapFrame" width="100%" height="350" style="border:0;border-radius:20px;box-shadow:var(--shadow);" loading="lazy" src="https://maps.google.com/maps?q=الرياض&hl=ar&z=10&output=embed"></iframe>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <h2 class="section-h2 fade-up" style="text-align:center;">ماذا تقول <span style="color:var(--yellow-dark)">الأمهات</span> عنا 💬</h2>
+  <div class="gm-reviews-container fade-up" id="testimonialsTrack"></div>
+</section>
+
+<footer>
+  <div class="footer-glass"></div>
+  <div class="footer-grid">
+    <div>
+      <div class="brand-logo-container" style="justify-content:flex-start;">
+        <div class="cl-ar" style="font-size:20px;"><span class="cl-red">أي ام</span> <span class="cl-yellow">سبيشل</span></div>
+        <img src="2A3521A9-7E2C-47C5-A13C-349CC090A87B.png" alt="Logo" class="brand-logo-img" style="width:35px;height:35px;">
+      </div>
+      <p class="footer-desc">الخيار الأول للضيافة الترفيهية داخل المجمعات التجارية. نوفر بيئة حركية آمنة تمنح الأطفال السعادة وتمنح الآباء والأمهات تجربة تسوق هادئة.</p>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <a href="#home">الرئيسية</a>
+      <a href="#programs">مناطق اللعب</a>
+      <a href="#babysitter">جليسة الأطفال</a>
+    </div>
+    <div class="footer-col">
+      <h4>فروعنا</h4>
+      <a href="#partners">الرياض جاليري</a>
+      <a href="#partners">ذا فيو مول</a>
+      <a href="#partners">مركز المملكة</a>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <a href="tel:0537333567" style="font-size:18px;font-weight:800; color:var(--blue-dark);">0537333567</a>
+      <a style="cursor:default;font-size:12px;font-weight:normal;">في خدمتكم من 2 مساءً حتى 11:00 مساءً</a>
+      <a href="mailto:info@iamspecial.sa">info@iamspecial.sa</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 أي ام سبيشل (I am Special) للضيافة الترفيهية — جميع الحقوق محفوظة</span>
+    <span style="font-size:20px">❤️💛💚💙</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  // ===== بيانات الفروع =====
+  var branchesData = [
+    { name: "مركز المملكة", floor: "الدور السفلي",  lat: 24.7114, lon: 46.6745 },
+    { name: "ذا فيو مول",   floor: "بوابة 1",       lat: 24.7570, lon: 46.7323 },
+    { name: "الرياض جاليري",floor: "الدور الثاني",  lat: 24.7435, lon: 46.6575 },
+    { name: "شرق بلازا",    floor: "في الواجهة",    lat: 24.7533, lon: 46.8174 },
+    { name: "سلام مول",     floor: "الدور السفلي",  lat: 24.5828, lon: 46.6782 },
+    { name: "القصر مول",    floor: "الدور الثالث",  lat: 24.6030, lon: 46.6853 }
+  ];
+
+  // ===== رسم بطاقات الفروع =====
+  function buildBranchCards(data, containerId) {
+    var frag = document.createDocumentFragment();
+    data.forEach(function (branch) {
+      var card = document.createElement('a');
+      card.className = 'branch-card';
+      card.href = 'https://google.com/maps';
+      card.target = '_blank';
+      card.innerHTML = '<div class="branch-overlay"></div><div class="branch-info"><div class="branch-name">' + branch.name + '</div><span class="branch-dist">' + branch.floor + '</span></div>';
+      frag.appendChild(card);
+    });
+    var grid = document.getElementById(containerId);
+    if(grid) { grid.innerHTML = ''; grid.appendChild(frag); }
+  }
+
+  // ===== تقييمات الأمهات =====
+  function initTestimonials() {
+    var reviews = [
+      { stars:5, text:"المكان مميز وأجيه كثير أحط بنتي فيه وأتمشى ولا أشيل هم، أمانة واهتمام.", name:"زائرة", role:"الرياض جاليري", color:"#4285F4" },
+      { stars:5, text:"مكان جميل ونظيف جداً، ولدي الفهد دايم عندهم. يعطون لعبة لكل طفل.", name:"أم الفهد", role:"سلام مول", color:"#EA4335" },
+      { stars:5, text:"أجمل وأأمن مكان في الرياض، كلهم أمينات على عيالنا. الوقت مفتوح.", name:"أب لطفلين", role:"مركز المملكة", color:"#34A853" },
+      { stars:4, text:"الخدمة ممتازة والموظفات بشوشات جداً مع الأطفال، أنصح به بشدة.", name:"زائرة", role:"ذا فيو مول", color:"#FBBC04" }
+    ];
+    var frag = document.createDocumentFragment();
+    reviews.forEach(function (rev) {
+      var stars = '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+      var card = document.createElement('div');
+      card.className = 'gm-review-card glass-panel fade-up';
+      card.innerHTML = '<div class="gm-reviewer"><div class="gm-avatar" style="background:' + rev.color + '">' + rev.name.charAt(0) + '</div><div class="gm-name-col"><span class="gm-name">' + rev.name + '</span><span class="gm-meta">' + rev.role + '</span></div></div><div class="gm-rating">' + stars + '</div><div class="gm-text">' + rev.text + '</div>';
+      frag.appendChild(card);
+    });
+    var track = document.getElementById('testimonialsTrack');
+    if(track) track.appendChild(frag);
+  }
+
+  // ===== تأثير الظهور Fade-up =====
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  
+  window.addEventListener('load', function () {
+    buildBranchCards(branchesData, 'mainBranchesGrid');
+    initTestimonials();
+    document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
+  });
+})();
+</script>
+</body>
+</html>
