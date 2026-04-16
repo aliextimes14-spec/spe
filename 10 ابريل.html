@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اي ام سبيشل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ألوان عصرية هادئة */
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --border: #e2e8f0;
+  --accent: #6366f1; /* Indigo 500 */
+  --accent-hover: #4f46e5;
+  --al: #e0e7ff; 
+  --green: #10b981; --gl: #d1fae5;
+  --red: #ef4444; --rl: #fee2e2;
+  --amber: #f59e0b; --ambl: #fef3c7;
+  --purple: #8b5cf6; --pl: #ede9fe;
+  --pink: #ec4899; --pkl: #fce7f3;
+  --teal: #06b6d4; --tl: #cffafe;
+  --text: #0f172a; /* Slate 900 */
+  --t2: #475569; /* Slate 600 */
+  --tl2: #94a3b8; /* Slate 400 */
+  --r: 16px; 
+  --r-btn: 12px;
+  --r-input: 12px;
+  /* ظلال ناعمة */
+  --ss: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --s: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  --sm: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 10px 20px -5px rgba(99, 102, 241, 0.3);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { 
+  font-family: 'Cairo', sans-serif; 
+  background: var(--bg); 
+  color: var(--text); 
+  min-height: 100vh; 
+  direction: rtl; 
+  font-size: 14px; 
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.hdr {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--ss);
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+.logo-mark svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2.5; }
+.logo-txt { font-family: 'Tajawal', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+.hdr-clock {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t2);
+  font-variant-numeric: tabular-nums;
+  box-shadow: var(--ss);
+}
+
+/* TABS */
+.tabs-nav {
+  display: flex; gap: 8px; padding: 16px 28px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--ss);
+}
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 10px 24px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t2);
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tab-btn:hover:not(.active) { background: var(--bg); color: var(--text); }
+.tab-btn.active {
+  background: var(--text);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+.cbadge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-right: 6px;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.4);
+}
+
+/* CONTENT */
+.tab-content { display: none; padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
+.tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* FORM CARD */
+.fc, .sc, .ch, .cust-block, #textViewPanel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--s);
+  transition: box-shadow 0.3s ease;
+}
+.fc:hover, .sc:hover, .ch:hover { box-shadow: var(--sm); }
+.fc { padding: 24px; margin-bottom: 16px; }
+
+.stitle {
+  font-family: 'Tajawal', sans-serif; font-size: 12px; font-weight: 800;
+  color: var(--tl2); text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+.frow:last-of-type { margin-bottom: 0; }
+.frow.t3 { grid-template-columns: 1fr 1fr 1fr; }
+.frow.s1 { grid-template-columns: 1fr; }
+.fg { display: flex; flex-direction: column; gap: 8px; }
+.flbl { font-size: 13px; font-weight: 700; color: var(--t2); }
+
+/* INPUTS */
+.fi, .fta, .min {
+  background: #f1f5f9;
+  border: 1.5px solid transparent;
+  border-radius: var(--r-input);
+  padding: 12px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+.fi:focus, .fta:focus, .min:focus {
+  background: var(--white);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--al);
+}
+.fi::placeholder, .fta::placeholder { color: var(--tl2); font-weight: 500; }
+.fta { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+/* OPTION BUTTONS */
+.bg { display: flex; flex-wrap: wrap; gap: 8px; }
+.ob {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-btn);
+  padding: 8px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--t2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.ob:hover { border-color: var(--tl2); color: var(--text); background: var(--bg); }
+.ob:active { transform: scale(0.97); }
+.ob.sel {
+  background: var(--text); border-color: var(--text); color: var(--white);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+/* ACTIONS */
+.arow { display: flex; gap: 10px; margin-top: 8px; }
+.btn-p {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  border: none;
+  border-radius: var(--r-btn);
+  padding: 12px 28px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+.btn-p:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.btn-p:active { transform: translateY(0); }
+.btn-s {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-btn);
+  padding: 12px 20px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-s:hover { border-color: var(--text); color: var(--text); background: var(--bg); }
+
+/* DROPDOWNS */
+.dropdown { position: relative; display: inline-block; }
+.dropdown-content { 
+  display: none; position: absolute; background-color: var(--white); 
+  min-width: 180px; box-shadow: var(--sm); z-index: 1000; 
+  border-radius: 12px; border: 1px solid var(--border); overflow: hidden; 
+  right: 0; top: 110%; 
+}
+.dropdown-content button, .dropdown-content select { 
+  width: 100%; text-align: right; background: none; border: none; 
+  padding: 10px 16px; font-family: 'Cairo', sans-serif; font-size: 13px; 
+  font-weight: 700; color: var(--t2); cursor: pointer; transition: 0.2s; border-radius: 0;
+}
+.dropdown-content button:hover { background-color: var(--bg); color: var(--accent); }
+.dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.2s ease; }
+.dropbtn { 
+  padding: 8px 16px; border: 1.5px solid var(--border); border-radius: 10px; 
+  background: var(--white); font-family: 'Cairo', sans-serif; font-size: 13px; 
+  font-weight: 800; color: var(--text); cursor: pointer; display: flex; 
+  align-items: center; gap: 6px; transition: all 0.2s ease; height: 38px; 
+}
+.dropbtn:hover { border-color: var(--accent); color: var(--accent); }
+
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+  color: #fff; padding: 12px 24px; border-radius: 100px; font-weight: 700; font-size: 14px;
+  box-shadow: var(--sm); z-index: 3000; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: var(--text); backdrop-filter: blur(8px);
+}
+.toast.ok { background: var(--green); }
+.toast.err { background: var(--red); }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* LOG & ANALYTICS */
+.log-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.log-title { font-family: 'Tajawal', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); }
+.select-sort {
+  padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 10px;
+  background: var(--white); font-family: 'Cairo', sans-serif; font-size: 13px;
+  font-weight: 800; color: #64748b; cursor: pointer; outline: none; transition: all 0.2s ease;
+  min-width: 100px; height: 38px; 
+}
+.select-sort:hover { border-color: var(--accent); color: var(--accent); }
+
+/* CUSTOMER CARDS */
+.cust-block { margin-bottom: 16px; }
+.cust-hdr {
+  padding: 12px 18px; background: var(--bg); border-bottom: 1px solid var(--border);
+  font-size: 13px; font-weight: 700; color: var(--t2); display: flex; align-items: center; gap: 10px;
+}
+.cust-ph { font-family: 'Cairo', sans-serif; direction: ltr; color: var(--accent); font-weight: 800; }
+.cc { border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+.cc:last-child { border-bottom: none; }
+.cc:hover { background: #f8fafc; }
+.cc.standalone { margin-bottom: 12px; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--ss); }
+.cc-top { padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+.cc-summary { font-size: 13px; color: var(--t2); font-weight: 600; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-seq { font-size: 11px; font-weight: 800; border-radius: 6px; padding: 4px 10px; font-variant-numeric: tabular-nums; direction: ltr; color: #fff; }
+.cc-seq.ct-complaint { background: var(--red); }
+.cc-seq.ct-inquiry { background: var(--accent); }
+.cc-seq.ct-request { background: var(--green); }
+.cc-time { font-size: 13px; font-weight: 800; color: var(--tl2); flex: 1; }
+
+.cc-dtl { padding: 0 18px 18px; border-top: 1px solid var(--border); display: none; }
+.cc-dtl.open { display: block; animation: fadeIn 0.3s ease; }
+.dgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.di { background: var(--bg); border-radius: 10px; padding: 10px 14px; border: 1px solid rgba(226, 232, 240, 0.5); }
+.dl { font-size: 11px; font-weight: 800; color: var(--tl2); margin-bottom: 4px; }
+.dv { font-size: 13px; font-weight: 700; color: var(--text); }
+.dnotes { background: var(--ambl); border-left: 3px solid var(--amber); border-radius: 8px; padding: 12px 16px; font-size: 13px; font-weight: 600; color: #925c0e; line-height: 1.7; margin-bottom: 12px; }
+
+/* REFINED TAG ROWS */
+.trow { display: flex; flex-direction: column; gap: 0; background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.tline { display: flex; flex-wrap: nowrap; gap: 1px; overflow: hidden; max-width: 100%; border-bottom: 1px solid var(--border); background: var(--border); }
+.tline:last-child { border-bottom: none; }
+.tline .ob {
+  flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  text-align: center; transition: all 0.2s ease; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 700;
+  border-radius: 0; font-size: 13px; border: none; padding: 10px 6px; background: var(--white);
+}
+.tline .ob:hover { background: #f8fafc; color: var(--accent); }
+.tl-solid-teal .ob.sel { background: var(--teal); color: #fff; }
+.tl-solid-green .ob.sel { background: var(--green); color: #fff; }
+.tl-wide-blue .ob.sel { background: var(--accent); color: #fff; }
+.tl-contrast-dark .ob.sel { background: var(--text); color: #fff; }
+.tl-outline-red .ob.sel { background: var(--red); color: #fff; }
+.tl-pill-blue .ob.sel { background: var(--purple); color: #fff; }
+.tl-teal-text .ob.sel { background: #0f766e; color: #fff; }
+.tl-solid-blue .ob.sel { background: #2563eb; color: #fff; }
+.tl-bold-indigo .ob.sel { background: #4338ca; color: #fff; }
+.tl-wide-outline .ob.sel { background: var(--amber); color: #fff; }
+
+.tline.dim { opacity: 0.4; filter: grayscale(1); pointer-events: none; }
+
+/* BADGES & ANALYTICS */
+.sg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.sc { padding: 24px; }
+.slbl { font-size: 13px; font-weight: 700; color: var(--t2); margin-bottom: 10px; }
+.sval { font-family: 'Tajawal', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; }
+.sb { height: 4px; border-radius: 4px; margin-top: 16px; opacity: 0.2; }
+.cbl .sval { color: var(--accent); } .cbl .sb { background: var(--accent); }
+.cgr .sval { color: var(--green); } .cgr .sb { background: var(--green); }
+.crd .sval { color: var(--red); }   .crd .sb { background: var(--red); }
+
+.cr { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.ch { padding: 24px; }
+.cht { font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+
+/* MAINTENANCE BTN */
+.btn-maint {
+  position: fixed; bottom: 24px; left: 24px; background: var(--white); border: 1px solid var(--border);
+  border-radius: 100px; padding: 10px 20px; font-family: 'Cairo', sans-serif; font-size: 14px;
+  font-weight: 700; color: var(--t2); cursor: pointer; box-shadow: var(--s); transition: all 0.25s ease; z-index: 200;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-maint:hover { box-shadow: var(--sm); transform: translateY(-2px); color: var(--text); }
+
+/* MISC FIXES */
+.summ-box {
+  display: none; margin-top: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 16px; font-size: 14px; line-height: 2; color: var(--text); font-weight: 600;
+}
+.summ-box.open { display: block; animation: fadeIn 0.3s ease; }
+.cc-act-row button { border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; background: var(--white); transition: 0.2s; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+@media(max-width:900px){
+  .hdr, .tabs-nav, .tab-content { padding-right: 16px; padding-left: 16px; }
+  .frow, .frow.t3, .sg, .cr { grid-template-columns: 1fr; }
+  .dgrid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </div>
+    <span class="logo-txt">اي ام سبيشل</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="hdr-clock" style="display:flex;align-items:center;gap:4px;padding:4px 12px;">
+      <button onclick="changeFontSize(-1)" title="تصغير الخط" style="background:none;border:none;cursor:pointer;color:var(--t2);font-size:15px;font-weight:800;padding:4px;transition:color .2s;">−</button>
+      <span id="fontSizeLabel" style="font-size:13px;color:var(--text);min-width:40px;text-align:center;">100%</span>
+      <button onclick="changeFontSize(1)" title="تكبير الخط" style="background:none;border:none;cursor:pointer;color:var(--t2);font-size:15px;font-weight:800;padding:4px;transition:color .2s;">+</button>
+    </div>
+    <div class="hdr-clock" id="clock">--:--:--</div>
+  </div>
+</header>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="form" onclick="switchTab('form',this)">تسجيل مكالمة</button>
+  <button class="tab-btn" data-tab="log" onclick="switchTab('log',this)">سجل المكالمات <span id="logBadge" style="display:none" class="cbadge">0</span></button>
+  <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics',this)">التحليلات</button>
+  
+  <button class="tab-btn" style="color: var(--red); margin-right: auto; font-weight: 800; border-right: 1px solid var(--border); border-radius: 0; padding-right: 20px;" onclick="window.open('complaints.html', '_blank')">
+     ↗
+  </button>
+</nav>
+
+<div class="tab-content active" id="tab-form">
+  <div class="fc">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:nowrap;position:relative;">
+      <span id="seqLabel" style="font-size:13px;font-weight:800;color:var(--tl2);letter-spacing:.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">تسلسل —</span>
+      <input type="date" id="datePicker" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;" onchange="onDatePick(this.value)" />
+      <input type="time" id="timePicker" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;" onchange="onTimePick(this.value)" />
+      <input type="date" id="defaultDatePicker" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;" onchange="onDefaultDatePick(this.value)" />
+      <button id="dateSettingsBtn" onclick="toggleDateSettings()" title="تعديل التاريخ الافتراضي" class="ob" style="padding:8px 12px;"><span style="font-size:15px;line-height:1;">⚙️</span></button>
+      <button id="tagsToggleBtn" onclick="toggleTagsPanel()" class="ob" style="padding:8px 16px;">الأوسمة</button>
+      <button id="dateBtn" onclick="openDatePicker()" class="ob" style="padding:8px 16px;">التاريخ</button>
+      <button id="timeBtn" onclick="openTimePicker()" class="ob" style="padding:8px 16px;">الوقت</button>
+      <button class="btn-s" onclick="clearForm()" style="padding:8px 16px;">مسح</button>
+      <button class="btn-p" id="submitBtn" onclick="submitCall()" style="padding:8px 24px;">حفظ</button>
+    </div>
+    <div id="dateSettingsPanel" style="display:none;margin-bottom:16px;background:var(--tl);border:1px solid rgba(6,182,212,.3);border-radius:12px;padding:12px 16px;">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:800;color:var(--teal);">⚙️ تاريخ ثابت</span>
+        <span id="fixedDateDisplay" style="font-size:14px;font-weight:800;color:var(--text);flex:1;min-width:60px;">—</span>
+        <button onclick="openDefaultDatePicker()" class="btn-p" style="padding:8px 16px; font-size:12px;">تعديل</button>
+        <button id="resetDefaultDateBtn" onclick="resetDefaultDate()" class="btn-s" style="padding:8px 16px; font-size:12px; color:var(--teal); border-color:var(--teal);">إزالة ↺</button>
+      </div>
+    </div>
+    <div id="tagsPanel" style="display:none;margin-bottom:20px;">
+      <div class="trow">
+        <div class="tline tl-wide-blue" id="branchGroup"></div>
+        <div class="tline tl-contrast-dark">
+          <button class="ob" data-group="ctype" data-val="استفسار" onclick="selectOpt(this,'ctype')">استفسار</button>
+          <button class="ob" data-group="ctype" data-val="طلب" onclick="selectOpt(this,'ctype')">طلب</button>
+          <button class="ob" data-group="ctype" data-val="شكوى" onclick="selectOpt(this,'ctype')">شكوى</button>
+        </div>
+        <div class="tline tl-outline-red" id="topicGroup"></div>
+        <div class="tline tl-pill-blue" id="tl-child"><div id="childGroup" style="display:contents"></div></div>
+        <div class="tline tl-teal-text" id="tl-loc"><div id="locGroup" style="display:contents"></div></div>
+        <div class="tline tl-solid-blue" id="natGroup"></div>
+        <div class="tline tl-bold-indigo" id="emoGroup"></div>
+        <div class="tline tl-wide-outline" id="tl-src"><div id="srcGroup" style="display:contents"></div></div>
+        <div class="tline tl-solid-teal">
+          <button class="ob" data-group="gender" data-val="ذكر" onclick="selectOpt(this,'gender')">ذكر</button>
+          <button class="ob" data-group="gender" data-val="أنثى" onclick="selectOpt(this,'gender')">أنثى</button>
+        </div>
+      </div>
+      <div class="cond" id="condComp" style="margin-top:12px;"><input type="text" class="fi" id="compNo" placeholder="رقم الشكوى..." /></div>
+      <div class="cond" id="condReq" style="margin-top:12px;"><input type="text" class="fi" id="reqNo" placeholder="رقم الطلب..." /></div>
+    </div>
+    <div class="fg">
+      <input type="tel" inputmode="numeric" class="fi" id="phone" placeholder="05XXXXXXXX" maxlength="10" oninput="onPhoneInput(this.value)" style="font-size:18px;font-weight:800;letter-spacing:1px;" />
+    </div>
+    <div class="fg" style="margin-top:16px;">
+      <textarea class="fta" id="details" placeholder="ماذا قال العميل...؟"></textarea>
+    </div>
+    <div class="notice" id="custNotice" style="margin-top:12px; display:none; align-items:center; gap:10px; background:var(--al); border-radius:12px; padding:12px 16px; font-weight:700; color:var(--accent);">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+      <span id="custNoticeText">عميل مسجل</span>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content" id="tab-log">
+  <div class="log-toolbar" style="flex-wrap:wrap;gap:16px;">
+    <div class="log-title">سجل المكالمات <span class="cbadge" id="logCount" style="margin-right:8px;">0</span></div>
+    <div style="display:flex;gap:12px;align-items:center;flex:1;min-width:250px;">
+      <input type="search" id="logSearch" placeholder="بحث برقم الجوال، التسلسل، التفاصيل..." oninput="renderFilteredLog()" class="fi" style="padding:10px 16px;" />
+    </div>
+    
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
+      
+      <div class="dropdown">
+        <button class="dropbtn">عرض ▾</button>
+        <div class="dropdown-content">
+          <div style="padding: 8px 16px; border-bottom: 1px solid var(--border);">
+            <label style="font-size:11px; color:var(--tl2); font-weight:800; display:block; margin-bottom:4px;">ترتيب السجل</label>
+            <select id="logSort" onchange="renderFilteredLog()" style="width: 100%; padding: 4px; border: none; outline: none; background: transparent; font-weight: 700; cursor: pointer; color: var(--text);">
+              <option value="newest">الأحدث</option>
+              <option value="oldest">الأقدم</option>
+              <option value="branch">الفرع</option>
+              <option value="ctype">النوع</option>
+              <option value="src">المصدر</option>
+            </select>
+          </div>
+          <button id="btnGroupMode" onclick="toggleGroupMode()" style="text-align: right; display: flex; justify-content: space-between; align-items: center;">
+             تجميع البيانات
+             <span id="groupModeIcon" style="color:var(--accent); font-weight:bold;"></span>
+          </button>
+          <button id="btnTextView" onclick="toggleTextView()" style="text-align: right; display: flex; justify-content: space-between; align-items: center;">
+             عرض نصي
+             <span id="textViewIcon" style="color:var(--accent); font-weight:bold;"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">البيانات ▾</button>
+        <div class="dropdown-content">
+          <button onclick="exportCSV()">تصدير اكسل</button>
+          <button onclick="exportTXT()">تصدير تقرير</button>
+          <button onclick="document.getElementById('importFile').click()">استيراد البيانات</button>
+        </div>
+      </div>
+      
+      <input type="file" id="importFile" accept=".xlsx, .xls, .csv" style="display:none" onchange="handleImport(event)">
+
+    </div>
+  </div>
+  
+  <div id="textViewPanel" style="display:none;margin-bottom:24px;">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;color:var(--text);">تقرير مبسط</span>
+      <button class="btn-s" onclick="copyAllText()" style="padding:6px 14px; font-size:12px;">نسخ الكل</button>
+    </div>
+    <div id="textViewBody" style="padding:20px;font-size:14px;line-height:2.2;color:var(--t2);direction:rtl;white-space:pre-wrap;max-height:480px;overflow-y:auto;"></div>
+  </div>
+  <div id="logWrap"></div>
+</div>
+
+<div class="tab-content" id="tab-analytics">
+  <div class="sc" style="margin-bottom:24px; padding:16px 20px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <input type="text" id="analyticsSearch" placeholder="اكتب وسم للتصفية ..." onkeydown="if(event.key==='Enter') addAnalyticsTag()" class="fi" style="flex:1; padding:10px 16px;" />
+      <button onclick="addAnalyticsTag()" class="btn-p" style="padding:10px 24px;">تصفية</button>
+      <button onclick="clearFilters()" class="btn-s" style="padding:10px 20px;">مسح</button>
+    </div>
+    <div id="filterTagsRow" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"></div>
+    <div id="suggestedTagsRow" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;"></div>
+  </div>
+
+  <div id="branchAnalyticsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:24px;"></div>
+
+  <div class="cr" style="grid-template-columns:1fr;margin-bottom:24px;">
+    <div class="ch">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid var(--border); padding-bottom:12px;">
+        <div class="cht" style="margin-bottom:0; border-bottom:none; padding-bottom:0;">تحليل المكالمات عبر الزمن</div>
+        <select id="timeScaleSelect" class="select-sort" onchange="updateLineChart()">
+          <option value="day">يوم</option>
+          <option value="week">أسبوع</option>
+          <option value="month">شهر</option>
+          <option value="year">سنة</option>
+        </select>
+      </div>
+      <div style="position: relative; height: 350px; width: 100%;">
+        <canvas id="timelineChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="sg">
+    <div class="sc cbl"><div class="slbl">إجمالي المكالمات</div><div class="sval" id="stTotal">0</div><div class="sb"></div></div>
+    <div class="sc crd"><div class="slbl">الشكاوى</div><div class="sval" id="stComp">0</div><div class="sb"></div></div>
+    <div class="sc cbl"><div class="slbl">الاستفسارات</div><div class="sval" id="stInq">0</div><div class="sb"></div></div>
+    <div class="sc cgr"><div class="slbl">الطلبات</div><div class="sval" id="stReq">0</div><div class="sb"></div></div>
+  </div>
+  
+
+  <div class="cr">
+    <div class="ch"><div class="cht">عدد الأطفال</div><div id="chChild"><div class="ec">لا توجد بيانات</div></div></div>
+    <div class="ch"><div class="cht">نبرة العميل</div><div id="chEmo"><div class="ec">لا توجد بيانات</div></div></div>
+  </div>
+  
+  <div class="cr">
+    <div class="ch"><div class="cht">مواقع العملاء</div><div class="bar-c" id="chLoc"><div class="ec">لا توجد بيانات</div></div></div>
+    <div class="ch"><div class="cht">الجنسيات (حسب اللكنة)</div><div class="pw" id="chNat"><div class="ec">لا توجد بيانات</div></div></div>
+  </div>
+  <div class="cr">
+    <div class="ch"><div class="cht">توزيع الجنس</div><div class="pw" id="chGen"><div class="ec">لا توجد بيانات</div></div></div>
+    <div class="ch"><div class="cht">مصادر الوصول</div><div class="bar-c" id="chSrc"><div class="ec">لا توجد بيانات</div></div></div>
+  </div>
+  <div class="cr" style="grid-template-columns:1fr;">
+    <div class="ch"><div class="cht">توزيع فترة المكالمات</div><div class="pw" id="chTime"><div class="ec">لا توجد بيانات</div></div></div>
+  </div>
+</div>
+
+<div class="tab-content" id="tab-maint">
+  <div class="fc" style="padding:0;">
+    <div style="padding:20px 24px;border-bottom:1px solid var(--border);">
+      <span style="font-family:'Tajawal',sans-serif;font-size:16px;font-weight:800;color:var(--text);">لوحة الإعدادات والصيانة</span>
+    </div>
+    <div style="padding:24px;" id="mBody"></div>
+  </div>
+</div>
+
+<button class="btn-maint" onclick="switchTab('maint', document.querySelector('[data-tab=maint]') || this)">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  الإعدادات
+</button>
+
+<div class="toast" id="toast"></div>
+
+<div id="post-save-modal" style="display:none; position:fixed; inset:0; background:rgba(15, 23, 42, 0.6); backdrop-filter:blur(4px); z-index:10000; align-items:center; justify-content:center; padding:20px;">
+  <div style="background:var(--white); border-radius:24px; padding:24px; width:100%; max-width:500px; box-shadow:0 10px 40px rgba(0,0,0,0.15);">
+     <h3 style="margin-bottom:16px; font-family:'Tajawal', sans-serif; font-size:18px; font-weight:800; color:var(--text); border-bottom: 2px solid var(--al); padding-bottom: 8px;">تم حفظ <span id="ps-type" style="color:var(--accent);"></span> بنجاح</h3>
+     <div id="ps-summary" style="margin-bottom:16px; font-size:13px; color:var(--text); line-height:1.8; background:#f8fafc; padding:12px; border-radius:12px; border:1px solid #e2e8f0;"></div>
+
+     <div style="margin-bottom:16px;">
+        <label style="font-weight:bold; font-size:13px; color:var(--text);">أسماء الأطفال (بحد أقصى 10):</label>
+        <div id="ps-children-container" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+           <input type="text" class="fi child-name-input" placeholder="اسم الطفل 1" />
+        </div>
+        <button class="btn-s" style="margin-top:8px; padding:6px 12px; font-size:12px; border-radius:8px;" onclick="addPSChildInput()">+ إضافة طفل</button>
+     </div>
+
+     <div style="display:flex; flex-wrap:wrap; gap:8px; border-top:1px solid var(--border); padding-top:16px;">
+        <button onclick="psNotifyAdmin()" style="flex:1; color:var(--accent); border:1px solid var(--al); padding:8px; border-radius:8px; background:var(--white); font-weight:bold; cursor:pointer;">الإدارة</button>
+        <button onclick="psNotifyBranch()" style="flex:1; color:var(--amber); border:1px solid var(--ambl); padding:8px; border-radius:8px; background:var(--white); font-weight:bold; cursor:pointer;">الفرع</button>
+        <button onclick="psSendFollowUp()" style="flex:1; color:var(--green); border:1px solid var(--gl); padding:8px; border-radius:8px; background:var(--white); font-weight:bold; cursor:pointer;">العميل</button>
+     </div>
+     <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+        <button onclick="psRedirect1()" style="flex:1; color:#fff; background:var(--accent); border:none; padding:8px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:'Cairo';">توجيه (تطمن)</button>
+        <button onclick="psRedirect2()" style="flex:1; color:#fff; background:var(--teal); border:none; padding:8px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:'Cairo';">توجيه (تطمن + جوال)</button>
+     </div>
+
+     <button class="btn-s" style="width:100%; margin-top:16px; padding:10px; border-radius:12px; cursor:pointer;" onclick="document.getElementById('post-save-modal').style.display='none'">إغلاق</button>
+  </div>
+</div>
+
+<script>
+// إعداد خط عام لـ Chart.js
+Chart.defaults.font.family = 'Cairo';
+
+// ===== DATABASES & LOCALSTORAGE =====
+const DB_NAME = 'CS_DB';
+const STORE_NAME = 'calls';
+let db;
+
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = e => {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: 'seq' });
+      }
+    };
+    req.onsuccess = e => { db = e.target.result; resolve(db); };
+    req.onerror = e => reject(e.target.error);
+  });
+}
+
+function getAllCallsDB() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.getAll();
+    req.onsuccess = () => resolve(req.result.map(c => ({...c, dt: new Date(c.dt)})));
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function saveCallDB(call) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.put(call);
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject(req.error);
+  });
+}
+
+// ===== SETTINGS =====
+const S_DEFAULT = {
+  nat:      ['سعودي','شامي','مصري','اسيوي','غربي'],
+  branches: ['شرق بلازا','مركز المملكة','سلام مول','الرياض جاليري','القصر مول','ذافيو مول'],
+  locs:     ['المنزل','السيارة','المول','الخارج'],
+  ctypes:   ['استفسار','طلب','شكوى'],
+  emos:     ['طبيعي','مستعجل','إيجابي','غير حاسم','منزعج','كثير الإلحاح'],
+  srcs:     ['انستقرام','الخرائط','الذكاء الاصطناعي','بحث قوقل'],
+  topicMap: {
+    'استفسار': ['الأسعار','أوقات العمل','سعر بالساعة','سياسة المرافق','الأعمار','العروض','الاشتراك الشهري','الفعاليات','التعليم','الخدمة','الوجبة'],
+    'شكوى':    ['أسلوب الموظفات','قائمة الحظر','السلامة','الختم','شكوى قانونية','سياسة الإلغاء'],
+    'طلب':     ['مفقودات','التواصل','حفلة خاصة','مكان الفرع','الإطمئنان']
+  },
+  labels: {},          
+  branchPhones: {},    
+  adminPhone: ''       
+};
+
+// تم تغيير اسم المفتاح لـ CS_Settings_v2 ليتم تطبيق القوائم الجديدة مباشرة بدلاً من القديمة
+let S = JSON.parse(localStorage.getItem('CS_Settings_v2')) || S_DEFAULT;
+function saveS() { localStorage.setItem('CS_Settings_v2', JSON.stringify(S)); }
+
+const CHILD_LABELS_DEF = {'طفل':'1','طفلين':'2','ثلاثة':'3','أربعة':'4','خمسة':'5','أكثر':'6+'};
+let defaultDate = null; 
+const CHILD_OPTS = ['طفل','طفلين','ثلاثة','أربعة','خمسة','أكثر'];
+const MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+
+// ===== STATE =====
+let calls = [];
+let editSeq = null;
+let callDT = null;
+const sel = {gender:'',nat:'',branch:'',loc:'',src:'',topics:[],ctype:'',child:'',emo:''};
+
+// ===== TIME/DATE HELPER =====
+function fmtTime(d){ let h=d.getHours(), m=String(d.getMinutes()).padStart(2,'0'); const ap=h>=12?'م':'ص'; h=h%12||12; return `${h}:${m} ${ap}`; }
+function fmtDate(d){ return `${d.getDate()} ${MONTHS[d.getMonth()]}`; }
+function fmtDT(d){ return `${fmtDate(d)}  ${fmtTime(d)}`; }
+function dayKey(d){ return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`; }
+function isSaudiPhone(v){ return /^05\d{8}$/.test(v); }
+function monthLetter(d){ return String.fromCharCode(65 + (d||new Date()).getMonth()); }
+function dayCallCount(dt){ const k=dayKey(dt); return calls.filter(c=>dayKey(c.dt)===k).length + 1; }
+function buildSeq(dt){ const d=dt||(defaultDate?new Date(defaultDate):new Date()); const letter=monthLetter(d); const day=String(d.getDate()).padStart(2,'0'); const num=String(dayCallCount(d)).padStart(2,'0'); return letter+day+num; }
+function nextSeq(dt){ return buildSeq(dt); }
+
+// ===== CLOCK =====
+let fontScale=100; const FONT_STEPS=[75,85,100,115,130];
+function changeFontSize(dir){ const idx=FONT_STEPS.indexOf(fontScale); const next=idx+dir; if(next<0||next>=FONT_STEPS.length) return; fontScale=FONT_STEPS[next]; applyFontScale(); document.getElementById('fontSizeLabel').textContent=fontScale+'%'; }
+function applyFontScale(){ const ratio=fontScale/100; const body=document.body; if(typeof body.style.zoom!=='undefined'){body.style.zoom=ratio;}else{body.style.transform=`scale(${ratio})`;body.style.transformOrigin='top right';body.style.width=(100/ratio)+'%';} }
+setInterval(()=>{ document.getElementById('clock').textContent = fmtTime(new Date()); }, 1000);
+
+// ===== TABS =====
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(id==='analytics') updateAnalytics();
+  if(id==='maint') renderMBody();
+  if(id==='log'){ renderFilteredLog(); }
+  if(id==='form' && !callDT && defaultDate){ touchDT(); }
+}
+
+// ===== RENDER BUTTON GROUPS =====
+function rbg(elId, items, grp, clsFn){
+  const el=document.getElementById(elId); if(!el) return;
+  const inTline=el.classList.contains('tline');
+  el.innerHTML=items.map(item=>{
+    const cls=inTline?'':(typeof clsFn==='function'?clsFn(item):(clsFn||''));
+    const isSel=sel[grp]===item;
+    const lbl=S.labels[item]||'';
+    const display=lbl?lbl:item;
+    return `<button class="ob ${cls}${isSel?' sel':''}" data-group="${grp}" data-val="${item}" onclick="selectOpt(this,'${grp}')" title="${item}">${display}</button>`;
+  }).join('');
+}
+function renderChildren(){
+  const el=document.getElementById('childGroup'); if(!el) return;
+  const inTline=el.classList.contains('tline');
+  el.innerHTML=CHILD_OPTS.map(item=>{
+    const cls=inTline?'':`t`;
+    const lbl=S.labels[item]||CHILD_LABELS_DEF[item]||'';
+    const display=lbl?lbl:item;
+    return `<button class="ob ${cls}${sel.child===item?' sel':''}" data-group="child" data-val="${item}" onclick="selectOpt(this,'child')" title="${item}">${display}</button>`;
+  }).join('');
+}
+function renderAllGroups(){
+  rbg('natGroup', S.nat, 'nat', ''); rbg('branchGroup', S.branches, 'branch', 'a'); rbg('locGroup', S.locs, 'loc', 'p'); rbg('srcGroup', S.srcs, 'src', ''); rbg('emoGroup', S.emos, 'emo', 't');
+  document.querySelectorAll('[data-group="ctype"]').forEach(b=>{ b.classList.toggle('sel', b.dataset.val===sel.ctype); });
+  document.querySelectorAll('[data-group="gender"]').forEach(b=>{ b.classList.toggle('sel', b.dataset.val===sel.gender); });
+  renderTopicGroup(); renderChildren(); updateDimRows();
+}
+function renderTopicGroup(){
+  const el=document.getElementById('topicGroup'); if(!el) return;
+  const topics=sel.ctype&&S.topicMap[sel.ctype]?S.topicMap[sel.ctype]:[];
+  if(!topics.length){ el.innerHTML='<span style="font-size:12px;color:var(--tl2);padding:6px 0;">اختر نوع المكالمة أولاً</span>'; return; }
+  el.innerHTML=topics.map(item=>{
+    const isSel=sel.topics.includes(item);
+    return `<button class="ob${isSel?' sel':''}" data-group="topic" data-val="${item}" onclick="selectOpt(this,'topic')">${item}</button>`;
+  }).join('');
+}
+
+// ===== PHONE INPUT =====
+function onPhoneInput(v){
+  touchDT();
+  if(isSaudiPhone(v) && !editSeq){
+    const prev=calls.filter(c=>c.phone===v);
+    if(prev.length){
+      const lat=prev[0];
+      if(!sel.nat){ sel.nat=lat.nat; } if(!sel.gender){ sel.gender=lat.gender; }
+      renderAllGroups();
+      document.getElementById('custNotice').style.display='flex';
+      
+      const isFemale = lat.gender === 'أنثى'; 
+      const verbMap = {
+        'استفسار': isFemale ? 'تستفسر' : 'يستفسر',
+        'شكوى': isFemale ? 'تشتكي' : 'يشتكي',
+        'طلب': isFemale ? 'تطلب' : 'يطلب'
+      };
+      const verb = verbMap[lat.ctype] || (lat.ctype || '');
+      const topicStr = lat.topic ? ` ${lat.topic}` : '';
+      
+      document.getElementById('custNotice').innerHTML = `
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+        <span style="flex:1; line-height: 1.5; font-size: 13px;">
+          ${prev.length} مكالمات سابقة ، آخر مكالمة في ${fmtDT(lat.dt)} <span style="color:var(--accent); font-weight:700;">${verb}${topicStr}</span>
+        </span>
+        <button type="button" onclick="viewCustomerHistory('${v}')" style="background:var(--white); border:1.5px solid var(--accent); border-radius:8px; padding:4px 10px; font-family:'Cairo', sans-serif; font-size:11px; font-weight:700; color:var(--accent); cursor:pointer; white-space:nowrap;">سجل العميل</button>
+      `;
+      return;
+    }
+  }
+  document.getElementById('custNotice').style.display='none';
+}
+function viewCustomerHistory(phone) {
+  const logTabBtn = document.querySelector('[data-tab="log"]');
+  if (logTabBtn) switchTab('log', logTabBtn);
+  if (!groupMode) toggleGroupMode();
+  const searchInput = document.getElementById('logSearch');
+  if (searchInput) {
+    searchInput.value = phone;
+    renderFilteredLog();
+  }
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function touchDT(){
+  if(!callDT && !editSeq){
+    if(defaultDate){ const now=new Date(); callDT=new Date(defaultDate); callDT.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), 0); }
+    else { callDT=new Date(); }
+    updateDTBtns(); updateSeqLabel();
+  }
+}
+let dateSettingsOpen=false;
+function toggleDateSettings(){
+  dateSettingsOpen=!dateSettingsOpen;
+  const panel=document.getElementById('dateSettingsPanel'); const gear=document.getElementById('dateSettingsBtn');
+  panel.style.display=dateSettingsOpen?'block':'none';
+  const active=dateSettingsOpen||defaultDate;
+  if(gear){ gear.style.borderColor=active?'var(--teal)':'var(--border)'; gear.style.color=active?'var(--teal)':'var(--t2)'; gear.style.background=active?'var(--tl)':'var(--white)'; }
+  updateFixedDateDisplay();
+}
+function updateFixedDateDisplay(){ const lbl=document.getElementById('fixedDateDisplay'); if(lbl) lbl.textContent=defaultDate?fmtDate(defaultDate):'لم يتم تحديد تاريخ ثابت'; }
+function openDefaultDatePicker(){ const dp=document.getElementById('defaultDatePicker'); const base=defaultDate?new Date(defaultDate):new Date(); dp.value=base.toLocaleDateString('en-CA'); dp.style.cssText='position:fixed;top:50%;left:50%;opacity:0;pointer-events:auto;width:1px;height:1px;'; dp.showPicker?dp.showPicker():dp.click(); }
+function onDefaultDatePick(v){ if(!v) return; const [y,m,d]=v.split('-').map(Number); const nd=new Date(); nd.setFullYear(y,m-1,d); defaultDate=nd; callDT=null; touchDT(); updateDefaultDateUI(); updateFixedDateDisplay(); const gear=document.getElementById('dateSettingsBtn'); if(gear) gear.style.color='var(--amber)'; }
+function resetDefaultDate(){ defaultDate=null; callDT=null; updateDefaultDateUI(); updateFixedDateDisplay(); updateSeqLabel(); const gear=document.getElementById('dateSettingsBtn'); if(gear){ gear.style.borderColor='var(--border)'; gear.style.color='var(--t2)'; gear.style.background='var(--white)'; } }
+function updateDefaultDateUI(){ const db=document.getElementById('dateBtn'); if(defaultDate){ if(db) db.textContent=callDT?fmtDate(callDT):fmtDate(defaultDate); } else { if(db && !callDT) db.textContent='التاريخ'; } updateSeqLabel(); }
+function updateSeqLabel(){ const lbl=document.getElementById('seqLabel'); if(lbl) lbl.textContent='تسلسل '+(editSeq!==null?editSeq:buildSeq(callDT||new Date())); }
+function updateDTBtns(){ if(!callDT) return; const db=document.getElementById('dateBtn'); const tb=document.getElementById('timeBtn'); if(db) db.textContent=fmtDate(callDT); if(tb) tb.textContent=fmtTime(callDT); const dp=document.getElementById('datePicker'); const tp=document.getElementById('timePicker'); if(dp) dp.value=callDT.toLocaleDateString('en-CA'); if(tp){ const hh=String(callDT.getHours()).padStart(2,'0'),mm=String(callDT.getMinutes()).padStart(2,'0'); tp.value=hh+':'+mm; } }
+function openDatePicker(){ if(!callDT){ callDT=new Date(); } const dp=document.getElementById('datePicker'); dp.value=callDT.toLocaleDateString('en-CA'); dp.style.cssText='position:fixed;top:50%;left:50%;opacity:0;pointer-events:auto;width:1px;height:1px;'; dp.showPicker ? dp.showPicker() : dp.click(); }
+function openTimePicker(){ if(!callDT){ callDT=new Date(); } const tp=document.getElementById('timePicker'); const hh=String(callDT.getHours()).padStart(2,'0'),mm=String(callDT.getMinutes()).padStart(2,'0'); tp.value=hh+':'+mm; tp.style.cssText='position:fixed;top:50%;left:50%;opacity:0;pointer-events:auto;width:1px;height:1px;'; tp.showPicker ? tp.showPicker() : tp.click(); }
+function onDatePick(v){ if(!v) return; if(!callDT) callDT=new Date(); const [y,m,d]=v.split('-').map(Number); callDT.setFullYear(y,m-1,d); updateDTBtns(); }
+function onTimePick(v){ if(!v) return; if(!callDT) callDT=new Date(); const [h,m]=v.split(':').map(Number); callDT.setHours(h,m,0,0); updateDTBtns(); }
+
+// ===== SELECT OPT & AUTO SAVE =====
+function checkAutoSave(isGenderTrigger = false) {
+  const phone = document.getElementById('phone').value.trim();
+  if (!isSaudiPhone(phone) || editSeq !== null) return;
+  if (!sel.ctype || sel.topics.length === 0) return;
+
+  if (isGenderTrigger) {
+      if (sel.gender) { submitCall(); }
+      return;
+  }
+}
+
+function selectOpt(btn, grp){
+  if(grp==='topic'){
+    const v=btn.dataset.val; const idx=sel.topics.indexOf(v);
+    if(idx>=0){ sel.topics.splice(idx,1); btn.classList.remove('sel'); } else { sel.topics.push(v); btn.classList.add('sel'); }
+    touchDT(); checkAutoSave(); return;
+  }
+  const alreadySelected = btn.classList.contains('sel');
+  document.querySelectorAll(`[data-group="${grp}"]`).forEach(b=>b.classList.remove('sel'));
+  if(alreadySelected){ sel[grp]=''; } else { btn.classList.add('sel'); sel[grp]=btn.dataset.val; }
+  if(grp==='ctype'){
+    updateCond();
+    if(sel.ctype && S.topicMap[sel.ctype]){ sel.topics=sel.topics.filter(t=>S.topicMap[sel.ctype].includes(t)); } else { sel.topics=[]; }
+    renderTopicGroup();
+  }
+  touchDT(); updateTagsBtnIndicator(); checkAutoSave(grp === 'gender');
+}
+function updateCond(){ document.getElementById('condComp').style.display=sel.ctype==='شكوى'?'block':'none'; document.getElementById('condReq').style.display=sel.ctype==='طلب'?'block':'none'; updateDimRows(); }
+function updateDimRows(){ const isComp=sel.ctype==='شكوى'; ['tl-child','tl-loc','tl-src'].forEach(id=>{ const el=document.getElementById(id); if(!el) return; isComp ? el.classList.add('dim') : el.classList.remove('dim'); }); }
+
+// ===== SUBMIT & DELETE =====
+async function submitCall(){
+  const phone=document.getElementById('phone').value.trim();
+  if(!isSaudiPhone(phone)) return toast('أدخل رقم جوال سعودي صحيح (05XXXXXXXX)','err');
+  if(!sel.ctype)   return toast('الرجاء اختيار نوع المكالمة','err');
+  if(sel.topics.length === 0) return toast('الرجاء اختيار موضوع المكالمة','err');
+  if(!callDT) callDT=new Date();
+
+  const rec={
+    seq:   editSeq!==null ? editSeq : nextSeq(callDT||new Date()),
+    dt:    editSeq!==null ? calls.find(c=>c.seq===editSeq).dt : callDT,
+    phone, gender:sel.gender, nat:sel.nat, branch:sel.branch, loc:sel.loc,
+    src:sel.src, topic:sel.topics.join('، '), ctype:sel.ctype,
+    compNo:sel.ctype==='شكوى'?(document.getElementById('compNo').value.trim()||''):'',
+    reqNo: sel.ctype==='طلب' ?(document.getElementById('reqNo').value.trim()||''):'',
+    child: sel.child, emo:sel.emo, notes: document.getElementById('details').value.trim()||''
+  };
+
+  try {
+    await saveCallDB(rec);
+
+    if(editSeq!==null){
+      const idx=calls.findIndex(c=>c.seq===editSeq);
+      if(idx!==-1) calls[idx]=rec;
+      const savedSeq=editSeq; editSeq=null;
+      document.getElementById('submitBtn').textContent='حفظ';
+      renderLog(); updateBadge(); clearForm(); toast('تم تحديث المكالمة','ok');
+      const logBtn=document.querySelector('[data-tab="log"]'); switchTab('log',logBtn);
+      requestAnimationFrame(()=>{ const card=document.getElementById('dtl-'+savedSeq); if(card){ if(!card.classList.contains('open')) togCard(savedSeq); const el=card.closest('.cc'); if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); } } });
+      
+      if(rec.ctype === 'شكوى' || rec.ctype === 'طلب') {
+          showPostSaveModal(rec);
+      }
+    } else {
+      calls.unshift(rec);
+      renderLog(); updateBadge(); clearForm();
+      if(tagsPanelOpen){ toggleTagsPanel(); }
+      toast('تم حفظ المكالمة','ok');
+      
+      if(rec.ctype === 'شكوى' || rec.ctype === 'طلب') {
+          showPostSaveModal(rec);
+      }
+    }
+  } catch(err) {
+    toast('حدث خطأ أثناء حفظ المكالمة في قاعدة البيانات', 'err');
+    console.error(err);
+  }
+}
+
+async function deleteCall(seq) {
+  if(!confirm('هل أنت متأكد من حذف هذه المكالمة تماماً؟')) return;
+  try {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    store.delete(seq);
+    tx.oncomplete = () => {
+      calls = calls.filter(c => c.seq !== seq);
+      renderFilteredLog();
+      updateBadge();
+      if(document.getElementById('tab-analytics').classList.contains('active')){
+         updateAnalytics();
+      }
+      toast('تم الحذف بنجاح', 'ok');
+    };
+  } catch(err) {
+    console.error(err);
+    toast('حدث خطأ أثناء الحذف', 'err');
+  }
+}
+
+function clearForm(){
+  ['phone','compNo','reqNo','details'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('custNotice').style.display='none'; document.getElementById('condComp').style.display='none'; document.getElementById('condReq').style.display='none';
+  Object.keys(sel).forEach(k=>{ sel[k]=k==='topics'?[]:'' }); callDT=null;
+  if(defaultDate){ touchDT(); } else { updateSeqLabel(); updateDTBtns(); document.getElementById('dateBtn').textContent='التاريخ'; document.getElementById('timeBtn').textContent='الوقت'; }
+  renderAllGroups(); document.querySelectorAll('[data-group="gender"],[data-group="ctype"],[data-group="child"]').forEach(b=>b.classList.remove('sel')); updateTagsBtnIndicator();
+}
+
+function editCall(seq){
+  const c=calls.find(x=>x.seq===seq); if(!c) return;
+  editSeq=seq;
+  document.getElementById('phone').value=c.phone; document.getElementById('details').value=c.notes; document.getElementById('compNo').value=c.compNo||''; document.getElementById('reqNo').value=c.reqNo||'';
+  callDT=new Date(c.dt); updateSeqLabel(); updateDTBtns();
+  sel.gender=c.gender; sel.nat=c.nat; sel.branch=c.branch; sel.loc=c.loc; sel.src=c.src||''; sel.topics=c.topic?c.topic.split('، ').filter(Boolean):[]; sel.ctype=c.ctype; sel.child=c.child||''; sel.emo=c.emo||'';
+  renderAllGroups(); updateCond();
+  document.getElementById('submitBtn').textContent='تعديل ✓'; document.getElementById('custNotice').style.display='none';
+  const formBtn=document.querySelector('[data-tab="form"]'); switchTab('form',formBtn); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== POST SAVE MODAL (شكوى / طلب) =====
+let psCallRecord = null;
+function showPostSaveModal(rec) {
+    psCallRecord = rec;
+    document.getElementById('ps-type').textContent = rec.ctype;
+    document.getElementById('ps-summary').textContent = genSummary(rec);
+    document.getElementById('ps-children-container').innerHTML = '<input type="text" class="fi child-name-input" placeholder="اسم الطفل 1" />';
+    document.getElementById('post-save-modal').style.display = 'flex';
+}
+
+function addPSChildInput() {
+    const container = document.getElementById('ps-children-container');
+    const inputs = container.querySelectorAll('input');
+    if(inputs.length >= 10) {
+        toast('الحد الأقصى 10 أطفال', 'err');
+        return;
+    }
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'fi child-name-input';
+    input.placeholder = `اسم الطفل ${inputs.length + 1}`;
+    container.appendChild(input);
+}
+
+function getPSChildNames() {
+    const inputs = document.querySelectorAll('.child-name-input');
+    const names = Array.from(inputs).map(inp => inp.value.trim()).filter(n => n !== '');
+    return names.join(' و ');
+}
+
+function psNotifyAdmin() { if(psCallRecord) notifyAdmin(psCallRecord.seq); }
+function psNotifyBranch() { if(psCallRecord) notifyBranch(psCallRecord.seq); }
+function psSendFollowUp() { if(psCallRecord) sendFollowUp(psCallRecord.seq); }
+
+function psRedirect1() {
+    const names = getPSChildNames();
+    if(!names) { toast('الرجاء إدخال اسم طفل واحد على الأقل', 'err'); return; }
+    if(!psCallRecord.branch || !S.branchPhones[psCallRecord.branch]) { toast('لم يتم إضافة رقم هذا الفرع', 'err'); return; }
+    const msg = `السلام عليكم ، ابي اتطمن على الاطفال ${names}`;
+    waLink(S.branchPhones[psCallRecord.branch], msg);
+}
+
+function psRedirect2() {
+    const names = getPSChildNames();
+    if(!names) { toast('الرجاء إدخال اسم طفل واحد على الأقل', 'err'); return; }
+    if(!psCallRecord.branch || !S.branchPhones[psCallRecord.branch]) { toast('لم يتم إضافة رقم هذا الفرع', 'err'); return; }
+    const msg = `السلام عليكم ،ابي اتطمن على الاطفال ${names} وابي تطلبون من العاملة تنتبه للجوال.`;
+    waLink(S.branchPhones[psCallRecord.branch], msg);
+}
+
+// ===== LOG =====
+function renderLog(subset){
+  const wrap=document.getElementById('logWrap'); const _calls=subset||calls;
+  document.getElementById('logCount').textContent=_calls.length;
+  if(!_calls.length){ wrap.innerHTML=`<div class="empty" style="text-align:center; padding: 40px;"><div style="width:50px;height:50px;background:#e2e8f0;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><p style="color:var(--t2);font-weight:600;">لا توجد مكالمات مسجّلة بعد</p></div>`; return; }
+  
+  const sortVal = document.getElementById('logSort') ? document.getElementById('logSort').value : 'newest';
+  const sorted = [..._calls].sort((a,b) => {
+    if(sortVal === 'oldest') return a.dt - b.dt;
+    if(sortVal === 'branch') return (a.branch||'').localeCompare(b.branch||'') || b.dt - a.dt;
+    if(sortVal === 'ctype')  return (a.ctype||'').localeCompare(b.ctype||'') || b.dt - a.dt;
+    if(sortVal === 'gender') return (a.gender||'').localeCompare(b.gender||'') || b.dt - a.dt;
+    if(sortVal === 'nat')    return (a.nat||'').localeCompare(b.nat||'') || b.dt - a.dt;
+    if(sortVal === 'loc')    return (a.loc||'').localeCompare(b.loc||'') || b.dt - a.dt;
+    if(sortVal === 'emo')    return (a.emo||'').localeCompare(b.emo||'') || b.dt - a.dt;
+    if(sortVal === 'src')    return (a.src||'').localeCompare(b.src||'') || b.dt - a.dt;
+    return b.dt - a.dt; 
+  });
+
+  let html='';
+  if(groupMode){
+    const phMap={}, phOrd=[];
+    sorted.forEach(c=>{ if(!phMap[c.phone]){phMap[c.phone]=[];phOrd.push(c.phone);} phMap[c.phone].push(c); });
+    phOrd.forEach(ph=>{
+      const pcs=phMap[ph]; const latestDay=fmtDate(new Date(Math.max(...pcs.map(x=>x.dt))));
+      if(pcs.length===1){ html+=callCard(pcs[0],false); } else { html+=`<div class="cust-block"><div class="cust-hdr"><span class="cust-ph">${ph}</span> · ${pcs.length} مكالمات · آخرها ${latestDay}</div>`; pcs.forEach(c=>{ html+=callCard(c,true); }); html+='</div>'; }
+    });
+  } else { sorted.forEach(c=>{ html+=callCard(c,false); }); }
+  wrap.innerHTML=html;
+}
+
+function cardSummary(c){
+  const f=c.gender==='أنثى'; const verb={'شكوى':f?'تشتكي':'يشتكي','استفسار':f?'تستفسر عن':'يستفسر عن','طلب':f?'تطلب':'يطلب'}[c.ctype]||c.ctype;
+  const topics=c.topic?c.topic.split('، ').filter(Boolean):[]; let topicPart=''; if(topics.length===1) topicPart=topics[0]; else if(topics.length>1) topicPart=topics.slice(0,-1).join(' و')+' و'+topics[topics.length-1];
+  let s=verb; if(topicPart) s+=' '+topicPart; if(c.branch) s+=` في فرع ${c.branch}`; return s;
+}
+
+function callCard(c, nested){
+  const sa=nested?'':' standalone'; const fields=[{l:'جوال العميل',v:c.phone},{l:'الجنس',v:c.gender},{l:'اللكنة',v:c.nat},{l:'الفرع',v:c.branch},{l:'الموقع',v:c.loc},{l:'عدد الأطفال',v:c.child||'—'},{l:'نبرة العميل',v:c.emo||'—'},{l:'المصدر',v:c.src||'—'},{l:'الموضوع',v:c.topic||'—'},...(c.compNo?[{l:'رقم الشكوى',v:c.compNo}]:[]),...(c.reqNo?[{l:'رقم الطلب',v:c.reqNo}]:[])];
+  const seqCls=c.ctype==='شكوى'?'ct-complaint':c.ctype==='طلب'?'ct-request':'ct-inquiry';
+  return `
+  <div class="cc${sa}">
+    <div class="cc-top" onclick="togCard('${c.seq}')">
+      <span class="cc-seq ${seqCls}">${c.seq}</span><span class="cc-time" style="flex-shrink:0">${fmtTime(c.dt)}</span>
+      <span class="cc-summary">${cardSummary(c)}</span><span class="cc-tog" id="tog-${c.seq}" style="font-size:18px;font-weight:300;">＋</span>
+    </div>
+    <div class="cc-act-row" id="act-${c.seq}" style="display:none;padding:8px 18px;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:#f8fafc;">
+      ${c.ctype === 'شكوى' ? `<button onclick="event.stopPropagation();showIMSDetails('${c.phone}', 'شكوى', '${c.compNo||''}')" style="color:#e11d48; border:1px solid #fecaca; font-weight:800; background:#fff1f2;">تفاصيل الشكوى </button>` : ''}
+      ${c.ctype === 'طلب' ? `<button onclick="event.stopPropagation();showIMSDetails('${c.phone}', 'طلب', '${c.reqNo||''}')" style="color:#0ea5e9; border:1px solid #bae6fd; font-weight:800; background:#f0f9ff;">تفاصيل الطلب </button>` : ''}
+      <button onclick="event.stopPropagation();notifyAdmin('${c.seq}')" style="color:var(--accent); border:1px solid var(--al);">الإدارة</button>
+      <button onclick="event.stopPropagation();notifyBranch('${c.seq}')" style="color:var(--amber); border:1px solid var(--ambl);">الفرع</button>
+      <button onclick="event.stopPropagation();sendFollowUp('${c.seq}')" style="color:var(--green); border:1px solid var(--gl);">العميل</button>
+      <button id="summBtn-${c.seq}" onclick="event.stopPropagation();toggleSummDetail('${c.seq}')" style="color:var(--text); border:1px solid var(--border);">ملخص</button>
+      <button onclick="event.stopPropagation();editCall('${c.seq}')" style="color:var(--t2); border:1px solid var(--border);">تعديل</button>
+      <button onclick="event.stopPropagation();deleteCall('${c.seq}')" style="color:var(--red); border:1px solid var(--rl); margin-right:auto;">حذف</button>
+      <button id="copy-${c.seq}" onclick="event.stopPropagation();copySumm('${c.seq}')" style="display:none; color:var(--purple); border:1px solid var(--pl);">نسخ</button>
+    </div>
+    <div class="cc-dtl" id="dtl-${c.seq}">
+      <div class="summ-box" id="summ-${c.seq}"></div>
+      <div id="grid-${c.seq}" style="display:none;"><div class="dgrid">${fields.map(f=>`<div class="di"><div class="dl">${f.l}</div><div class="dv">${f.v}</div></div>`).join('')}</div>${c.notes?`<div class="dnotes">${c.notes}</div>`:''}</div>
+    </div>
+  </div>`;
+}
+
+// ===== SUMMARY GENERATION =====
+function genSummary(c){
+  const f=c.gender==='أنثى'; const g=(m,fm)=>f?fm:m; const parts=[];
+  const childLabel={'طفل':'طفل واحد','طفلين':'طفلين','ثلاثة':'ثلاثة أطفال','أربعة':'أربعة أطفال','خمسة':'خمسة أطفال','أكثر':'أكثر من خمسة أطفال'};
+  parts.push(c.child && childLabel[c.child] ? `${g('أب','أم')} لـ${childLabel[c.child]}` : g('أب','أم'));
+  if(c.nat){ const natF = c.nat.endsWith('ي') ? c.nat+'ة' : c.nat; parts.push(`يظهر ${g('أنه','أنها')} ${g(c.nat, natF)}`); }
+  const verb={'شكوى':g('يشتكي','تشتكي'),'استفسار':g('يستفسر عن','تستفسر عن'),'طلب':g('يطلب','تطلب')}[c.ctype]||c.ctype;
+  let callPart=`${g('اتصل','اتصلت')} ${verb}`; if(c.topic) callPart+=` ${c.topic}`; if(c.branch) callPart+=` في ${c.branch}`; parts.push(callPart);
+  if(c.compNo) parts.push(`رقم الشكوى: ${c.compNo}`); if(c.reqNo) parts.push(`رقم الطلب: ${c.reqNo}`);
+if(c.notes) parts.push(`في المكالمة: ${c.notes}`);
+  parts.push(`رقم ${g('العميل','العميلة')} ${c.phone}`);
+  return parts.join('، ');
+}
+function copySumm(seq){ const box=document.getElementById('summ-'+seq); if(!box||!box.textContent) return; navigator.clipboard.writeText(box.textContent).then(()=>toast('تم نسخ النص','ok')).catch(()=>{ const ta=document.createElement('textarea'); ta.value=box.textContent; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toast('تم نسخ النص','ok'); }); }
+function waLink(phone, msg){ let p=phone.replace(/\D/g,''); if(p.startsWith('0')) p='966'+p.slice(1); window.open(`https://wa.me/${p}?text=${encodeURIComponent(msg)}`,'_blank'); }
+
+// دالة العميل المحدثة بالشكل المطلوب
+function followUpText(c){ 
+  const f=c.gender==='أنثى'; 
+  const clientLabel=f?'أم':'أب'; 
+  const verb={'شكوى':f?'تشتكي':'يشتكي','استفسار':f?'تستفسر عن':'يستفسر عن','طلب':f?'تطلب':'يطلب'}[c.ctype]||c.ctype; 
+  return `*جزء خاص بالادارة يوضح تفاصيل الحالة ، قم بحذها* \n ${clientLabel}  ${verb} ${c.topic||c.ctype}  في فرع ${c.branch||'غير محدد'} ، ${c.notes||'لا يوجد'}`; 
+}
+
+function sendFollowUp(seq){ const c=calls.find(x=>x.seq===seq); if(!c) return; waLink(c.phone, followUpText(c)); }
+function notifyBranch(seq){ const c=calls.find(x=>x.seq===seq); if(!c) return; const phone=S.branchPhones[c.branch]||''; if(!phone){ toast('لم يتم إضافة رقم هذا الفرع في الصيانة','err'); return; } waLink(phone, genSummary(c)); }
+function notifyAdmin(seq){ const c=calls.find(x=>x.seq===seq); if(!c) return; if(!S.adminPhone){ toast('لم يتم إضافة رقم الإدارة في الصيانة','err'); return; } let custPhone=c.phone.replace(/[^0-9]/g,''); if(custPhone.startsWith('0')) custPhone='966'+custPhone.slice(1); const custWaLink=`https://wa.me/${custPhone}?text=${encodeURIComponent(followUpText(c))}`; waLink(S.adminPhone, genSummary(c)+'\n\n---\n'+custWaLink); }
+
+function togCard(seq){
+  const d=document.getElementById('dtl-'+seq); const a=document.getElementById('act-'+seq); const t=document.getElementById('tog-'+seq); if(!d) return;
+  const open=d.classList.toggle('open'); if(a) a.style.display=open?'flex':'none'; t.textContent=open?'－':'＋';
+  if(open){ showSummaryMode(seq); }
+}
+function showSummaryMode(seq){ const box=document.getElementById('summ-'+seq); const grid=document.getElementById('grid-'+seq); const btn=document.getElementById('summBtn-'+seq); const c=calls.find(x=>x.seq===seq); if(!c||!box) return; box.textContent=genSummary(c); box.classList.add('open'); if(grid) grid.style.display='none'; if(btn){ btn.textContent='تفاصيل'; } }
+function toggleSummDetail(seq){
+  const box=document.getElementById('summ-'+seq); const grid=document.getElementById('grid-'+seq); const copy=document.getElementById('copy-'+seq); const btn=document.getElementById('summBtn-'+seq); const inSummary=box&&box.classList.contains('open');
+  if(inSummary){ if(box){ box.classList.remove('open'); box.textContent=''; } if(grid) grid.style.display=''; if(copy) copy.style.display='none'; if(btn) btn.textContent='ملخص'; }
+  else { const c=calls.find(x=>x.seq===seq); if(!c) return; if(box){ box.textContent=genSummary(c); box.classList.add('open'); } if(grid) grid.style.display='none'; if(copy) copy.style.display='inline-block'; if(btn) btn.textContent='تفاصيل'; }
+}
+function updateBadge(){ const b=document.getElementById('logBadge'); b.style.display='inline-block'; b.textContent=calls.length; }
+
+// ===== ANALYTICS =====
+let activeFilters={}; let logFilters={}; let analyticsTerms=[];
+function filteredCalls(){ const terms=analyticsTerms.map(t=>t.toLowerCase()); if(!terms.length) return calls; return calls.filter(c=>{ const fields=[c.phone,c.seq,c.ctype,c.gender,c.nat,c.branch,c.loc,c.src,c.topic,c.emo,c.child,c.notes,c.compNo,c.reqNo].map(v=>(v||'').toLowerCase()); return terms.every(t=>fields.some(f=>f.includes(t))); }); }
+function filteredLogCalls(){ const q=(document.getElementById('logSearch')||{}).value||''; const term=q.trim().toLowerCase(); let result=calls; if(term){ result=result.filter(c=>{ const fields=[c.phone,c.seq,c.ctype,c.gender,c.nat,c.branch,c.loc,c.src,c.topic,c.emo,c.child,c.notes,c.compNo,c.reqNo].map(v=>(v||'').toLowerCase()); return fields.some(f=>f.includes(term)); }); } return result; }
+function addAnalyticsTag(){ const inp=document.getElementById('analyticsSearch'); if(!inp) return; const v=inp.value.trim(); if(!v) return; if(!analyticsTerms.includes(v)) analyticsTerms.push(v); inp.value=''; activeFilters={_tags:analyticsTerms}; renderAnalyticsTags(); updateAnalytics(); inp.focus(); }
+function addSuggestedTag(tag){ if(!analyticsTerms.includes(tag)) analyticsTerms.push(tag); activeFilters={_tags:analyticsTerms}; renderAnalyticsTags(); updateAnalytics(); }
+function renderAnalyticsTags(){ const row=document.getElementById('filterTagsRow'); if(!row) return; row.innerHTML=analyticsTerms.map(t=>`<span style="display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1.5px solid var(--accent);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:700;color:var(--accent);box-shadow:var(--ss);">${t}<button onclick="removeAnalyticsTag('${t}')" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:16px;padding:0;line-height:1;margin-right:4px;">×</button></span>`).join(''); }
+function removeAnalyticsTag(term){ analyticsTerms=analyticsTerms.filter(t=>t!==term); activeFilters={_tags:analyticsTerms}; renderAnalyticsTags(); updateAnalytics(); }
+function clearFilters(){ activeFilters={}; analyticsTerms=[]; const inp=document.getElementById('analyticsSearch'); if(inp) inp.value=''; const row=document.getElementById('filterTagsRow'); if(row) row.innerHTML=''; updateAnalytics(); }
+function renderSuggestedTags() {
+  const container = document.getElementById('suggestedTagsRow');
+  if (!container) return;
+  const fc = filteredCalls();
+  const counts = {};
+  
+  fc.forEach(c => {
+    const tags = [c.ctype, c.branch, c.loc, c.src, c.gender, c.nat, c.emo, c.child];
+    if (c.topic) tags.push(...c.topic.split('، '));
+    
+    tags.filter(Boolean).forEach(tag => {
+      if (!analyticsTerms.includes(tag)) {
+        counts[tag] = (counts[tag] || 0) + 1;
+      }
+    });
+  });
+  
+  const topTags = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(t => t[0]);
+  
+  if (!topTags.length) { container.innerHTML = ''; return; }
+  container.innerHTML = `<span style="font-size:13px;color:var(--tl2);font-weight:800;margin-left:4px;">الأكثر ظهورا:</span> ` + 
+    topTags.map(tag => `<button onclick="addSuggestedTag('${tag}')" class="ob" style="padding:6px 14px; font-size:12px; border-radius:100px; background:var(--bg); border:1px solid var(--border); box-shadow:var(--ss);">${tag}</button>`).join('');
+}
+
+function renderFilteredLog(){ 
+  renderLog(filteredLogCalls()); 
+  // إذا كان العرض النصي مفعلاً، يتم تحديثه أيضاً لتطبيق الفلترة المباشرة
+  if (typeof textViewActive !== 'undefined' && textViewActive) {
+      buildTextView();
+  }
+}
+
+function timeSlot(dt){ const h=dt.getHours(); if(h>=12&&h<14) return '12:00~2:00م'; if(h>=14&&h<16) return '2:00~4:00م'; if(h>=16&&h<18) return '4:00~6:00م'; if(h>=18&&h<20) return '6:00~8:00م'; if(h>=20&&h<22) return '8:00~10:00م'; if(h>=22) return '10:00~12:00م'; if(h>=0&&h<2) return '12:00~2:00ص'; if(h>=2&&h<4) return '2:00~4:00ص'; if(h>=4&&h<6) return '4:00~6:00ص'; if(h>=6&&h<8) return '6:00~8:00ص'; if(h>=8&&h<10) return '8:00~10:00ص'; if(h>=10&&h<12) return '10:00~12:00ص'; return null; }
+
+// ===== LINE CHART LOGIC =====
+function getISOWeek(d) {
+    const date = new Date(d.getTime());
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+    const week1 = new Date(date.getFullYear(), 0, 4);
+    return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+}
+function getGroupKey(date, scale) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    if(scale === 'day') return `${y}-${m}-${d}`;
+    if(scale === 'week') {
+        const w = String(getISOWeek(date)).padStart(2, '0');
+        return `${y}-W${w}`;
+    }
+    if(scale === 'month') return `${y}-${m}`;
+    if(scale === 'year') return `${y}`;
+}
+function formatGroupKey(key, scale) {
+    if(scale === 'day') {
+       const [y,m,d] = key.split('-');
+       return `${d} ${MONTHS[parseInt(m)-1]}`;
+    }
+    if(scale === 'week') return `أسبوع ${key.split('-W')[1]} (${key.split('-')[0]})`;
+    if(scale === 'month') {
+       const [y,m] = key.split('-');
+       return `${MONTHS[parseInt(m)-1]} ${y}`;
+    }
+    return key; 
+}
+
+let lineChartInstance = null;
+function updateLineChart() {
+    const scale = document.getElementById('timeScaleSelect').value;
+    const fc = filteredCalls();
+    
+    // الفرز التصاعدي زمنياً ليكون الرسم صحيحاً
+    const sorted = [...fc].sort((a,b) => a.dt - b.dt);
+    
+    const grouped = {};
+    sorted.forEach(c => {
+        const k = getGroupKey(c.dt, scale);
+        if(!grouped[k]) grouped[k] = { 'شكوى':0, 'استفسار':0, 'طلب':0, total: 0 };
+        if(c.ctype) {
+            grouped[k][c.ctype] = (grouped[k][c.ctype] || 0) + 1;
+        }
+        grouped[k].total++;
+    });
+
+    const labels = Object.keys(grouped);
+    const displayLabels = labels.map(k => formatGroupKey(k, scale));
+    
+    const dataComp = labels.map(k => grouped[k]['شكوى']);
+    const dataInq = labels.map(k => grouped[k]['استفسار']);
+    const dataReq = labels.map(k => grouped[k]['طلب']);
+
+    const ctx = document.getElementById('timelineChart').getContext('2d');
+    
+    if(lineChartInstance) lineChartInstance.destroy();
+
+    lineChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: displayLabels,
+            datasets: [
+                {
+                    label: 'شكاوى',
+                    data: dataComp,
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.3, fill: false, borderWidth: 2,
+                    pointRadius: 1, pointHoverRadius: 4
+                },
+                {
+                    label: 'استفسارات',
+                    data: dataInq,
+                    borderColor: '#6366f1',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.3, fill: false, borderWidth: 2,
+                    pointRadius: 1, pointHoverRadius: 4
+                },
+                {
+                    label: 'طلبات',
+                    data: dataReq,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.3, fill: false, borderWidth: 2,
+                    pointRadius: 1, pointHoverRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', rtl: true, labels: { font: { family: 'Cairo', weight: 'bold' } } },
+                tooltip: { titleFont: { family: 'Cairo' }, bodyFont: { family: 'Cairo' }, rtl: true, textDirection: 'rtl' }
+            },
+            scales: {
+                y: { beginAtZero: true, position: 'right', ticks: { stepSize: 1, font: { family: 'Cairo' } } },
+                x: { ticks: { font: { family: 'Cairo' } } }
+            }
+        }
+    });
+}
+
+function updateAnalytics(){
+  const fc=filteredCalls();
+  document.getElementById('stTotal').textContent=fc.length; document.getElementById('stComp').textContent=fc.filter(c=>c.ctype==='شكوى').length; document.getElementById('stInq').textContent=fc.filter(c=>c.ctype==='استفسار').length; document.getElementById('stReq').textContent=fc.filter(c=>c.ctype==='طلب').length;
+  
+  // تحديث الرسم البياني الخطي
+  updateLineChart();
+
+  // تحديث مربعات الفروع التفاعلية
+  const branchGrid = document.getElementById('branchAnalyticsGrid');
+  if (branchGrid) {
+      let branchHtml = '';
+      S.branches.forEach(br => {
+          const brCalls = fc.filter(c => c.branch === br);
+          const count = brCalls.length;
+          
+          const topicsMap = {};
+          brCalls.forEach(c => {
+              if (c.topic) {
+                  c.topic.split('، ').filter(Boolean).forEach(t => {
+                      topicsMap[t] = (topicsMap[t] || 0) + 1;
+                  });
+              }
+          });
+          const topTopics = Object.entries(topicsMap).sort((a,b) => b[1] - a[1]).slice(0, 5);
+          
+          let topicsHtml = topTopics.length ? topTopics.map(([t, c]) => `
+              <div style="display:flex; justify-content:space-between; font-size:12px; border-bottom:1px solid var(--border); padding:6px 0;">
+                  <span style="color:var(--t2); font-weight:700;">${t}</span>
+                  <span style="background:var(--al); color:var(--accent); padding:2px 8px; border-radius:10px; font-weight:800;">${c}</span>
+              </div>
+          `).join('') : '<div style="font-size:12px; color:var(--tl2); text-align:center; padding:10px 0;">لا توجد مواضيع مضافة</div>';
+
+          branchHtml += `
+              <div class="sc" style="padding:16px; display:flex; flex-direction:column; gap:12px; border-top: 4px solid var(--accent); background:var(--white);">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div style="font-size:15px; font-weight:800; color:var(--text);">${br}</div>
+                      <div style="font-size:24px; font-weight:800; color:var(--accent);">${count}</div>
+                  </div>
+                  <div style="background:var(--bg); border-radius:10px; padding:8px 12px; flex:1;">
+                      ${topicsHtml}
+                  </div>
+              </div>
+          `;
+      });
+      branchGrid.innerHTML = branchHtml;
+  }
+
+  const p1=['#8b5cf6','#a78bfa','#c4b5fd','#ddd6fe']; const p2=['#6366f1','#818cf8','#a5b4fc','#c7d2fe','#e0e7ff']; const p3=['#6366f1','#ec4899']; const p4=['#06b6d4','#22d3ee','#67e8f9','#a5f3fc','#cffafe','#ecfeff']; const p5=['#10b981','#34d399','#6ee7b7','#a7f3d0','#d1fae5'];
+  const cnt=(k)=>{const m={};fc.forEach(c=>{if(c[k])m[c[k]]=(m[c[k]]||0)+1;});return Object.entries(m).sort((a,b)=>b[1]-a[1]);};
+  renderBar('chLoc', cnt('loc'), p1); renderPie('chNat', cnt('nat'), p2); renderPie('chGen', cnt('gender'), p3); renderBar('chSrc', cnt('src'), p1);
+  
+  // تصاميم جديدة ومختلفة (البطاقات) للأطفال والنبرة
+  renderStatCards('chChild', cnt('child'), p4);
+  renderStatCards('chEmo', cnt('emo'), p5);
+
+  const topicPalettes={'شكوى':['#ef4444','#f87171','#fca5a5','#fecaca','#fee2e2'],'استفسار':['#6366f1','#818cf8','#a5b4fc','#c7d2fe','#e0e7ff'],'طلب':['#10b981','#34d399','#6ee7b7','#a7f3d0','#d1fae5']};
+  const ctypeElMap={'شكوى':'chTopComp','استفسار':'chTopInq','طلب':'chTopReq'};
+  
+  ['شكوى','استفسار','طلب'].forEach(ct=>{ 
+      const subset=fc.filter(c=>c.ctype===ct); 
+      const m={}; 
+      subset.forEach(c=>{ 
+          if(!c.topic) return; 
+          c.topic.split('، ').filter(Boolean).forEach(t=>{ m[t]=(m[t]||0)+1; }); 
+      }); 
+      const data=Object.entries(m).sort((a,b)=>b[1]-a[1]); 
+      renderCountsList(ctypeElMap[ct], data, topicPalettes[ct]); 
+  });
+
+  const ORDER=['12:00~2:00م','2:00~4:00م','4:00~6:00م','6:00~8:00م','8:00~10:00م','10:00~12:00م','12:00~2:00ص','2:00~4:00ص','4:00~6:00ص','6:00~8:00ص','8:00~10:00ص','10:00~12:00ص'];
+  const tm={}; fc.forEach(c=>{ const s=timeSlot(c.dt); if(s) tm[s]=(tm[s]||0)+1; }); const tmData=ORDER.filter(k=>tm[k]).map(k=>[k,tm[k]]);
+  renderPie('chTime', tmData, ['#6366f1','#818cf8','#a5b4fc','#c7d2fe','#e0e7ff','#06b6d4','#22d3ee','#67e8f9','#a5f3fc','#10b981','#34d399']);
+  
+  if(typeof renderSuggestedTags === 'function') renderSuggestedTags();
+}
+
+function renderStatCards(id, data, colors){ 
+    const el = document.getElementById(id); 
+    if(!el) return; 
+    el.className = ''; 
+    if(!data.length){ el.innerHTML='<div class="ec" style="padding:14px 0;font-size:13px; color:var(--tl2); text-align:center;">لا توجد بيانات</div>'; return; } 
+    el.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:12px;">` + data.map(([lbl, val], i) => `
+        <div style="flex: 1 1 calc(33% - 12px); min-width:80px; background:var(--white); border:1px solid var(--border); border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:var(--ss); border-bottom: 3px solid ${colors[i%colors.length]};">
+            <span style="font-size:20px; font-weight:800; color:var(--text); line-height:1; margin-bottom:4px;">${val}</span>
+            <span style="font-size:12px; font-weight:700; color:var(--t2); text-align:center;">${lbl}</span>
+        </div>
+    `).join('') + `</div>`; 
+}
+
+function renderCountsList(id, data, colors){
+    const el = document.getElementById(id);
+    if(!el) return;
+    if(!data.length){ el.innerHTML='<div class="ec" style="padding:20px 0; color:var(--tl2); text-align:center;">لا توجد</div>'; return; }
+    el.innerHTML = data.map(([lbl, val], i) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--bg); border-radius:8px; margin-bottom:8px; border-right:4px solid ${colors[i%colors.length]}">
+            <span style="font-size:13px; font-weight:700; color:var(--t2);">${lbl}</span>
+            <span style="font-size:15px; font-weight:800; color:var(--text);">${val}</span>
+        </div>
+    `).join('');
+}
+
+function renderBar(id, data, colors){ const el=document.getElementById(id); if(!el) return; if(!data.length){el.innerHTML='<div class="ec">لا توجد بيانات</div>';el.className='bar-c';return;} const max=Math.max(...data.map(d=>d[1])); el.className='bar-c'; el.innerHTML=data.map(([lbl,val],i)=>`<div style="display:flex;flex-direction:column;gap:6px;"><div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text);font-weight:700;">${lbl}</span><span style="color:var(--tl2);font-weight:700;">${val}</span></div><div style="background:#f1f5f9;border-radius:6px;height:8px;overflow:hidden;"><div style="height:100%;border-radius:6px;transition:width 0.5s ease;background:${colors[i%colors.length]};width:${(val/max*100).toFixed(1)}%;"></div></div></div>`).join(''); }
+function renderPie(id, data, colors){ const el=document.getElementById(id); if(!el) return; if(!data.length){el.innerHTML='<div class="ec">لا توجد بيانات</div>';el.className='';return;} const tot=data.reduce((s,d)=>s+d[1],0); const sz=110,cx=55,cy=55,r=42,ir=24; let a=-Math.PI/2, paths=''; data.forEach(([,val],i)=>{ const a2=a+(val/tot)*2*Math.PI,lg=(val/tot)*2*Math.PI>Math.PI?1:0; const p=(ag,rr)=>[cx+rr*Math.cos(ag),cy+rr*Math.sin(ag)]; const[x1,y1]=p(a,r),[x2,y2]=p(a2,r),[ix1,iy1]=p(a2,ir),[ix2,iy2]=p(a,ir); paths+=`<path d="M${x1} ${y1} A${r} ${r} 0 ${lg} 1 ${x2} ${y2} L${ix1} ${iy1} A${ir} ${ir} 0 ${lg} 0 ${ix2} ${iy2}Z" fill="${colors[i%colors.length]}"/>`; a=a2; }); const legend=data.map(([lbl,val],i)=>`<div style="display:flex;align-items:center;gap:8px;"><div style="background:${colors[i%colors.length]};width:10px;height:10px;border-radius:50%;flex-shrink:0;"></div><span style="font-size:13px;font-weight:600;color:var(--t2);flex:1;">${lbl}</span><span style="font-size:13px;font-weight:800;color:var(--text);">${((val/tot)*100).toFixed(0)}%</span></div>`).join(''); el.className=''; el.style.cssText='display:flex;align-items:center;gap:24px;'; el.innerHTML=`<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}">${paths}</svg><div style="flex:1;display:flex;flex-direction:column;gap:8px;">${legend}</div>`; }
+
+// ===== MODAL =====
+const MSECS=[
+  {key:'nat', lbl:'الجنسيات', ph:'أضف جنسية...'},{key:'branches',lbl:'الفروع', ph:'أضف فرعاً...'},{key:'locs', lbl:'مواقع العميل', ph:'أضف موقعاً...'},
+  {key:'ctypes', lbl:'أنواع المكالمة', ph:'أضف نوعاً...'},{key:'emos', lbl:'مشاعر العميل', ph:'أضف مشاعر...'},{key:'srcs', lbl:'مصادر الوصول', ph:'أضف مصدراً...'}
+];
+
+function renderMBody(){
+  let html=MSECS.map(sec=>`
+    <div style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);"><div style="font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:var(--t2);margin-bottom:16px;">${sec.lbl}</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+        ${S[sec.key].map((item,i)=>`<div style="display:flex;align-items:center;gap:12px;">
+            <span style="flex:0 0 100px;font-size:14px;font-weight:700;color:var(--text);">${item}</span>
+            <input type="text" class="min" style="flex:1;" placeholder="تسمية توضيحية..." value="${S.labels[item]||''}" oninput="S.labels['${item}']=this.value; saveS(); renderAllGroups();" />
+            <button onclick="delItem('${sec.key}',${i})" style="background:var(--rl);color:var(--red);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;cursor:pointer;">×</button></div>`).join('')}
+      </div>
+      <div style="display:flex;gap:10px;"><input type="text" class="min" id="madd-${sec.key}" placeholder="${sec.ph}" onkeydown="if(event.key==='Enter')addItem('${sec.key}')"/><button class="btn-p" onclick="addItem('${sec.key}')" style="padding:10px 20px;">إضافة</button></div>
+    </div>`).join('');
+
+  html += `<div style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);"><div style="font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:var(--t2);margin-bottom:16px;">تسميات عدد الأطفال</div><div style="display:flex;flex-direction:column;gap:8px;">
+    ${CHILD_OPTS.map(item=>`<div style="display:flex;align-items:center;gap:12px;"><span style="flex:0 0 100px;font-size:14px;font-weight:700;color:var(--text);">${item}</span>
+        <input type="text" class="min" style="flex:1;" placeholder="تسمية..." value="${S.labels[item]||CHILD_LABELS_DEF[item]||''}" oninput="S.labels['${item}']=this.value; saveS(); renderChildren();" /></div>`).join('')}</div></div>`;
+
+  html += `<div style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);"><div style="font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:var(--t2);margin-bottom:16px;">أرقام واتساب الفروع</div><div style="display:flex;flex-direction:column;gap:8px;">
+    ${S.branches.map(br=>`<div style="display:flex;align-items:center;gap:12px;"><span style="flex:0 0 100px;font-size:14px;font-weight:700;color:var(--text);">${br}</span>
+        <input type="tel" inputmode="numeric" class="min" style="flex:1;direction:ltr;" placeholder="05XXXXXXXX" maxlength="10" value="${S.branchPhones[br]||''}" oninput="S.branchPhones['${br}']=this.value; saveS();" /></div>`).join('')}</div></div>`;
+
+  html += `<div style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);"><div style="font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:var(--t2);margin-bottom:16px;">رقم واتساب الإدارة</div><div style="display:flex;gap:10px;">
+      <input type="tel" inputmode="numeric" class="min" style="direction:ltr;" placeholder="05XXXXXXXX" maxlength="10" value="${S.adminPhone||''}" oninput="S.adminPhone=this.value; saveS();" /></div></div>`;
+
+  html += `<div><div style="font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:var(--t2);margin-bottom:16px;">مواضيع المكالمة (حسب النوع)</div>`;
+  S.ctypes.forEach(ct=>{
+    if(!S.topicMap[ct]) S.topicMap[ct]=[];
+    html+=`<div style="margin-bottom:20px;"><div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px;">${ct}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">${S.topicMap[ct].map((item,i)=>`<div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;">${item}<button onclick="delTopicItem('${ct}',${i})" style="background:none;border:none;cursor:pointer;color:var(--tl2);font-size:16px;">×</button></div>`).join('')}</div>
+      <div style="display:flex;gap:10px;"><input type="text" class="min" id="madd-topic-${ct}" placeholder="أضف موضوعاً..." onkeydown="if(event.key==='Enter')addTopicItem('${ct}')"/><button class="btn-s" onclick="addTopicItem('${ct}')" style="padding:10px 20px;">إضافة</button></div></div>`;
+  });
+  html+=`</div>`;
+  document.getElementById('mBody').innerHTML=html;
+}
+
+function addTopicItem(ct){ const inp=document.getElementById('madd-topic-'+ct); const v=inp.value.trim(); if(!v) return; if(!S.topicMap[ct]) S.topicMap[ct]=[]; if(S.topicMap[ct].includes(v)){toast('الموضوع موجود بالفعل','err');return;} S.topicMap[ct].push(v); saveS(); inp.value=''; renderMBody(); renderTopicGroup(); }
+function delTopicItem(ct,i){ const removed=S.topicMap[ct][i]; S.topicMap[ct].splice(i,1); saveS(); if(sel.topic===removed) sel.topic=''; renderMBody(); renderTopicGroup(); }
+function addItem(k){ const inp=document.getElementById('madd-'+k); const v=inp.value.trim(); if(!v) return; if(S[k].includes(v)){toast('العنصر موجود بالفعل','err');return;} S[k].push(v); saveS(); inp.value=''; renderMBody(); renderAllGroups(); }
+function delItem(k,i){ const removed=S[k][i]; S[k].splice(i,1); saveS(); const gmap={nat:'nat',branches:'branch',locs:'loc',ctypes:'ctype',emos:'emo',srcs:'src'}; const gk=gmap[k]; if(gk && sel[gk]===removed) sel[gk]=''; renderMBody(); renderAllGroups(); }
+
+// ===== TAGS PANEL TOGGLE =====
+let tagsPanelOpen = false;
+function toggleTagsPanel(){ tagsPanelOpen = !tagsPanelOpen; const panel = document.getElementById('tagsPanel'); const btn = document.getElementById('tagsToggleBtn'); panel.style.display = tagsPanelOpen ? 'block' : 'none'; btn.style.borderColor = tagsPanelOpen ? 'var(--accent)' : 'var(--border)'; btn.style.color = tagsPanelOpen ? 'var(--accent)' : 'var(--t2)'; btn.style.background  = tagsPanelOpen ? 'var(--al)' : 'var(--white)'; updateTagsBtnIndicator(); }
+function updateTagsBtnIndicator(){ const btn=document.getElementById('tagsToggleBtn'); if(!btn) return; const hasAny=Object.values(sel).some(v=>Array.isArray(v)?v.length>0:v!==''); btn.style.borderColor = tagsPanelOpen ? 'var(--accent)' : (hasAny ? 'var(--green)' : 'var(--border)'); btn.style.color = tagsPanelOpen ? 'var(--accent)' : (hasAny ? 'var(--green)' : 'var(--t2)'); }
+
+// ===== TOAST & EXPORT =====
+function toast(msg, type='ok'){ const t=document.getElementById('toast'); t.textContent=msg; t.className=`toast ${type} show`; setTimeout(()=>t.classList.remove('show'),3000); }
+let groupMode=false;
+function toggleGroupMode(){ 
+  groupMode=!groupMode; 
+  const icon = document.getElementById('groupModeIcon');
+  if(icon) {
+      icon.textContent = groupMode ? '✓' : '';
+  }
+  renderFilteredLog(); 
+}
+
+
+function exportCSV(){ if(!calls.length) return toast('لا توجد بيانات للتصدير','err'); const h=['تسلسل','التاريخ','الوقت','جوال العميل','الجنس','لكنة العميل','الفرع','الموقع','المصدر','الموضوع','نوع المكالمة','رقم الشكوى','رقم الطلب','الأطفال','نبرة العميل','التفاصيل']; const rows=calls.map(c=>[c.seq,fmtDate(c.dt),fmtTime(c.dt),c.phone,c.gender||'',c.nat||'',c.branch||'',c.loc||'',c.src||'',c.topic||'',c.ctype||'',c.compNo||'',c.reqNo||'',c.child||'',c.emo||'',`"${c.notes||''}"`]); const csv=[h,...rows].map(r=>r.join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})); a.download=`calls_${new Date().toLocaleDateString('en-CA')}.csv`; a.click(); toast('تم تصدير الجدول بنجاح'); }
+function exportTXT(){ if(!calls.length) return toast('لا توجد بيانات للتصدير','err'); const dayMap={}, dayOrder=[]; [...calls].sort((a,b)=>a.dt-b.dt).forEach(c=>{ const k=dayKey(c.dt); if(!dayMap[k]){dayMap[k]={lbl:fmtDate(c.dt),cs:[]};dayOrder.push(k);} dayMap[k].cs.push(c); }); let txt=''; dayOrder.forEach(dk=>{ const{lbl,cs}=dayMap[dk]; txt+=`════════════════════════\n${lbl}\n════════════════════════\n\n`; cs.forEach(c=>{ txt+=`[${fmtTime(c.dt)}] — ${genSummary(c)}\n\n`; }); }); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\uFEFF'+txt],{type:'text/plain;charset=utf-8;'})); a.download=`call_summaries_${new Date().toLocaleDateString('en-CA')}.txt`; a.click(); toast('تم تصدير الملخصات بنجاح'); }
+
+// ===== EXCEL IMPORT =====
+async function handleImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, {type: 'array'});
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      const json = XLSX.utils.sheet_to_json(worksheet);
+
+      if(json.length === 0) {
+        toast('الملف المرفق فارغ', 'err');
+        return;
+      }
+
+      let importedCount = 0;
+      
+      const parseArabicDateTime = (dateStr, timeStr) => {
+        let d = new Date();
+        try {
+          if (typeof dateStr === 'number') {
+              d = new Date(Math.round((dateStr - 25569) * 86400 * 1000));
+          } else if (dateStr) {
+            if(dateStr.toString().includes('/')) {
+                 const parsed = new Date(dateStr);
+                 if(!isNaN(parsed)) d = parsed;
+            } else if (dateStr.toString().includes('-')) {
+                 const parsed = new Date(dateStr);
+                 if(!isNaN(parsed)) d = parsed;
+            } else {
+                 const parts = dateStr.toString().split(' ');
+                 if(parts.length >= 2) {
+                   const day = parseInt(parts[0]);
+                   const monthIdx = MONTHS.indexOf(parts[1]);
+                   if(!isNaN(day) && monthIdx !== -1) { 
+                       d.setMonth(monthIdx); 
+                       d.setDate(day); 
+                       if (parts[2]) d.setFullYear(parseInt(parts[2]));
+                   }
+                 }
+            }
+          }
+          if(timeStr) {
+            if (typeof timeStr === 'number') {
+                let totalSeconds = Math.floor(timeStr * 86400);
+                let h = Math.floor(totalSeconds / 3600);
+                let m = Math.floor((totalSeconds % 3600) / 60);
+                d.setHours(h, m, 0, 0);
+            } else {
+                const tParts = timeStr.toString().split(' ');
+                let timeNumStr = tParts[0];
+                let modifier = tParts[1] || '';
+                if(timeNumStr.includes(':')) {
+                    let timeNum = timeNumStr.split(':');
+                    let h = parseInt(timeNum[0]), m = parseInt(timeNum[1]);
+                    if((modifier === 'م' || modifier.toLowerCase() === 'pm') && h < 12) h += 12;
+                    if((modifier === 'ص' || modifier.toLowerCase() === 'am') && h === 12) h = 0;
+                    d.setHours(h, m, 0, 0);
+                }
+            }
+          }
+        } catch(err) { console.error('Date parse err:', err); }
+        return d;
+      };
+
+      for(const row of json) {
+        const seq = row['تسلسل'];
+        if(!seq) continue; 
+
+        const rec = {
+          seq: seq.toString(),
+          dt: parseArabicDateTime(row['التاريخ'], row['الوقت']),
+          phone: (row['جوال العميل'] || '').toString(),
+          gender: row['الجنس'] || '',
+          nat: row['لكنة العميل'] || '',
+          branch: row['الفرع'] || '',
+          loc: row['الموقع'] || '',
+          src: row['المصدر'] || '',
+          topic: row['الموضوع'] || '',
+          ctype: row['نوع المكالمة'] || '',
+          compNo: (row['رقم الشكوى'] || '').toString(),
+          reqNo: (row['رقم الطلب'] || '').toString(),
+          child: row['الأطفال'] || '',
+          emo: row['نبرة العميل'] || '',
+          notes: row['التفاصيل'] || ''
+        };
+
+        const existingIdx = calls.findIndex(c => c.seq === rec.seq);
+        if(existingIdx >= 0) {
+          calls[existingIdx] = {...calls[existingIdx], ...rec, dt: calls[existingIdx].dt}; 
+        } else {
+          calls.push(rec); 
+        }
+        
+        await saveCallDB(rec); 
+        importedCount++;
+      }
+
+      calls.sort((a,b) => b.dt - a.dt);
+      
+      toast(`تم استيراد ${importedCount} مكالمة بنجاح`, 'ok');
+      renderFilteredLog();
+      updateBadge();
+      
+      if(document.getElementById('tab-analytics').classList.contains('active')) {
+          updateAnalytics();
+      }
+
+    } catch (err) {
+      console.error("Import Error: ", err);
+      toast('حدث خطأ أثناء قراءة الملف، تأكد من صيغة الأعمدة', 'err');
+    }
+    event.target.value = '';
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ===== TEXT VIEW =====
+let textViewActive=false;
+function toggleTextView(){ 
+  textViewActive=!textViewActive; 
+  const panel=document.getElementById('textViewPanel'); 
+  const icon = document.getElementById('textViewIcon');
+  panel.style.display=textViewActive?'block':'none'; 
+  if(icon) {
+      icon.textContent = textViewActive ? '✓' : '';
+  }
+  if(textViewActive) buildTextView(); 
+}
+
+function briefLine(c){ 
+  const f=c.gender==='أنثى'; 
+  const g=(m,fm)=>f?fm:m; 
+  
+  // تحديد لون واسم نوع المكالمة بخط عريض متزن
+  const ctypeColor = c.ctype === 'شكوى' ? 'var(--red)' : c.ctype === 'طلب' ? 'var(--green)' : 'var(--accent)';
+  const typeBadge = `<strong style="color:${ctypeColor}; font-size:14px;">${c.ctype}</strong>`;
+
+  const verb={'شكوى':g('يشتكي','تشتكي'),'استفسار':g('يستفسر عن','تستفسر عن'),'طلب':g('يطلب','تطلب')}[c.ctype]||c.ctype; 
+  const parts=[]; 
+  
+  // إضافة النوع متبوعاً برقم العميل (بدون طابع الوقت)
+  parts.push(`${typeBadge} ${g('اتصل','اتصلت')} <span dir="ltr">${c.phone}</span>`); 
+  if(c.loc) parts.push(`من ${c.loc}`); 
+  
+  let topicPart = '';
+  if(c.topic) {
+      const topics = c.topic.split('، ').filter(Boolean);
+      topicPart = topics.join(' و ');
+  }
+  
+  const vPart=[verb, topicPart].filter(Boolean).join(' '); 
+  parts.push(vPart); 
+  if(c.branch) parts.push(`في ${c.branch}`); 
+  return parts.join(' '); 
+}
+function buildTextView(){ 
+  const body=document.getElementById('textViewBody'); 
+  const sortVal = document.getElementById('logSort') ? document.getElementById('logSort').value : 'newest';
+  
+  // نستخدم filteredLogCalls للحصول على النتائج المُفلترة فقط
+  let _calls = filteredLogCalls();
+
+  if(!_calls.length){body.innerHTML='لا توجد مكالمات متطابقة مع البحث.';return;} 
+
+  const sorted = [..._calls].sort((a,b) => {
+    if(sortVal === 'oldest') return a.dt - b.dt;
+    if(sortVal === 'branch') return (a.branch||'').localeCompare(b.branch||'') || b.dt - a.dt;
+    if(sortVal === 'ctype')  return (a.ctype||'').localeCompare(b.ctype||'') || b.dt - a.dt;
+    if(sortVal === 'gender') return (a.gender||'').localeCompare(b.gender||'') || b.dt - a.dt;
+    if(sortVal === 'nat')    return (a.nat||'').localeCompare(b.nat||'') || b.dt - a.dt;
+    if(sortVal === 'loc')    return (a.loc||'').localeCompare(b.loc||'') || b.dt - a.dt;
+    if(sortVal === 'emo')    return (a.emo||'').localeCompare(b.emo||'') || b.dt - a.dt;
+    if(sortVal === 'src')    return (a.src||'').localeCompare(b.src||'') || b.dt - a.dt;
+    return b.dt - a.dt; 
+  });
+
+  let html=''; 
+  let currentDay = '';
+
+  sorted.forEach(c=>{ 
+    // نظام التجميع حسب اليوم (إذا كان الترتيب "الأحدث")
+    if (sortVal === 'newest') {
+        let dayStr = fmtDate(c.dt);
+        if (currentDay !== dayStr) {
+            currentDay = dayStr;
+            // إضافة مسافة بصرية وعنوان اليوم بخط عريض
+            html += `<div style="font-size:16px; font-weight:800; color:var(--text); margin-top:24px; margin-bottom:12px; border-bottom:2px solid var(--border); padding-bottom:6px;">(${dayStr})</div>`;
+        }
+    }
+
+    let notesSnippet = '';
+    if(c.notes && c.notes.trim() !== '') {
+        notesSnippet = c.notes.trim().substring(0, 150);
+        if(c.notes.trim().length > 150) notesSnippet += '...';
+        // إضافة التفاصيل في سطر جديد بلون أخف قليلاً لتمييزها
+        notesSnippet = `<br><span style="color:var(--t2); font-size:13px;">↳ التفاصيل: ${notesSnippet}</span>`;
+    }
+
+    // إدراج المكالمة مع مسافة بصرية (margin-bottom: 20px) بين كل مكالمة والأخرى
+    html += `<div style="margin-bottom:20px; line-height:1.8;">${briefLine(c)}${notesSnippet}</div>`;
+  }); 
+  
+  body.innerHTML = html; 
+}
+function copyAllText(){ 
+  const body=document.getElementById('textViewBody'); 
+  // استخدام innerText لضمان نسخ المسافات البصرية والأسطر الجديدة
+  const textToCopy = body.innerText || body.textContent;
+  
+  if(!textToCopy.trim()) return toast('لا يوجد نص للنسخ','err'); 
+  
+  navigator.clipboard.writeText(textToCopy).then(()=>toast('تم نسخ النص كاملاً','ok')).catch(()=>{ 
+    const ta=document.createElement('textarea'); 
+    ta.value=textToCopy; 
+    document.body.appendChild(ta); 
+    ta.select(); 
+    document.execCommand('copy'); 
+    document.body.removeChild(ta); 
+    toast('تم نسخ النص كاملاً','ok'); 
+  }); 
+}
+// ===== APP INITIALIZATION =====
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await initDB();
+    calls = await getAllCallsDB();
+    calls.sort((a,b) => b.dt - a.dt);
+    
+    updateSeqLabel();
+    renderAllGroups();
+    renderFilteredLog();
+    updateBadge();
+
+  } catch (error) {
+    console.error("خطأ أثناء تهيئة قاعدة البيانات:", error);
+    toast("حدث خطأ في تحميل البيانات المحفوظة", "err");
+  }
+});
+
+// --- دالة عرض تفاصيل الشكاوى والطلبات من النظام المتقدم ---
+
+// 1. حقن نافذة منبثقة (Modal) في واجهة خدمة العملاء
+document.body.insertAdjacentHTML('beforeend', `
+<div id="cs-modal" style="display:none; position:fixed; inset:0; background:rgba(15, 23, 42, 0.6); backdrop-filter:blur(4px); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:var(--white); border-radius:24px; padding:24px 32px; width:100%; max-width:500px; box-shadow:0 10px 40px rgba(0,0,0,0.15); animation: fadeIn 0.3s ease;">
+        <h3 id="cs-modal-title" style="font-family:'Tajawal', sans-serif; font-size:18px; font-weight:800; margin-bottom:16px; color:var(--text); border-bottom: 2px solid var(--al); padding-bottom: 8px;"></h3>
+        <div id="cs-modal-body" style="margin-bottom:24px; font-size:14px; color:var(--t2); line-height:1.8;"></div>
+        <button class="btn-s" style="width:100%; padding:10px; border-radius:12px; font-weight:800;" onclick="document.getElementById('cs-modal').style.display='none'">إغلاق النافذة</button>
+    </div>
+</div>
+`);
+
+// 2. دالة جلب البيانات وعرضها
+function showIMSDetails(phone, type, refNo) {
+    let records = [];
+    let title = '';
+    
+    if(type === 'شكوى') {
+        records = JSON.parse(localStorage.getItem('ims_c') || '[]');
+        title = 'تفاصيل الشكوى  ';
+    } else {
+        records = JSON.parse(localStorage.getItem('ims_r') || '[]');
+        title = 'تفاصيل الطلب  ';
+    }
+
+    let cleanPhone = phone.replace(/\D/g, '');
+    let match = null;
+    
+    if(refNo) match = records.find(r => r.ref === refNo);
+    
+    if(!match) {
+        let userRecords = records.filter(r => r.mobile && r.mobile.replace(/\D/g, '') === cleanPhone);
+        if(userRecords.length > 0) match = userRecords[0]; 
+    }
+
+    if(!match) {
+        toast('لم يتم العثور على تفاصيل مسجلة لهذا العميل في نظام الشكاوى ', 'err');
+        return;
+    }
+
+    let summaryHTML = '';
+    if(type === 'شكوى') {
+        summaryHTML = `
+            <div style="background:#f8fafc; padding:16px; border-radius:12px; border:1px solid #e2e8f0;">
+                <p style="margin-bottom:8px;"><strong>رقم الشكوى:</strong> <span style="color:var(--accent); font-weight:800; font-family:monospace; font-size:15px;">${match.ref}</span></p>
+                <p style="margin-bottom:8px;"><strong>العميل:</strong> ${match.client} <span style="color:var(--tl2)">(الطفل: ${match.child})</span></p>
+                <p style="margin-bottom:8px;"><strong>الفرع:</strong> ${match.branch}</p>
+                <p style="margin-bottom:8px;"><strong>حالة الشكوى:</strong> <span style="background:var(--al); color:var(--accent); padding:4px 10px; border-radius:12px; font-weight:bold; font-size:12px;">${match.status}</span></p>
+                <hr style="border:none; border-top:1px dashed #cbd5e1; margin:16px 0;">
+                <p style="margin-bottom:8px;"><strong>الوصف:</strong> <br><span style="color:var(--text); font-weight:600;">${match.desc}</span></p>
+                <p style="margin-bottom:8px;"><strong>المطلب:</strong> <br><span style="color:var(--text); font-weight:600;">${match.demand}</span></p>
+                ${match.branchComment ? `<hr style="border:none; border-top:1px dashed #cbd5e1; margin:16px 0;"><p style="color:#b45309; margin-bottom:8px;"><strong>إفادة مديرة الفرع:</strong> <br>${match.branchComment}</p>` : ''}
+                ${match.adminComment ? `<p style="color:#047857; margin-bottom:8px;"><strong>توضيح الإدارة:</strong> <br>${match.adminComment}</p>` : ''}
+            </div>
+        `;
+    } else {
+         summaryHTML = `
+            <div style="background:#f8fafc; padding:16px; border-radius:12px; border:1px solid #e2e8f0;">
+                <p style="margin-bottom:8px;"><strong>رقم الطلب:</strong> <span style="color:#0ea5e9; font-weight:800; font-family:monospace; font-size:15px;">${match.ref}</span></p>
+                <p style="margin-bottom:8px;"><strong>العميل:</strong> ${match.client}</p>
+                <p style="margin-bottom:8px;"><strong>الفرع:</strong> ${match.branch}</p>
+                <p style="margin-bottom:8px;"><strong>حالة الطلب:</strong> <span style="background:#e0f2fe; color:#0ea5e9; padding:4px 10px; border-radius:12px; font-weight:bold; font-size:12px;">${match.status}</span></p>
+                <hr style="border:none; border-top:1px dashed #cbd5e1; margin:16px 0;">
+                <p style="margin-bottom:8px;"><strong>وصف الطلب:</strong> <br><span style="color:var(--text); font-weight:600;">${match.desc}</span></p>
+            </div>
+        `;
+    }
+
+    document.getElementById('cs-modal-title').textContent = title;
+    document.getElementById('cs-modal-body').innerHTML = summaryHTML;
+    document.getElementById('cs-modal').style.display = 'flex';
+}
+</script>
+</body>
+</html>
