@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>I am Special — التقييمات</title>
+  
+  <title>اي ام سبيشل - الضيافة الترفيهية للأطفال</title>
+  <meta name="description" content="ساهمي في صنعة بيئة افضل لطفلك ، شاركي رأيك الآن" />
+  <meta property="og:title" content="اي ام سبيشل - الضيافة الترفيهية للأطفال" />
+  <meta property="og:description" content="ساهمي في صنعة بيئة افضل لطفلك ، شاركي رأيك الآن" />
+  <meta property="og:image" content="special.png" />
+  <meta property="og:type" content="website" />
+
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,6 +23,7 @@
       animation: bgShift 18s ease infinite;
       overflow-x: hidden;
       color: #1a252f;
+      will-change: background-position;
     }
 
     @keyframes bgShift {
@@ -38,6 +46,8 @@
       filter: blur(70px);
       opacity: 0.35;
       animation: blobMove 22s ease-in-out infinite alternate;
+      will-change: transform;
+      transform: translateZ(0);
     }
     .aurora-blob:nth-child(1) { width: 500px; height: 500px; background: radial-gradient(circle, #a8edea, transparent); top: -10%; left: -10%; animation-duration: 20s; }
     .aurora-blob:nth-child(2) { width: 400px; height: 400px; background: radial-gradient(circle, #fed6e3, transparent); top: 30%; right: -10%; animation-duration: 25s; animation-delay: -5s; }
@@ -45,9 +55,9 @@
     .aurora-blob:nth-child(4) { width: 300px; height: 300px; background: radial-gradient(circle, #fccb90, transparent); top: 60%; left: -5%; animation-duration: 30s; animation-delay: -3s; }
 
     @keyframes blobMove {
-      0%   { transform: translate(0, 0) scale(1); }
-      50%  { transform: translate(40px, 30px) scale(1.1); }
-      100% { transform: translate(-20px, 50px) scale(0.95); }
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(40px, 30px, 0) scale(1.1); }
+      100% { transform: translate3d(-20px, 50px, 0) scale(0.95); }
     }
 
     /* ── Floating Emojis (Limited to 3 with calm irregular movement) ── */
@@ -63,6 +73,8 @@
       font-size: 70px;
       opacity: 0.6;
       user-select: none;
+      will-change: transform;
+      transform: translateZ(0);
     }
     
     .floater:nth-child(1) { left: 15%; top: 100vh; animation: calmDrift1 45s ease-in-out infinite alternate; }
@@ -70,33 +82,34 @@
     .floater:nth-child(3) { left: 85%; top: 100vh; animation: calmDrift3 65s ease-in-out infinite alternate; animation-delay: -30s; }
 
     @keyframes calmDrift1 {
-      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-      33% { transform: translate(20vw, -35vh) scale(1.15) rotate(45deg); }
-      66% { transform: translate(-10vw, -70vh) scale(0.9) rotate(-20deg); }
-      100% { transform: translate(15vw, -110vh) scale(1.1) rotate(60deg); }
+      0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+      33% { transform: translate3d(20vw, -35vh, 0) scale(1.15) rotate(45deg); }
+      66% { transform: translate3d(-10vw, -70vh, 0) scale(0.9) rotate(-20deg); }
+      100% { transform: translate3d(15vw, -110vh, 0) scale(1.1) rotate(60deg); }
     }
     @keyframes calmDrift2 {
-      0% { transform: translate(0, 0) scale(0.9) rotate(0deg); }
-      33% { transform: translate(-20vw, -25vh) scale(1.1) rotate(-45deg); }
-      66% { transform: translate(10vw, -75vh) scale(1) rotate(30deg); }
-      100% { transform: translate(-15vw, -110vh) scale(1.2) rotate(-60deg); }
+      0% { transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); }
+      33% { transform: translate3d(-20vw, -25vh, 0) scale(1.1) rotate(-45deg); }
+      66% { transform: translate3d(10vw, -75vh, 0) scale(1) rotate(30deg); }
+      100% { transform: translate3d(-15vw, -110vh, 0) scale(1.2) rotate(-60deg); }
     }
     @keyframes calmDrift3 {
-      0% { transform: translate(0, 0) scale(1.1) rotate(0deg); }
-      33% { transform: translate(15vw, -45vh) scale(0.9) rotate(30deg); }
-      66% { transform: translate(-15vw, -65vh) scale(1.15) rotate(-10deg); }
-      100% { transform: translate(5vw, -110vh) scale(1) rotate(90deg); }
+      0% { transform: translate3d(0, 0, 0) scale(1.1) rotate(0deg); }
+      33% { transform: translate3d(15vw, -45vh, 0) scale(0.9) rotate(30deg); }
+      66% { transform: translate3d(-15vw, -65vh, 0) scale(1.15) rotate(-10deg); }
+      100% { transform: translate3d(5vw, -110vh, 0) scale(1) rotate(90deg); }
     }
 
-    /* ── Frosted Glass Overlay ── */
+    /* ── Frosted Glass Overlay (تم تخفيف البلورية 20%) ── */
     .glass-overlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      backdrop-filter: blur(45px);
-      -webkit-backdrop-filter: blur(45px);
+      backdrop-filter: blur(36px);
+      -webkit-backdrop-filter: blur(36px);
       background: rgba(255, 255, 255, 0.15);
+      transform: translateZ(0); /* لمنع استهلاك المعالج بالرسم المستمر */
     }
 
     /* ── Layout ── */
@@ -174,7 +187,7 @@
       to   { opacity: 1; transform: translateY(0)    scale(1);    }
     }
 
-    /* ── Brand Icon (Updated to Image with Dynamic Glow) ── */
+    /* ── Brand Icon ── */
     .brand-icon {
       position: relative;
       width: 160px;
@@ -195,6 +208,7 @@
       filter: blur(25px);
       z-index: 0;
       border-radius: inherit;
+      will-change: transform, opacity;
     }
     .brand-icon img {
       width: 100%;
@@ -204,6 +218,7 @@
       z-index: 1;
       filter: drop-shadow(0 6px 15px rgba(0,0,0,0.15));
       animation: roseFloat 5s ease-in-out infinite;
+      will-change: transform;
     }
     @keyframes pulseGlow {
       0% { opacity: 0.5; transform: scale(0.95); }
@@ -228,7 +243,7 @@
 
     .tagline { font-size: 16px; font-weight: 500; color: #5d6d7e; line-height: 1.6; margin-bottom: 26px; position: relative; z-index: 1; }
 
-    /* ── Review Button ── */
+    /* ── Review Button (تم تحسين الأداء عبر فصل الأنيميشن عن العنصر الرئيسي) ── */
     .review-btn {
       position: relative; z-index: 1;
       display: inline-flex;
@@ -246,11 +261,22 @@
       cursor: pointer;
       box-shadow: 0 6px 22px rgba(17,153,142,0.35);
       transition: all 0.3s;
+    }
+    .review-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50px;
+      box-shadow: 0 6px 34px rgba(56,239,125,0.55), 0 0 0 5px rgba(56,239,125,0.1);
+      opacity: 0;
       animation: btnGlowPulse 2.8s ease-in-out infinite;
+      z-index: -1;
+      pointer-events: none;
+      will-change: opacity;
     }
     @keyframes btnGlowPulse {
-      0%, 100% { box-shadow: 0 6px 22px rgba(56,239,125,0.25); }
-      50%       { box-shadow: 0 6px 34px rgba(56,239,125,0.55), 0 0 0 5px rgba(56,239,125,0.1); }
+      0%, 100% { opacity: 0; }
+      50%       { opacity: 1; }
     }
     .review-btn:hover { transform: translateY(-3px) scale(1.03); }
 
@@ -272,7 +298,7 @@
       gap: 14px;
     }
 
-    /* ── Review Card (Google Maps style - Modified for gradual loading) ── */
+    /* ── Review Card ── */
     .gm-card {
       background: rgba(255, 255, 255, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.88);
@@ -284,7 +310,6 @@
         0 3px 14px rgba(0,0,0,0.07),
         inset 0 1px 0 rgba(255,255,255,0.85);
       text-align: start;
-      /* Default hidden state for gradual appearance */
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s;
