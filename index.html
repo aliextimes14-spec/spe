@@ -43,21 +43,22 @@
     .aurora-blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(70px);
-      opacity: 0.35;
-      animation: blobMove 22s ease-in-out infinite alternate;
+      filter: blur(80px); /* زيادة البلورة لعدم تمييز الشكل */
+      opacity: 0.65; /* زيادة الوضوح */
+      animation: blobMove 8s ease-in-out infinite alternate; /* تسريع الحركة الأساسية */
       will-change: transform;
       transform: translateZ(0);
     }
-    .aurora-blob:nth-child(1) { width: 500px; height: 500px; background: radial-gradient(circle, #a8edea, transparent); top: -10%; left: -10%; animation-duration: 20s; }
-    .aurora-blob:nth-child(2) { width: 400px; height: 400px; background: radial-gradient(circle, #fed6e3, transparent); top: 30%; right: -10%; animation-duration: 25s; animation-delay: -5s; }
-    .aurora-blob:nth-child(3) { width: 350px; height: 350px; background: radial-gradient(circle, #d4fc79, transparent); bottom: -10%; left: 20%; animation-duration: 18s; animation-delay: -8s; }
-    .aurora-blob:nth-child(4) { width: 300px; height: 300px; background: radial-gradient(circle, #fccb90, transparent); top: 60%; left: -5%; animation-duration: 30s; animation-delay: -3s; }
+    .aurora-blob:nth-child(1) { width: 500px; height: 500px; background: radial-gradient(circle, #a8edea, transparent); top: -10%; left: -10%; animation-duration: 6s; }
+    .aurora-blob:nth-child(2) { width: 400px; height: 400px; background: radial-gradient(circle, #fed6e3, transparent); top: 30%; right: -10%; animation-duration: 7s; animation-delay: -1s; }
+    .aurora-blob:nth-child(3) { width: 350px; height: 350px; background: radial-gradient(circle, #d4fc79, transparent); bottom: -10%; left: 20%; animation-duration: 5s; animation-delay: -2s; }
+    .aurora-blob:nth-child(4) { width: 300px; height: 300px; background: radial-gradient(circle, #fccb90, transparent); top: 60%; left: -5%; animation-duration: 9s; animation-delay: -3s; }
 
     @keyframes blobMove {
+      /* زيادة مسافة التحرك لتكون ظاهرة جدا */
       0%   { transform: translate3d(0, 0, 0) scale(1); }
-      50%  { transform: translate3d(40px, 30px, 0) scale(1.1); }
-      100% { transform: translate3d(-20px, 50px, 0) scale(0.95); }
+      50%  { transform: translate3d(80px, 60px, 0) scale(1.2); }
+      100% { transform: translate3d(-60px, 100px, 0) scale(0.85); }
     }
 
     /* ── Floating Emojis (Limited to 3 with calm irregular movement) ── */
@@ -100,14 +101,14 @@
       100% { transform: translate3d(5vw, -110vh, 0) scale(1) rotate(90deg); }
     }
 
-    /* ── Frosted Glass Overlay (تم تخفيف البلورية 20%) ── */
+    /* ── Frosted Glass Overlay ── */
     .glass-overlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      backdrop-filter: blur(36px);
-      -webkit-backdrop-filter: blur(36px);
+      backdrop-filter: blur(28px); /* تم التعديل إلى 28 بدلا من 36 */
+      -webkit-backdrop-filter: blur(28px);
       background: rgba(255, 255, 255, 0.15);
       transform: translateZ(0); /* لمنع استهلاك المعالج بالرسم المستمر */
     }
@@ -184,7 +185,7 @@
     }
     @keyframes floatIn {
       from { opacity: 0; transform: translateY(36px) scale(0.96); }
-      to   { opacity: 1; transform: translateY(0)    scale(1);    }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
     }
 
     /* ── Brand Icon ── */
@@ -202,13 +203,15 @@
       content: '';
       position: absolute;
       inset: -15px;
-      background: linear-gradient(-45deg, #a8edea, #fed6e3, #d4fc79, #fccb90);
+      /* تم التعديل: تدرج لوني بين الأزرق والأحمر والأخضر والأصفر */
+      background: linear-gradient(-45deg, #2196F3, #F44336, #4CAF50, #FFEB3B);
       background-size: 400% 400%;
-      animation: bgShift 18s ease infinite, pulseGlow 4s ease-in-out infinite alternate;
+      /* تسريع حركة الألوان */
+      animation: bgShift 4s ease infinite, pulseGlow 2s ease-in-out infinite alternate;
       filter: blur(25px);
       z-index: 0;
       border-radius: inherit;
-      will-change: transform, opacity;
+      will-change: transform, opacity, background-position;
     }
     .brand-icon img {
       width: 100%;
@@ -217,16 +220,21 @@
       position: relative;
       z-index: 1;
       filter: drop-shadow(0 6px 15px rgba(0,0,0,0.15));
-      animation: roseFloat 5s ease-in-out infinite;
+      /* تم التعديل: رقص الصورة باستخدام transform فقط لتوفير الموارد */
+      animation: danceFloat 3s ease-in-out infinite;
       will-change: transform;
     }
     @keyframes pulseGlow {
       0% { opacity: 0.5; transform: scale(0.95); }
       100% { opacity: 1; transform: scale(1.08); }
     }
-    @keyframes roseFloat {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50%       { transform: translateY(-6px) scale(1.02); }
+    /* تأثير الرقص الخفيف لتقليل الاستهلاك */
+    @keyframes danceFloat {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      25% { transform: translateY(-6px) rotate(-4deg) scale(1.02); }
+      50% { transform: translateY(0) rotate(0deg) scale(1); }
+      75% { transform: translateY(-6px) rotate(4deg) scale(1.02); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
     }
 
     .brand-name { font-size: 25px; font-weight: 800; color: #1a252f; margin-bottom: 4px; position: relative; z-index: 1; }
@@ -234,7 +242,8 @@
     .brand-sub { font-size: 13px; color: #5d6d7e; margin-bottom: 6px; position: relative; z-index: 1; }
 
     .divider {
-      width: 64px; height: 2px;
+      width: 64px;
+      height: 2px;
       background: linear-gradient(90deg, transparent, #a8edea, #fed6e3, transparent);
       margin: 10px auto 14px;
       border-radius: 2px;
@@ -243,9 +252,10 @@
 
     .tagline { font-size: 16px; font-weight: 500; color: #5d6d7e; line-height: 1.6; margin-bottom: 26px; position: relative; z-index: 1; }
 
-    /* ── Review Button (تم تحسين الأداء عبر فصل الأنيميشن عن العنصر الرئيسي) ── */
+    /* ── Review Button ── */
     .review-btn {
-      position: relative; z-index: 1;
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -323,7 +333,8 @@
     .gm-header { display: flex; align-items: center; margin-bottom: 10px; gap: 12px; }
     .gm-avatar {
       width: 42px; height: 42px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center; justify-content: center;
       font-size: 17px; font-weight: 700; color: #fff;
       flex-shrink: 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -339,13 +350,15 @@
 
     /* ── Modal ── */
     .modal-overlay {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: rgba(0,0,0,0.35);
       backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       z-index: 100;
       display: flex; align-items: center; justify-content: center;
       padding: 20px;
-      opacity: 0; pointer-events: none;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity 0.3s;
     }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
@@ -413,6 +426,26 @@
 
     /* ── Footer ── */
     .footer { margin-top: 44px; text-align: center; color: #95a5a6; font-size: 13px; }
+
+    /* ── Touch Effect (الإضافة الجديدة) ── */
+    .touch-emoji {
+      position: fixed;
+      font-size: 30px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: touchFade 0.6s ease-out forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes touchFade {
+      0% {
+        transform: translate(-50%, -50%) scale(0.5) translateY(0px);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.5) translateY(-30px);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -449,6 +482,7 @@
     <div class="brand-icon">
       <img src="special.png" alt="I am Special Logo">
     </div>
+    
     <div class="brand-name" id="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية للأطفال</div>
     <div class="divider"></div>
     <div class="brand-sub" id="brandSub">الرياض جاليري</div>
@@ -468,6 +502,7 @@
   <div class="modal">
     <div class="form-content" id="formContent">
       <div class="modal-icon">📞</div>
+  
       <div class="modal-title" id="modalTitle">طلب اتصال</div>
       <div class="modal-sub" id="modalSub">يرجى تزويدنا بمعلوماتك للتواصل معك</div>
 
@@ -480,6 +515,7 @@
         <input class="field-input" id="childInput" type="text" placeholder="..." />
       </div>
 
+    
       <div class="modal-note" id="modalNote">☏ سيتم الاتصال بك خلال دقائق</div>
 
       <div class="modal-actions">
@@ -659,7 +695,7 @@
   const avatarColors = ['#e53935','#d81b60','#8e24aa','#5e35b1','#3949ab','#1e88e5','#039be5','#00acc1','#00897b','#43a047','#7cb342','#f4511e','#f6bf26','#0b8043','#3f51b5'];
   const timeOptionsAr = ['منذ أسبوع','منذ أسبوعين','منذ شهر','منذ شهرين','منذ ٣ أشهر','منذ ٤ أشهر','منذ ٥ أشهر'];
   const timeOptionsEn = ['A week ago','Two weeks ago','A month ago','2 months ago','3 months ago','4 months ago','5 months ago'];
-
+  
   // Language management
   let lang = localStorage.getItem('lang') || 'ar';
 
@@ -667,7 +703,7 @@
     document.documentElement.lang = lang;
     document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
     document.getElementById('langBtn').textContent = lang === 'ar' ? 'E' : 'ع';
-
+    
     if (lang === 'en') {
       document.getElementById('brandName').innerHTML   = '<span>I am Special</span> Entertainment Care';
       document.getElementById('brandSub').textContent  = 'Riyadh Gallery';
@@ -695,7 +731,7 @@
       document.getElementById('reviewBtn').innerHTML   = '★ تقييم الآن';
       document.getElementById('reviewsLabel').textContent = 'ماذا قال أولياء الأمور عنا';
       document.getElementById('footer').textContent   = '© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة';
-
+      
       // Modal Translation
       document.getElementById('reportBtn').innerHTML = '<span>⚑</span> إبلاغ';
       document.getElementById('modalTitle').textContent = 'طلب اتصال';
@@ -739,7 +775,7 @@
 
   function buildReviews() {
     let shuffled = shuffle(allReviews);
-
+    
     // Sort Reviews By Language Priority
     shuffled.sort((a, b) => {
       const aEng = isEnglishText(a.text) || isEnglishText(a.name);
@@ -754,7 +790,7 @@
       }
       return 0;
     });
-
+    
     const container = document.getElementById('reviewsContainer');
     const timeOptions = lang === 'en' ? timeOptionsEn : timeOptionsAr;
     let html = '';
@@ -812,7 +848,7 @@
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
-
+    
     cards.forEach(card => observer.observe(card));
   }
 
@@ -830,10 +866,11 @@
   }
   
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  
   document.getElementById('phoneInput').addEventListener('input', function() {
     this.style.borderColor = 'rgba(0,0,0,0.1)';
   });
-
+  
   async function submitReport() {
     const phone = document.getElementById('phoneInput').value.trim();
     if (!phone) {
@@ -841,6 +878,7 @@
       document.getElementById('phoneInput').focus();
       return;
     }
+    
     const btn = document.getElementById('submitBtn');
     const originalText = btn.textContent;
     btn.textContent = lang === 'en' ? 'Sending...' : 'جاري الإرسال...';
@@ -853,6 +891,34 @@
     btn.textContent = originalText;
     btn.disabled = false;
   }
+
+  // ── Touch Effect Logic (الإضافة الجديدة) ──
+  let emojiToggle = true; // true للإيموجي 🌸 و false للإيموجي 🦋
+
+  document.addEventListener('pointerdown', (e) => {
+    // تفعيل التأثير فقط عند اللمس بالإصبع (تجاهل الماوس)
+    if (e.pointerType === 'mouse') return;
+
+    // إنشاء العنصر
+    const emoji = document.createElement('div');
+    emoji.className = 'touch-emoji';
+    
+    // التناوب بين الإيموجيات
+    emoji.textContent = emojiToggle ? '🌸' : '🦋';
+    emojiToggle = !emojiToggle;
+
+    // تحديد مكان الظهور بناءً على نقطة اللمس
+    emoji.style.left = e.clientX + 'px';
+    emoji.style.top = e.clientY + 'px';
+
+    // إضافته للصفحة
+    document.body.appendChild(emoji);
+
+    // حذفه تلقائياً بعد انتهاء الحركة (600 ميلي ثانية)
+    setTimeout(() => {
+      emoji.remove();
+    }, 600);
+  });
 
   // ── Init ──
   document.addEventListener('DOMContentLoaded', applyLang);
