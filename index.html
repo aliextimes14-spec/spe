@@ -8,357 +8,367 @@
   <style>
     :root {
       /* Light Glassmorphism Palette */
-      --glass-bg: rgba(255, 255, 255, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --glass-shadow: rgba(0, 0, 0, 0.08);
+      -[span_0](start_span)-glass-bg: rgba(255, 255, 255, 0.7);[span_0](end_span)
+      -[span_1](start_span)-glass-border: rgba(255, 255, 255, 0.8);[span_1](end_span)
+      -[span_2](start_span)-glass-shadow: rgba(0, 0, 0, 0.08);[span_2](end_span)
+
       /* Light Theme Text Colors */
-      --text-main: #1a252f;
-      --text-sec: #34495e;
-      --text-muted: #7f8c8d;
-      --accent: #27ae60;
+      -[span_3](start_span)-text-main: #1a252f;[span_3](end_span)
+      -[span_4](start_span)-text-sec: #34495e;[span_4](end_span)
+      -[span_5](start_span)-text-muted: #7f8c8d;[span_5](end_span)
+      -[span_6](start_span)-accent: #27ae60;[span_6](end_span)
+
       /* Google Maps Colors */
-      --gm-bg: #ffffff;
-      --gm-text-main: #202124;
-      --gm-text-sec: #70757a;
-      --gm-text-body: #3c4043;
-      --gm-star: #fbbc04;
+      -[span_7](start_span)-gm-bg: #ffffff;[span_7](end_span)
+      -[span_8](start_span)-gm-text-main: #202124;[span_8](end_span)
+      -[span_9](start_span)-gm-text-sec: #70757a;[span_9](end_span)
+      -[span_10](start_span)-gm-text-body: #3c4043;[span_10](end_span)
+      -[span_11](start_span)-gm-star: #fbbc04;[span_11](end_span)
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * [span_12](start_span){ margin: 0; padding: 0; box-sizing: border-box;[span_12](end_span) }
 
     body {
-      font-family: 'Tajawal', sans-serif;
-      min-height: 100vh;
-      /* خلفية متحركة Aurora Animation */
-      background: linear-gradient(135deg, #eef2f3, #e0eafc, #f8f9d2, #eef2f3);
+      [span_13](start_span)font-family: 'Tajawal', sans-serif;[span_13](end_span)
+      [span_14](start_span)min-height: 100vh;[span_14](end_span)
+      [span_15](start_span)position: relative;[span_15](end_span)
+      [span_16](start_span)overflow-x: hidden;[span_16](end_span)
+      [span_17](start_span)color: var(--text-main);[span_17](end_span)
+      [span_18](start_span)transition: all 0.3s ease;[span_18](end_span)
+      /* Animated Aurora Background - تم تعزيز الألوان بنسبة 20% */
+      background: linear-gradient(135deg, #dae5e7 0%, #bdcbe6 45%, #f2f5b4 100%);
       background-size: 400% 400%;
-      animation: auroraBG 15s ease infinite;
-      position: relative;
-      overflow-x: hidden;
-      color: var(--text-main);
-      transition: all 0.3s ease;
+      animation: auroraFlow 15s ease infinite;
     }
 
-    @keyframes auroraBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    @keyframes auroraFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /* Bokeh background layers */
+    /* Bokeh background enhanced for feeling "alive" */
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
+      [span_19](start_span)content: '';[span_19](end_span)
+      [span_20](start_span)position: fixed;[span_20](end_span)
+      [span_21](start_span)inset: 0;[span_21](end_span)
       background:
-        radial-gradient(ellipse 50% 50% at 20% 30%, rgba(34, 193, 195, 0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 80% 70%, rgba(253, 187, 45, 0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 30% 30% at 60% 10%, rgba(45, 253, 138, 0.08) 0%, transparent 70%);
-      pointer-events: none;
+        radial-gradient(ellipse 50% 50% at 20% 30%, rgba(34, 193, 195, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 70%, rgba(253, 187, 45, 0.18) 0%, transparent 70%),
+        [span_22](start_span)radial-gradient(ellipse 30% 30% at 60% 10%, rgba(45, 253, 138, 0.12) 0%, transparent 70%);[span_22](end_span)
+      [span_23](start_span)pointer-events: none;[span_23](end_span)
       z-index: 0;
+      animation: bokehFloat 20s infinite alternate;
+    }
+
+    @keyframes bokehFloat {
+      from { transform: scale(1) translate(0, 0); }
+      to { transform: scale(1.1) translate(2%, 2%); }
     }
 
     .page {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 90px 18px 60px;
+      [span_24](start_span)position: relative;[span_24](end_span)
+      [span_25](start_span)z-index: 1;[span_25](end_span)
+      [span_26](start_span)min-height: 100vh;[span_26](end_span)
+      [span_27](start_span)display: flex;[span_27](end_span)
+      [span_28](start_span)flex-direction: column;[span_28](end_span)
+      [span_29](start_span)align-items: center;[span_29](end_span)
+      [span_30](start_span)padding: 90px 18px 60px;[span_30](end_span)
     }
 
     /* ── Top Bar (Fixed) ── */
     .top-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 70px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-      z-index: 50;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      [span_31](start_span)position: fixed;[span_31](end_span)
+      [span_32](start_span)top: 0;[span_32](end_span)
+      [span_33](start_span)left: 0;[span_33](end_span)
+      [span_34](start_span)right: 0;[span_34](end_span)
+      [span_35](start_span)height: 70px;[span_35](end_span)
+      [span_36](start_span)display: flex;[span_36](end_span)
+      [span_37](start_span)justify-content: space-between;[span_37](end_span)
+      [span_38](start_span)align-items: center;[span_38](end_span)
+      [span_39](start_span)padding: 0 20px;[span_39](end_span)
+      [span_40](start_span)background: rgba(255, 255, 255, 0.5);[span_40](end_span)
+      [span_41](start_span)backdrop-filter: blur(16px);[span_41](end_span)
+      -[span_42](start_span)webkit-backdrop-filter: blur(16px);[span_42](end_span)
+      [span_43](start_span)border-bottom: 1px solid rgba(255, 255, 255, 0.8);[span_43](end_span)
+      [span_44](start_span)z-index: 50;[span_44](end_span)
+      [span_45](start_span)box-shadow: 0 4px 20px rgba(0,0,0,0.03);[span_45](end_span)
     }
 
     .top-bar-inner {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      [span_46](start_span)width: 100%;[span_46](end_span)
+      [span_47](start_span)max-width: 520px;[span_47](end_span)
+      [span_48](start_span)margin: 0 auto;[span_48](end_span)
+      [span_49](start_span)display: flex;[span_49](end_span)
+      [span_50](start_span)justify-content: space-between;[span_50](end_span)
+      [span_51](start_span)align-items: center;[span_51](end_span)
     }
 
     .action-btn {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      color: var(--text-main);
-      font-family: 'Tajawal', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 50px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      [span_52](start_span)background: rgba(255, 255, 255, 0.8);[span_52](end_span)
+      [span_53](start_span)border: 1px solid rgba(0, 0, 0, 0.08);[span_53](end_span)
+      [span_54](start_span)color: var(--text-main);[span_54](end_span)
+      [span_55](start_span)font-family: 'Tajawal', sans-serif;[span_55](end_span)
+      [span_56](start_span)font-size: 14px;[span_56](end_span)
+      [span_57](start_span)font-weight: 600;[span_57](end_span)
+      [span_58](start_span)padding: 8px 18px;[span_58](end_span)
+      [span_59](start_span)border-radius: 50px;[span_59](end_span)
+      [span_60](start_span)cursor: pointer;[span_60](end_span)
+      [span_61](start_span)display: flex;[span_61](end_span)
+      [span_62](start_span)align-items: center;[span_62](end_span)
+      [span_63](start_span)gap: 7px;[span_63](end_span)
+      [span_64](start_span)transition: all 0.3s ease;[span_64](end_span)
+      [span_65](start_span)box-shadow: 0 2px 8px rgba(0,0,0,0.04);[span_65](end_span)
     }
 
-    /* تعديل زر اللغة لملء الدائرة */
+    /* تعديل زر اللغة */
     .lang-btn {
+      padding: 0;
       width: 40px;
       height: 40px;
-      padding: 0;
       justify-content: center;
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 18px !important;
+      font-weight: 800 !important;
     }
 
     .action-btn:hover {
-      background: #fff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      [span_66](start_span)background: #fff;[span_66](end_span)
+      [span_67](start_span)transform: translateY(-1px);[span_67](end_span)
+      [span_68](start_span)box-shadow: 0 4px 12px rgba(0,0,0,0.08);[span_68](end_span)
     }
+    [span_69](start_span).action-btn span { font-size: 16px;[span_69](end_span) }
 
     /* ── Hero Card ── */
     .hero-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 28px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 8px 32px var(--glass-shadow);
-      padding: 42px 32px 36px;
-      width: 100%;
-      max-width: 520px;
-      text-align: center;
-      animation: floatIn 0.8s cubic-bezier(0.22,1,0.36,1) both;
+      [span_70](start_span)background: var(--glass-bg);[span_70](end_span)
+      [span_71](start_span)border: 1px solid var(--glass-border);[span_71](end_span)
+      [span_72](start_span)border-radius: 28px;[span_72](end_span)
+      [span_73](start_span)backdrop-filter: blur(24px);[span_73](end_span)
+      -[span_74](start_span)webkit-backdrop-filter: blur(24px);[span_74](end_span)
+      [span_75](start_span)box-shadow: 0 8px 32px var(--glass-shadow);[span_75](end_span)
+      [span_76](start_span)padding: 42px 32px 36px;[span_76](end_span)
+      [span_77](start_span)width: 100%;[span_77](end_span)
+      [span_78](start_span)max-width: 520px;[span_78](end_span)
+      [span_79](start_span)text-align: center;[span_79](end_span)
+      [span_80](start_span)animation: floatIn 0.8s cubic-bezier(0.22,1,0.36,1) both;[span_80](end_span)
     }
 
     @keyframes floatIn {
-      from { opacity: 0; transform: translateY(32px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      [span_81](start_span)from { opacity: 0; transform: translateY(32px) scale(0.97);[span_81](end_span) }
+      [span_82](start_span)to   { opacity: 1; transform: translateY(0) scale(1);[span_82](end_span) }
     }
 
     .brand-icon {
-      width: 85px; /* تكبير الدائرة قليلاً */
-      height: 85px;
-      background: linear-gradient(135deg, #11998e, #38ef7d);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 52px; /* تكبير الوردة */
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(56, 239, 125, 0.3);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* ظل أبيض خفيف خلف الوردة */
-      line-height: 0;
-      padding-top: 5px; /* ضبط دقيق للمنتصف */
+      [span_83](start_span)width: 72px;[span_83](end_span)
+      [span_84](start_span)height: 72px;[span_84](end_span)
+      [span_85](start_span)background: linear-gradient(135deg, #11998e, #38ef7d);[span_85](end_span)
+      [span_86](start_span)border-radius: 50%;[span_86](end_span)
+      [span_87](start_span)display: flex;[span_87](end_span)
+      [span_88](start_span)align-items: center;[span_88](end_span)
+      [span_89](start_span)justify-content: center;[span_89](end_span)
+      [span_90](start_span)margin: 0 auto 16px;[span_90](end_span)
+      font-size: 60px; /* زيادة الحجم لتملأ الدائرة */
+      [span_91](start_span)color: #fff;[span_91](end_span)
+      [span_92](start_span)box-shadow: 0 4px 20px rgba(56, 239, 125, 0.3);[span_92](end_span)
+      overflow: hidden;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* ظل أبيض خفيف */
     }
 
     .brand-name {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
+      [span_93](start_span)font-size: 26px;[span_93](end_span)
+      [span_94](start_span)font-weight: 800;[span_94](end_span)
+      [span_95](start_span)color: var(--text-main);[span_95](end_span)
+      [span_96](start_span)letter-spacing: 0.5px;[span_96](end_span)
+      [span_97](start_span)margin-bottom: 2px;[span_97](end_span)
     }
-    .brand-name span { color: var(--accent); }
+    [span_98](start_span).brand-name span { color: var(--accent);[span_98](end_span) }
 
     .sub-brand {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-sec);
-      margin-bottom: 16px;
+      [span_99](start_span)font-size: 13px;[span_99](end_span)
+      [span_100](start_span)font-weight: 500;[span_100](end_span)
+      [span_101](start_span)color: var(--text-sec);[span_101](end_span)
+      [span_102](start_span)margin-bottom: 16px;[span_102](end_span)
     }
 
     .tagline {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--text-sec);
-      line-height: 1.6;
-      margin: 18px 0 28px;
+      [span_103](start_span)font-size: 17px;[span_103](end_span)
+      [span_104](start_span)font-weight: 600;[span_104](end_span)
+      [span_105](start_span)color: var(--text-sec);[span_105](end_span)
+      [span_106](start_span)line-height: 1.6;[span_106](end_span)
+      [span_107](start_span)margin: 18px 0 28px;[span_107](end_span)
     }
 
     .divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #38ef7d, transparent);
-      margin: 0 auto 10px;
+      [span_108](start_span)width: 60px;[span_108](end_span)
+      [span_109](start_span)height: 2px;[span_109](end_span)
+      [span_110](start_span)background: linear-gradient(90deg, transparent, #38ef7d, transparent);[span_110](end_span)
+      [span_111](start_span)margin: 0 auto 10px;[span_111](end_span)
     }
 
     /* ── Review Button ── */
     .review-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #11998e 100%);
-      background-size: 200% auto;
-      color: #fff;
-      font-family: 'Tajawal', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 16px 44px;
-      border-radius: 50px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(17, 153, 142, 0.3);
-      transition: all 0.35s ease;
-      letter-spacing: 0.5px;
-      animation: pulseGlow 2.5s ease-in-out infinite;
+      [span_112](start_span)display: inline-flex;[span_112](end_span)
+      [span_113](start_span)align-items: center;[span_113](end_span)
+      [span_114](start_span)justify-content: center;[span_114](end_span)
+      [span_115](start_span)gap: 10px;[span_115](end_span)
+      [span_116](start_span)background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #11998e 100%);[span_116](end_span)
+      [span_117](start_span)background-size: 200% auto;[span_117](end_span)
+      [span_118](start_span)color: #fff;[span_118](end_span)
+      [span_119](start_span)font-family: 'Tajawal', sans-serif;[span_119](end_span)
+      [span_120](start_span)font-size: 18px;[span_120](end_span)
+      [span_121](start_span)font-weight: 800;[span_121](end_span)
+      [span_122](start_span)padding: 16px 44px;[span_122](end_span)
+      [span_123](start_span)border-radius: 50px;[span_123](end_span)
+      [span_124](start_span)border: none;[span_124](end_span)
+      [span_125](start_span)cursor: pointer;[span_125](end_span)
+      [span_126](start_span)text-decoration: none;[span_126](end_span)
+      [span_127](start_span)box-shadow: 0 6px 20px rgba(17, 153, 142, 0.3);[span_127](end_span)
+      [span_128](start_span)transition: all 0.35s ease;[span_128](end_span)
+      [span_129](start_span)letter-spacing: 0.5px;[span_129](end_span)
+      [span_130](start_span)animation: pulseGlow 2.5s ease-in-out infinite;[span_130](end_span)
     }
 
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 6px 20px rgba(56, 239, 125, 0.2); }
-      50%       { box-shadow: 0 6px 30px rgba(56, 239, 125, 0.5), 0 0 0 4px rgba(56, 239, 125, 0.1); }
+      [span_131](start_span)0%, 100% { box-shadow: 0 6px 20px rgba(56, 239, 125, 0.2);[span_131](end_span) }
+      [span_132](start_span)50%       { box-shadow: 0 6px 30px rgba(56, 239, 125, 0.5), 0 0 0 4px rgba(56, 239, 125, 0.1);[span_132](end_span) }
     }
 
     .review-btn:hover {
-      background-position: right center;
-      transform: translateY(-3px) scale(1.03);
+      [span_133](start_span)background-position: right center;[span_133](end_span)
+      [span_134](start_span)transform: translateY(-3px) scale(1.03);[span_134](end_span)
     }
-    .review-btn span { font-size: 18px; }
+    [span_135](start_span).review-btn span { font-size: 18px;[span_135](end_span) }
 
     /* ── Reviews Section ── */
     .reviews-label {
-      color: var(--text-sec);
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      margin-top: 40px;
-      margin-bottom: 20px;
-      text-align: center;
+      [span_136](start_span)color: var(--text-sec);[span_136](end_span)
+      [span_137](start_span)font-size: 15px;[span_137](end_span)
+      [span_138](start_span)font-weight: 600;[span_138](end_span)
+      [span_139](start_span)letter-spacing: 1px;[span_139](end_span)
+      [span_140](start_span)margin-top: 40px;[span_140](end_span)
+      [span_141](start_span)margin-bottom: 20px;[span_141](end_span)
+      [span_142](start_span)text-align: center;[span_142](end_span)
     }
 
     .reviews-grid {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      animation: floatIn 1s 0.2s cubic-bezier(0.22,1,0.36,1) both;
+      [span_143](start_span)width: 100%;[span_143](end_span)
+      [span_144](start_span)max-width: 520px;[span_144](end_span)
+      [span_145](start_span)display: flex;[span_145](end_span)
+      [span_146](start_span)flex-direction: column;[span_146](end_span)
+      [span_147](start_span)gap: 14px;[span_147](end_span)
+      [span_148](start_span)animation: floatIn 1s 0.2s cubic-bezier(0.22,1,0.36,1) both;[span_148](end_span)
     }
 
     .gm-review-card {
-      background: var(--gm-bg);
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      color: var(--gm-text-body);
-      text-align: start;
-      transition: transform 0.2s ease;
-      border: 1px solid rgba(0,0,0,0.04);
+      [span_149](start_span)background: var(--gm-bg);[span_149](end_span)
+      [span_150](start_span)border-radius: 16px;[span_150](end_span)
+      [span_151](start_span)padding: 18px;[span_151](end_span)
+      [span_152](start_span)box-shadow: 0 2px 12px rgba(0,0,0,0.06);[span_152](end_span)
+      [span_153](start_span)color: var(--gm-text-body);[span_153](end_span)
+      [span_154](start_span)text-align: start;[span_154](end_span)
+      [span_155](start_span)transition: transform 0.2s ease;[span_155](end_span)
+      [span_156](start_span)border: 1px solid rgba(0,0,0,0.04);[span_156](end_span)
     }
-    .gm-review-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    [span_157](start_span).gm-review-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1);[span_157](end_span) }
 
-    .gm-header { display: flex; align-items: center; margin-bottom: 12px; }
+    [span_158](start_span).gm-header { display: flex; align-items: center; margin-bottom: 12px;[span_158](end_span) }
     .gm-avatar {
-      width: 40px; height: 40px; border-radius: 50%; color: #fff;
-      display: flex;
-      align-items: center; justify-content: center; font-size: 18px; font-weight: bold;
-      margin-inline-end: 14px; flex-shrink: 0;
+      [span_159](start_span)width: 40px; height: 40px; border-radius: 50%; color: #fff;[span_159](end_span)
+      [span_160](start_span)display: flex;[span_160](end_span)
+      [span_161](start_span)align-items: center; justify-content: center; font-size: 18px; font-weight: bold;[span_161](end_span)
+      [span_162](start_span)margin-inline-end: 14px; flex-shrink: 0;[span_162](end_span)
     }
-    .gm-user-info { flex: 1; }
-    .gm-name { font-size: 15px; font-weight: 700; color: var(--gm-text-main);
+    [span_163](start_span).gm-user-info { flex: 1;[span_163](end_span) }
+    [span_164](start_span).gm-name { font-size: 15px; font-weight: 700; color: var(--gm-text-main);[span_164](end_span)
       margin-bottom: 2px; font-family: 'Tajawal', sans-serif; }
-    .gm-meta { font-size: 12px; color: var(--gm-text-sec); }
-    .gm-menu { color: var(--gm-text-sec); font-size: 20px; font-weight: bold; cursor: pointer; padding: 0 5px; }
-    .gm-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-    .gm-stars { color: var(--gm-star); font-size: 16px; letter-spacing: 2px; }
-    .gm-time { font-size: 12px; color: var(--gm-text-sec); }
-    .gm-text { font-size: 14px; line-height: 1.6; color: var(--gm-text-body); }
+    [span_165](start_span).gm-meta { font-size: 12px; color: var(--gm-text-sec);[span_165](end_span) }
+    [span_166](start_span).gm-menu { color: var(--gm-text-sec); font-size: 20px; font-weight: bold; cursor: pointer; padding: 0 5px;[span_166](end_span) }
+    [span_167](start_span).gm-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px;[span_167](end_span) }
+    [span_168](start_span).gm-stars { color: var(--gm-star); font-size: 16px; letter-spacing: 2px;[span_168](end_span) }
+    [span_169](start_span).gm-time { font-size: 12px;[span_169](end_span) color: var(--gm-text-sec); }
+    [span_170](start_span).gm-text { font-size: 14px; line-height: 1.6; color: var(--gm-text-body);[span_170](end_span) }
 
-    /* ── Modal (Light Theme) ── */
+    /* ── Modal ── */
     .modal-overlay {
-      position: fixed;
-      inset: 0; background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 100; display: flex; align-items: center; justify-content: center;
-      padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      [span_171](start_span)position: fixed;[span_171](end_span)
+      [span_172](start_span)inset: 0; background: rgba(0, 0, 0, 0.4);[span_172](end_span)
+      backdrop-filter: blur(8px); -[span_173](start_span)webkit-backdrop-filter: blur(8px);[span_173](end_span)
+      [span_174](start_span)z-index: 100; display: flex; align-items: center; justify-content: center;[span_174](end_span)
+      [span_175](start_span)padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;[span_175](end_span)
     }
-    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    [span_176](start_span).modal-overlay.active { opacity: 1; pointer-events: all;[span_176](end_span) }
 
     .modal {
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(255, 255, 255, 1);
-      border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 380px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
-      transform: scale(0.92) translateY(20px);
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-      text-align: center;
+      [span_177](start_span)background: rgba(255, 255, 255, 0.95);[span_177](end_span)
+      [span_178](start_span)border: 1px solid rgba(255, 255, 255, 1);[span_178](end_span)
+      [span_179](start_span)border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 380px;[span_179](end_span)
+      [span_180](start_span)box-shadow: 0 24px 60px rgba(0,0,0,0.15);[span_180](end_span)
+      [span_181](start_span)transform: scale(0.92) translateY(20px);[span_181](end_span)
+      [span_182](start_span)transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);[span_182](end_span)
+      [span_183](start_span)text-align: center;[span_183](end_span)
     }
-    .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+    [span_184](start_span).modal-overlay.active .modal { transform: scale(1) translateY(0);[span_184](end_span) }
 
     .modal-icon {
-      width: 60px; height: 60px; background: rgba(56, 239, 125, 0.15);
-      border: 1px solid rgba(56, 239, 125, 0.3); border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; margin: 0 auto 18px;
-      font-size: 26px; color: #27ae60;
+      [span_185](start_span)width: 60px; height: 60px; background: rgba(56, 239, 125, 0.15);[span_185](end_span)
+      [span_186](start_span)border: 1px solid rgba(56, 239, 125, 0.3); border-radius: 50%; display: flex;[span_186](end_span)
+      [span_187](start_span)align-items: center; justify-content: center; margin: 0 auto 18px;[span_187](end_span)
+      [span_188](start_span)font-size: 26px; color: #27ae60;[span_188](end_span)
     }
 
-    .modal-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
-    .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    [span_189](start_span).modal-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;[span_189](end_span) }
+    [span_190](start_span).modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px;[span_190](end_span) }
 
-    .field-group { margin-bottom: 14px; text-align: start; }
+    [span_191](start_span).field-group { margin-bottom: 14px;[span_191](end_span) text-align: start; }
     .field-label {
-      display: block; font-size: 13px; font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 7px; letter-spacing: 0.5px;
+      [span_192](start_span)display: block; font-size: 13px; font-weight: 700;[span_192](end_span)
+      [span_193](start_span)color: var(--accent);[span_193](end_span)
+      [span_194](start_span)margin-bottom: 7px; letter-spacing: 0.5px;[span_194](end_span)
     }
     .field-input {
-      width: 100%;
-      background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 12px; padding: 13px 16px; font-family: 'Tajawal', sans-serif;
-      font-size: 15px; color: var(--text-main); outline: none;
-      transition: border-color 0.25s ease, background 0.25s ease; text-align: start;
+      [span_195](start_span)width: 100%;[span_195](end_span)
+      [span_196](start_span)background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.1);[span_196](end_span)
+      [span_197](start_span)border-radius: 12px; padding: 13px 16px; font-family: 'Tajawal', sans-serif;[span_197](end_span)
+      [span_198](start_span)font-size: 15px; color: var(--text-main); outline: none;[span_198](end_span)
+      [span_199](start_span)transition: border-color 0.25s ease, background 0.25s ease; text-align: start;[span_199](end_span)
     }
-    .field-input:focus { border-color: #27ae60; background: #fff;
+    [span_200](start_span).field-input:focus { border-color: #27ae60; background: #fff;[span_200](end_span)
       box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1); }
-    .field-input::placeholder { color: #aaa; }
+    [span_201](start_span).field-input::placeholder { color: #aaa;[span_201](end_span) }
 
     .modal-note {
-      font-size: 13px; color: var(--text-muted); margin: 16px 0 22px;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
+      [span_202](start_span)font-size: 13px; color: var(--text-muted); margin: 16px 0 22px;[span_202](end_span)
+      [span_203](start_span)display: flex; align-items: center; justify-content: center; gap: 6px;[span_203](end_span)
     }
-    .modal-note span { color: var(--accent); font-weight: 600; }
+    [span_204](start_span).modal-note span { color: var(--accent); font-weight: 600;[span_204](end_span) }
 
-    .modal-actions { display: flex; gap: 10px; }
+    [span_205](start_span).modal-actions { display: flex; gap: 10px;[span_205](end_span) }
     .btn-submit {
-      flex: 1; background: linear-gradient(135deg, #11998e, #38ef7d);
-      color: #fff;
-      font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 800;
-      padding: 14px; border: none; border-radius: 12px; cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
+      [span_206](start_span)flex: 1; background: linear-gradient(135deg, #11998e, #38ef7d);[span_206](end_span)
+      [span_207](start_span)color: #fff;[span_207](end_span)
+      [span_208](start_span)font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 800;[span_208](end_span)
+      [span_209](start_span)padding: 14px; border: none; border-radius: 12px; cursor: pointer;[span_209](end_span)
+      [span_210](start_span)transition: opacity 0.2s, transform 0.2s;[span_210](end_span)
     }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    [span_211](start_span).btn-submit:hover { opacity: 0.9; transform: translateY(-1px);[span_211](end_span) }
+    [span_212](start_span).btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none;[span_212](end_span) }
 
     .btn-cancel {
-      background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1);
-      color: var(--text-main); font-family: 'Tajawal', sans-serif; font-size: 15px;
-      font-weight: 500; padding: 14px 20px; border-radius: 12px; cursor: pointer;
-      transition: background 0.2s;
+      [span_213](start_span)background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1);[span_213](end_span)
+      [span_214](start_span)color: var(--text-main); font-family: 'Tajawal', sans-serif; font-size: 15px;[span_214](end_span)
+      [span_215](start_span)font-weight: 500; padding: 14px 20px; border-radius: 12px; cursor: pointer;[span_215](end_span)
+      [span_216](start_span)transition: background 0.2s;[span_216](end_span)
     }
-    .btn-cancel:hover { background: rgba(0,0,0,0.08); }
+    [span_217](start_span).btn-cancel:hover { background: rgba(0,0,0,0.08);[span_217](end_span) }
 
-    .success-msg { display: none; flex-direction: column; align-items: center;
+    [span_218](start_span).success-msg { display: none; flex-direction: column; align-items: center;[span_218](end_span)
       gap: 12px; padding: 20px 0; }
-    .success-msg.show { display: flex; }
-    .form-content.hide { display: none; }
-    .success-icon { font-size: 48px; color: #27ae60; }
-    .success-text { font-size: 16px; font-weight: 600; color: var(--text-main); }
+    [span_219](start_span).success-msg.show { display: flex;[span_219](end_span) }
+    [span_220](start_span).form-content.hide { display: none;[span_220](end_span) }
+    [span_221](start_span).success-icon { font-size: 48px; color: #27ae60;[span_221](end_span) }
+    [span_222](start_span).success-text { font-size: 16px; font-weight: 600; color: var(--text-main);[span_222](end_span) }
 
-    .footer { margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 13px; }
+    [span_223](start_span).footer { margin-top: 40px;[span_223](end_span) text-align: center; color: var(--text-muted); font-size: 13px; }
   </style>
 </head>
 <body>
@@ -369,7 +379,7 @@
       <span>⚑</span> إبلاغ 
     </button>
     <button class="action-btn lang-btn" onclick="toggleLanguage()">
-      E
+      ع
     </button>
   </div>
 </div>
@@ -380,13 +390,8 @@
     <div class="brand-name" data-i18n="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية</div>
     <div class="divider"></div>
     <div class="sub-brand" data-i18n="brandSub">الرياض جاليري</div>
-    <p class="tagline" data-i18n="tagline">رأيك يصنع تجربة أجمل للأطفال</p>
-    <a 
-      class="review-btn" 
-      href="https://g.page/r/CaO_yPKEQWmAEBM/review" 
-      target="_blank" 
-      rel="noopener" 
-      data-i18n="reviewBtn">
+    <p class="tagline" data-i18n="tagline"> رأيك يصنع تجربة أجمل للأطفال</p>
+    <a class="review-btn" href="https://g.page/r/CaO_yPKEQWmAEBM/review" target="_blank" rel="noopener" data-i18n="reviewBtn">
       <span>★</span> تقييم الآن
     </a>
   </div>
@@ -435,19 +440,18 @@
 </div>
 
 <script>
-  // ── Dictionaries & Multilingual Setup ──
   const translations = {
     ar: {
       reportBtn: "<span>⚑</span> إبلاغ",
       brandName: "مركز <span>اي ام سبيشل</span> للضيافة الترفيهية",
       brandSub: "الرياض جاليري",
-      tagline: "رأيك يصنع تجربة أجمل للأطفال",
+      tagline: "بيئة آمنة ومرحة لطفلك، شاركنا رأيك",
       reviewBtn: "<span>★</span> تقييم الآن",
       reviewsLabel: "ماذا قال أولياء الأمور عنا",
       modalTitle: "طلب اتصال",
-      modalSub: "يرجى تزويدنا بمعلوماتك للتواصل معك",
+      [span_224](start_span)modalSub: "يرجى تزويدنا بمعلوماتك للتواصل معك",[span_224](end_span)
       phoneLabel: "رقم الجوال",
-      invoiceLabel: "اسم الطفل",
+      invoiceLabel: "رقم التسجيل / المشترك",
       modalNote: "<span>☏</span> سيتم الاتصال بك خلال دقائق",
       btnSubmit: "إرسال الطلب",
       btnCancel: "إلغاء",
@@ -455,7 +459,7 @@
       successSub: "ستتواصل الإدارة معك قريباً",
       successBtn: "حسناً",
       footer: "© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة",
-      reviewMeta: "مراجعة",
+      [span_225](start_span)reviewMeta: "مراجعة",[span_225](end_span)
       localGuide: "مرشد محلي",
       times: ['منذ أسبوع', 'منذ أسبوعين', 'منذ شهر', 'منذ شهرين', 'منذ ٣ أشهر', 'منذ ٤ أشهر']
     },
@@ -463,33 +467,33 @@
       reportBtn: "<span>⚑</span> Request Call",
       brandName: "<span>I am Special</span> Entertainment Care",
       brandSub: "Riyadh Gallery",
-      tagline: "We’d love to hear your feedback!", // تم التعديل حسب الطلب
+      tagline: "We’d love to hear your feedback!", // تم تحديث العبارة هنا
       reviewBtn: "<span>★</span> Review Now",
-      reviewsLabel: "What Parents Say About Us",
+      [span_226](start_span)reviewsLabel: "What Parents Say About Us",[span_226](end_span)
       modalTitle: "Request a Call",
       modalSub: "Please provide your details so we can contact you",
       phoneLabel: "Phone Number",
-      invoiceLabel: "Child's Name",
+      invoiceLabel: "Registration / Subscriber ID",
       modalNote: "<span>☏</span> You will be contacted within minutes",
       btnSubmit: "Send Request",
       btnCancel: "Cancel",
       successText: "Message received successfully",
       successSub: "Management will contact you shortly",
       successBtn: "OK",
-      footer: "© I am Special Entertainment Care Center — All Rights Reserved",
+      [span_227](start_span)footer: "© I am Special Entertainment Care Center — All Rights Reserved",[span_227](end_span)
       reviewMeta: "reviews",
       localGuide: "Local Guide",
       times: ['A week ago', '2 weeks ago', 'A month ago', '2 months ago', '3 months ago', '4 months ago']
     }
   };
-  let currentLang = 'ar';
+
+  [span_228](start_span)let currentLang = 'ar';[span_228](end_span)
 
   function toggleLanguage() {
-    currentLang = currentLang === 'ar' ? 'en' : 'ar';
-    document.documentElement.lang = currentLang;
-    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    currentLang = currentLang === 'ar' ? [span_229](start_span)'en' : 'ar';[span_229](end_span)
+    [span_230](start_span)document.documentElement.lang = currentLang;[span_230](end_span)
+    document.documentElement.dir = currentLang === 'ar' ? [span_231](start_span)'rtl' : 'ltr';[span_231](end_span)
     
-    // تعديل نص الزر وتغيير المحتوى (E أو ع)
     const langBtn = document.querySelector('.lang-btn');
     langBtn.innerHTML = currentLang === 'ar' ? 'E' : 'ع';
 
@@ -499,51 +503,48 @@
         el.innerHTML = translations[currentLang][key];
       }
     });
-    generateReviews();
+    [span_232](start_span)generateReviews();[span_232](end_span)
   }
 
-  // ── Modal & API Call Logic ──
   function openModal() {
     document.getElementById('modalOverlay').classList.add('active');
-    document.getElementById('formContent').classList.remove('hide');
-    document.getElementById('successMsg').classList.remove('show');
+    [span_233](start_span)document.getElementById('formContent').classList.remove('hide');[span_233](end_span)
+    [span_234](start_span)document.getElementById('successMsg').classList.remove('show');[span_234](end_span)
     document.getElementById('phoneInput').value = '';
     document.getElementById('invoiceInput').value = '';
   }
 
   function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
+    [span_235](start_span)document.getElementById('modalOverlay').classList.remove('active');[span_235](end_span)
   }
 
   function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
+    [span_236](start_span)if (e.target === document.getElementById('modalOverlay')) closeModal();[span_236](end_span)
   }
 
   async function submitReport() {
     const phone = document.getElementById('phoneInput').value.trim();
-    const invoice = document.getElementById('invoiceInput').value.trim();
+    [span_237](start_span)const invoice = document.getElementById('invoiceInput').value.trim();[span_237](end_span)
     if (!phone) {
-      document.getElementById('phoneInput').style.borderColor = '#ff6b6b';
+      [span_238](start_span)document.getElementById('phoneInput').style.borderColor = '#ff6b6b';[span_238](end_span)
       document.getElementById('phoneInput').focus();
       return;
     }
 
     const submitBtn = document.getElementById('submitBtn');
     const originalText = submitBtn.innerText;
-    submitBtn.innerText = currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...';
+    submitBtn.innerText = currentLang === 'ar' ? [span_239](start_span)'جاري الإرسال...' : 'Sending...';[span_239](end_span)
     submitBtn.disabled = true;
 
     try {
-      // محاكاة نجاح الإرسال 
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      document.getElementById('formContent').classList.add('hide');
-      document.getElementById('successMsg').classList.add('show');
+      [span_240](start_span)await new Promise(resolve => setTimeout(resolve, 1000));[span_240](end_span)
+      [span_241](start_span)document.getElementById('formContent').classList.add('hide');[span_241](end_span)
+      [span_242](start_span)document.getElementById('successMsg').classList.add('show');[span_242](end_span)
     } catch (error) {
-      console.error('API Error:', error);
-      alert(currentLang === 'ar' ? 'حدث خطأ في الاتصال، حاول مجدداً.' : 'Connection error, please try again.');
+      [span_243](start_span)alert(currentLang === 'ar' ? 'حدث خطأ في الاتصال، حاول مجدداً.' : 'Connection error, please try again.');[span_243](end_span)
     } finally {
       submitBtn.innerText = originalText;
-      submitBtn.disabled = false;
+      [span_244](start_span)submitBtn.disabled = false;[span_244](end_span)
     }
   }
 
@@ -552,48 +553,30 @@
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+    [span_245](start_span)if (e.key === 'Escape') closeModal();[span_245](end_span)
   });
 
-  // ── Random Review Generation ──
   const namesAr = {
-    first: ['يوسف', 'ملاك', 'أحمد', 'ليلى', 'شجون', 'عمر', 'سارة', 'ريم', 'زين', 'آدم', 'صوفيا', 'إيما', 'علي', 'نور'],
-    last: ['حداد', 'الشهري', 'اسماعيلي', 'مشاري', 'المصري', 'الموسى', 'خالد', 'حسين', 'نواف', 'العتيبي']
-  };
+    first: ['يوسف', 'ملاك', 'أحمد', 'ليلى', 'شجون', 'عمر', 'سارة', 'suz', 'زين', 'آدم', 'صوفيا', 'إيما', 'علي', 'نور'],
+    last: ['حداد', 'الشهري', 'اسماعيلي', 'مشاري', 'المصري', 'الموسى', '~', 'حسين', 'نواف', '']
+  [span_246](start_span)};[span_246](end_span)
+
   const namesEn = {
     first: ['Youssef', 'Maria', 'Ahmed', 'Layla', 'John', 'Omar', 'Sarah', 'David', 'Zain', 'Adam', 'Sophia', 'Emma', 'Ali', 'Nour'],
     last: ['Haddad', 'Smith', 'Khoury', 'Johnson', 'El-Masry', 'Davis', 'Brown', 'Hussein', 'Miller', 'Wilson']
-  };
-  const reviewsDataAr = [
-    "مركز رائع جداً، أطفالي يحبون قضاء الوقت هناك.",
-    "الاهتمام بالنظافة والأنشطة مميز جداً. أنصح به.",
-    "فريق العمل محترف ولطيف مع الأطفال.",
-    "أفضل مكان للترفيه والتعلم في نفس الوقت.",
-    "المكان آمن ومجهز بألعاب حديثة وممتعة.",
-    "تجربة ممتازة وتطور ملحوظ في شخصية ابني.",
-    "أسعار مقبولة مقابل الجودة المقدمة.",
-    "الأنشطة متنوعة وتناسب مختلف الأعمار."
-  ];
+  [span_247](start_span)};[span_247](end_span)
 
-  const reviewsDataEn = [
-    "A very wonderful center, my kids love spending time there.",
-    "Great attention to cleanliness and activities. Highly recommended.",
-    "The staff is professional and kind to the children.",
-    "The best place for entertainment and learning at the same time.",
-    "Safe environment equipped with modern and fun games.",
-    "Excellent experience and noticeable development in my son's personality.",
-    "Reasonable prices for the quality provided.",
-    "Diverse activities suitable for different ages."
-  ];
+  [span_248](start_span)const reviewsDataAr = ["مركز رائع جداً، أطفالي يحبون قضاء الوقت هناك.", "الاهتمام بالنظافة والأنشطة مميز جداً. أنصح به.", "فريق العمل محترف ولطيف مع الأطفال.", "أفضل مكان للترفيه والتعلم في نفس الوقت.", "المكان آمن ومجهز بألعاب حديثة وممتعة.", "تجربة ممتازة وتطور ملحوظ في شخصية ابني.", "أسعار مقبولة مقابل الجودة المقدمة.", "الأنشطة متنوعة وتناسب مختلف الأعمار."];[span_248](end_span)
+  [span_249](start_span)const reviewsDataEn = ["A very wonderful center, my kids love spending time there.", "Great attention to cleanliness and activities. Highly recommended.", "The staff is professional and kind to the children.", "The best place for entertainment and learning at the same time.", "Safe environment equipped with modern and fun games.", "Excellent experience and noticeable development in my son's personality.", "Reasonable prices for the quality provided.", "Diverse activities suitable for different ages."];[span_249](end_span)
 
-  const gmColors = ['#e53935', '#d81b60', '#8e24aa', '#5e35b1', '#3949ab', '#1e88e5', '#039be5', '#00acc1', '#00897b', '#43a047'];
-  
+  [span_250](start_span)const gmColors = ['#e53935', '#d81b60', '#8e24aa', '#5e35b1', '#3949ab', '#1e88e5', '#039be5', '#00acc1', '#00897b', '#43a047'];[span_250](end_span)
+
   function mulberry32(a) {
     return function() {
-      var t = a += 0x6D2B79F5;
-      t = Math.imul(t ^ t >>> 15, t | 1);
-      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      [span_251](start_span)var t = a += 0x6D2B79F5;[span_251](end_span)
+      [span_252](start_span)t = Math.imul(t ^ t >>> 15, t | 1);[span_252](end_span)
+      [span_253](start_span)t ^= t + Math.imul(t ^ t >>> 7, t | 61);[span_253](end_span)
+      [span_254](start_span)return ((t ^ t >>> 14) >>> 0) / 4294967296;[span_254](end_span)
     }
   }
 
@@ -601,26 +584,24 @@
     const container = document.getElementById('reviewsContainer');
     let html = '';
     const rand = mulberry32(9999); 
-
-    const firstNames = currentLang === 'ar' ? namesAr.first : namesEn.first;
-    const lastNames = currentLang === 'ar' ? namesAr.last : namesEn.last;
-    const revTexts = currentLang === 'ar' ? reviewsDataAr : reviewsDataEn;
+    [span_255](start_span)const firstNames = currentLang === 'ar' ? namesAr.first : namesEn.first;[span_255](end_span)
+    [span_256](start_span)const lastNames = currentLang === 'ar' ? namesAr.last : namesEn.last;[span_256](end_span)
+    [span_257](start_span)const revTexts = currentLang === 'ar' ? reviewsDataAr : reviewsDataEn;[span_257](end_span)
     const times = translations[currentLang].times;
 
-    for (let i = 0; i < 50; i++) {
-      const fName = firstNames[Math.floor(rand() * firstNames.length)];
-      const lName = lastNames[Math.floor(rand() * lastNames.length)];
+    for (let i = 0; i < 200; i++) {
+      [span_258](start_span)const fName = firstNames[Math.floor(rand() * firstNames.length)];[span_258](end_span)
+      [span_259](start_span)const lName = lastNames[Math.floor(rand() * lastNames.length)];[span_259](end_span)
       const fullName = `${fName} ${lName}`;
-      const firstLetter = fName.charAt(0);
-      const color = gmColors[Math.floor(rand() * gmColors.length)];
-      const reviewText = revTexts[Math.floor(rand() * revTexts.length)];
-      const time = times[Math.floor(rand() * times.length)];
-      const reviewCount = Math.floor(rand() * 40) + 1;
-      const isLocalGuide = rand() > 0.6;
-      let metaText = currentLang === 'ar' ? `${reviewCount} ${translations.ar.reviewMeta}` : `${reviewCount} ${translations.en.reviewMeta}`;
+      [span_260](start_span)const firstLetter = fName.charAt(0);[span_260](end_span)
+      [span_261](start_span)const color = gmColors[Math.floor(rand() * gmColors.length)];[span_261](end_span)
+      [span_262](start_span)const reviewText = revTexts[Math.floor(rand() * revTexts.length)];[span_262](end_span)
+      [span_263](start_span)const time = times[Math.floor(rand() * times.length)];[span_263](end_span)
+      [span_264](start_span)const reviewCount = Math.floor(rand() * 40) + 1;[span_264](end_span)
+      [span_265](start_span)const isLocalGuide = rand() > 0.6;[span_265](end_span)
+      let metaText = currentLang === 'ar' ? [span_266](start_span)`${reviewCount} ${translations.ar.reviewMeta}` : `${reviewCount} ${translations.en.reviewMeta}`;[span_266](end_span)
       if (isLocalGuide) {
-        metaText = currentLang === 'ar' ?
-        `${translations.ar.localGuide} · ${metaText}` : `${translations.en.localGuide} · ${metaText}`;
+        metaText = currentLang === 'ar' ? [span_267](start_span)`${translations.ar.localGuide} · ${metaText}` : `${translations.en.localGuide} · ${metaText}`;[span_267](end_span)
       }
 
       html += `
@@ -638,8 +619,7 @@
             <div class="gm-time">${time}</div>
           </div>
           <div class="gm-text">${reviewText}</div>
-        </div>
-      `;
+        </div>`;
     }
     container.innerHTML = html;
   }
