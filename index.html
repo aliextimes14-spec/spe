@@ -43,7 +43,7 @@
     .aurora-blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px); /* زيادة البلورة لعدم تمييز الشكل */
+      filter: blur(30px); /* زيادة البلورة لعدم تمييز الشكل */
       opacity: 0.65; /* زيادة الوضوح */
       animation: blobMove 8s ease-in-out infinite alternate; /* تسريع الحركة الأساسية */
       will-change: transform;
@@ -459,8 +459,6 @@
 
 <div class="floaters">
   <div class="floater">🦋</div>
-  <div class="floater">🌸</div>
-  <div class="floater">🌼</div>
 </div>
 
 <div class="glass-overlay"></div>
@@ -725,12 +723,12 @@
       document.getElementById('successSub').textContent = 'Management will contact you soon';
       document.getElementById('successOkBtn').textContent = 'OK';
     } else {
-      document.getElementById('brandName').innerHTML   = 'مركز <span>اي ام سبيشل</span> للضيافة الترفيهية';
+      document.getElementById('brandName').innerHTML   = 'مركز <span>اي ام سبيشل</span> للضيافة الترفيهية للأطفال';
       document.getElementById('brandSub').textContent  = 'الرياض جاليري';
       document.getElementById('tagline').textContent   = 'رأيك يصنع تجربة أجمل للأطفال';
       document.getElementById('reviewBtn').innerHTML   = '★ تقييم الآن';
       document.getElementById('reviewsLabel').textContent = 'ماذا قال أولياء الأمور عنا';
-      document.getElementById('footer').textContent   = '© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة';
+      document.getElementById('footer').textContent   = '© مركز اي ام سبيشل للضيافة الترفيهية للأطفال — جميع الحقوق محفوظة';
       
       // Modal Translation
       document.getElementById('reportBtn').innerHTML = '<span>⚑</span> إبلاغ';
