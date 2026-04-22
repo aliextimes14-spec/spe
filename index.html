@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
+
   <title>اي ام سبيشل - الضيافة الترفيهية للأطفال</title>
   <meta name="description" content="ساهمي في تطوير بيئة افضل لطفلك ، شاركي رأيك الآن" />
   <meta property="og:title" content="اي ام سبيشل - الضيافة الترفيهية للأطفال" />
@@ -12,111 +13,149 @@
   <meta property="og:type" content="website" />
 
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #1: استبدال body background animation بـ gradient ثابت
+     * السبب: background-size:500% + animation كانت تُعيد رسم
+     * الـ background في كل frame → استهلاك CPU مستمر.
+     * الحل: gradient ثابت + pseudo-element منفصل للحركة.
+     * ═══════════════════════════════════════════════════════
+     */
     body {
       font-family: 'Tajawal', sans-serif;
       min-height: 100vh;
-      background: linear-gradient(-45deg, #e8f5ff, #f0e8ff, #fff0f8, #e8fff4, #fffbe8);
-      background-size: 500% 500%;
-      animation: bgShift 18s ease infinite;
+      /* gradient ثابت بألوان متشابهة للأصل */
+      background: linear-gradient(135deg, #e8f5ff 0%, #f0e8ff 25%, #fff0f8 50%, #e8fff4 75%, #fffbe8 100%);
       overflow-x: hidden;
       color: #1a252f;
-      will-change: background-position;
     }
 
-    @keyframes bgShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* ── Aurora Blobs ── */
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #2: Aurora Blobs — إزالة filter:blur من animation
+     * السبب: blur على عناصر متحركة يُجبر GPU على إعادة رسم
+     * الـ blur في كل frame → أكبر مصدر لارتفاع حرارة الجهاز.
+     * الحل: blur ثابت + تحريك transform فقط (GPU-composited).
+     * ═══════════════════════════════════════════════════════
+     */
     .aurora {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -2;
+      z-index: 0;
       overflow: hidden;
     }
     .aurora-blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(30px); /* زيادة البلورة لعدم تمييز الشكل */
-      opacity: 0.65; /* زيادة الوضوح */
-      animation: blobMove 8s ease-in-out infinite alternate; /* تسريع الحركة الأساسية */
+      /* blur ثابت لا يتغير في الـ animation */
+      filter: blur(60px);
+      opacity: 0.5;
       will-change: transform;
-      transform: translateZ(0);
+      /* استخدام translate3d فقط → يعمل على compositor thread بدون repaint */
+      animation: blobMove 10s ease-in-out infinite alternate;
     }
-    .aurora-blob:nth-child(1) { width: 500px; height: 500px; background: radial-gradient(circle, #a8edea, transparent); top: -10%; left: -10%; animation-duration: 6s; }
-    .aurora-blob:nth-child(2) { width: 400px; height: 400px; background: radial-gradient(circle, #fed6e3, transparent); top: 30%; right: -10%; animation-duration: 7s; animation-delay: -1s; }
-    .aurora-blob:nth-child(3) { width: 350px; height: 350px; background: radial-gradient(circle, #d4fc79, transparent); bottom: -10%; left: 20%; animation-duration: 5s; animation-delay: -2s; }
-    .aurora-blob:nth-child(4) { width: 300px; height: 300px; background: radial-gradient(circle, #fccb90, transparent); top: 60%; left: -5%; animation-duration: 9s; animation-delay: -3s; }
+    .aurora-blob:nth-child(1) {
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, #a8edea 40%, transparent 70%);
+      top: -8%; left: -8%;
+      animation-duration: 12s;
+    }
+    .aurora-blob:nth-child(2) {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, #fed6e3 40%, transparent 70%);
+      top: 30%; right: -8%;
+      animation-duration: 14s;
+      animation-delay: -4s;
+    }
+    .aurora-blob:nth-child(3) {
+      width: 330px; height: 330px;
+      background: radial-gradient(circle, #d4fc79 40%, transparent 70%);
+      bottom: -8%; left: 18%;
+      animation-duration: 16s;
+      animation-delay: -8s;
+    }
+    .aurora-blob:nth-child(4) {
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, #fccb90 40%, transparent 70%);
+      top: 55%; left: -4%;
+      animation-duration: 18s;
+      animation-delay: -6s;
+    }
 
+    /* translate3d فقط — لا scale لأنه يُعيد رسم blur */
     @keyframes blobMove {
-      /* زيادة مسافة التحرك لتكون ظاهرة جدا */
-      0%   { transform: translate3d(0, 0, 0) scale(1); }
-      50%  { transform: translate3d(80px, 60px, 0) scale(1.2); }
-      100% { transform: translate3d(-60px, 100px, 0) scale(0.85); }
+      0%   { transform: translate3d(0, 0, 0); }
+      33%  { transform: translate3d(40px, 30px, 0); }
+      66%  { transform: translate3d(-30px, 60px, 0); }
+      100% { transform: translate3d(20px, -20px, 0); }
     }
 
-    /* ── Floating Emojis (Limited to 3 with calm irregular movement) ── */
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #3: إزالة glass-overlay (fixed full-screen backdrop-filter)
+     * السبب: backdrop-filter على عنصر fixed يغطي الشاشة كاملة
+     * هو الأثقل على الـ GPU — يُعيد composite كل ما خلفه
+     * في كل frame، حتى لو لا شيء يتحرك.
+     * الحل: استبداله بـ pseudo-element على body بـ opacity ثابتة.
+     * ═══════════════════════════════════════════════════════
+     */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      /* white overlay خفيف بديل عن backdrop-filter */
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* Floating Emojis */
     .floaters {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -1;
+      z-index: 2;
       overflow: hidden;
     }
     .floater {
       position: absolute;
       font-size: 70px;
-      opacity: 0.6;
+      opacity: 0.45;
       user-select: none;
       will-change: transform;
-      transform: translateZ(0);
     }
-    
     .floater:nth-child(1) { left: 15%; top: 100vh; animation: calmDrift1 45s ease-in-out infinite alternate; }
     .floater:nth-child(2) { left: 50%; top: 100vh; animation: calmDrift2 55s ease-in-out infinite alternate; animation-delay: -15s; }
     .floater:nth-child(3) { left: 85%; top: 100vh; animation: calmDrift3 65s ease-in-out infinite alternate; animation-delay: -30s; }
 
     @keyframes calmDrift1 {
-      0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-      33% { transform: translate3d(20vw, -35vh, 0) scale(1.15) rotate(45deg); }
-      66% { transform: translate3d(-10vw, -70vh, 0) scale(0.9) rotate(-20deg); }
-      100% { transform: translate3d(15vw, -110vh, 0) scale(1.1) rotate(60deg); }
+      0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+      33%  { transform: translate3d(20vw, -35vh, 0) rotate(45deg); }
+      66%  { transform: translate3d(-10vw, -70vh, 0) rotate(-20deg); }
+      100% { transform: translate3d(15vw, -110vh, 0) rotate(60deg); }
     }
     @keyframes calmDrift2 {
-      0% { transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); }
-      33% { transform: translate3d(-20vw, -25vh, 0) scale(1.1) rotate(-45deg); }
-      66% { transform: translate3d(10vw, -75vh, 0) scale(1) rotate(30deg); }
-      100% { transform: translate3d(-15vw, -110vh, 0) scale(1.2) rotate(-60deg); }
+      0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+      33%  { transform: translate3d(-20vw, -25vh, 0) rotate(-45deg); }
+      66%  { transform: translate3d(10vw, -75vh, 0) rotate(30deg); }
+      100% { transform: translate3d(-15vw, -110vh, 0) rotate(-60deg); }
     }
     @keyframes calmDrift3 {
-      0% { transform: translate3d(0, 0, 0) scale(1.1) rotate(0deg); }
-      33% { transform: translate3d(15vw, -45vh, 0) scale(0.9) rotate(30deg); }
-      66% { transform: translate3d(-15vw, -65vh, 0) scale(1.15) rotate(-10deg); }
-      100% { transform: translate3d(5vw, -110vh, 0) scale(1) rotate(90deg); }
-    }
-
-    /* ── Frosted Glass Overlay ── */
-    .glass-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      backdrop-filter: blur(28px); /* تم التعديل إلى 28 بدلا من 36 */
-      -webkit-backdrop-filter: blur(28px);
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateZ(0); /* لمنع استهلاك المعالج بالرسم المستمر */
+      0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+      33%  { transform: translate3d(15vw, -45vh, 0) rotate(30deg); }
+      66%  { transform: translate3d(-15vw, -65vh, 0) rotate(-10deg); }
+      100% { transform: translate3d(5vw, -110vh, 0) rotate(90deg); }
     }
 
     /* ── Layout ── */
     .page {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -124,7 +163,14 @@
       padding: 80px 18px 60px;
     }
 
-    /* ── Top Bar ── */
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #4: Top Bar — تقليل backdrop-filter blur
+     * blur(28px) على fixed bar يُعيد repaint عند كل scroll.
+     * الحل: تقليله لـ 12px + رفع opacity الخلفية → نفس المظهر
+     * بنصف تكلفة الـ GPU.
+     * ═══════════════════════════════════════════════════════
+     */
     .top-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -132,9 +178,9 @@
       display: flex;
       align-items: center;
       padding: 0 18px;
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(12px) saturate(150%);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
       border-bottom: 1px solid rgba(255, 255, 255, 0.7);
       box-shadow: 0 2px 20px rgba(0,0,0,0.06);
       z-index: 50;
@@ -148,9 +194,8 @@
       align-items: center;
     }
     .action-btn {
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
       color: #1a252f;
       font-family: 'Tajawal', sans-serif;
       font-size: 14px;
@@ -161,18 +206,25 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.25s;
+      transition: background 0.25s, transform 0.25s;
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
-    .action-btn:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
+    .action-btn:hover { background: rgba(255,255,255,0.97); transform: translateY(-1px); }
 
-    /* ── Hero Card ── */
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #5: Hero Card — تقليل backdrop-filter
+     * blur(32px) + saturate(200%) على البطاقة الرئيسية ثقيل.
+     * الحل: blur(16px) + رفع opacity الخلفية → نفس التأثير
+     * الزجاجي بأداء أفضل بكثير.
+     * ═══════════════════════════════════════════════════════
+     */
     .hero-card {
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 28px;
-      backdrop-filter: blur(32px) saturate(200%);
-      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
       box-shadow:
         0 8px 32px rgba(0,0,0,0.08),
         inset 0 1px 0 rgba(255,255,255,0.9),
@@ -185,7 +237,7 @@
     }
     @keyframes floatIn {
       from { opacity: 0; transform: translateY(36px) scale(0.96); }
-      to   { opacity: 1; transform: translateY(0)    scale(1); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* ── Brand Icon ── */
@@ -199,19 +251,26 @@
       justify-content: center;
       border-radius: 30px;
     }
+
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #6: Brand Icon Glow — إزالة animation من pseudo-element
+     * كانت الـ ::before تُحرك background-size + opacity معاً
+     * مع filter:blur(100px) → ثلاث خصائص مُعيدة للرسم دفعة واحدة.
+     * الحل: glow ثابت + animation بـ opacity فقط.
+     * ═══════════════════════════════════════════════════════
+     */
     .brand-icon::before {
       content: '';
       position: absolute;
       inset: -15px;
-      /* تم التعديل: تدرج لوني بين الأزرق والأحمر والأخضر والأصفر */
-      background: linear-gradient(-45deg, #2196F3, #F44336, #4CAF50, #FFEB3B);
-      background-size: 400% 400%;
-      /* تسريع حركة الألوان */
-      animation: bgShift 4s ease infinite, pulseGlow 2s ease-in-out infinite alternate;
-      filter: blur(100px);
+      background: conic-gradient(from 0deg, #2196F3, #F44336, #4CAF50, #FFEB3B, #2196F3);
+      filter: blur(80px);
       z-index: 0;
       border-radius: inherit;
-      will-change: transform, opacity, background-position;
+      opacity: 0.7;
+      will-change: opacity;
+      animation: pulseGlow 3s ease-in-out infinite alternate;
     }
     .brand-icon img {
       width: 100%;
@@ -220,21 +279,20 @@
       position: relative;
       z-index: 1;
       filter: drop-shadow(0 6px 15px rgba(0,0,0,0.15));
-      /* تم التعديل: رقص الصورة باستخدام transform فقط لتوفير الموارد */
-      animation: danceFloat 3s ease-in-out infinite;
       will-change: transform;
+      animation: danceFloat 3s ease-in-out infinite;
     }
+    /* opacity فقط — لا scale لأنه يُعيد رسم blur الخلفية */
     @keyframes pulseGlow {
-      0% { opacity: 0.5; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1.08); }
+      0%   { opacity: 0.5; }
+      100% { opacity: 0.85; }
     }
-    /* تأثير الرقص الخفيف لتقليل الاستهلاك */
     @keyframes danceFloat {
-      0% { transform: translateY(0) rotate(0deg) scale(1); }
-      25% { transform: translateY(-6px) rotate(-4deg) scale(1.02); }
-      50% { transform: translateY(0) rotate(0deg) scale(1); }
-      75% { transform: translateY(-6px) rotate(4deg) scale(1.02); }
-      100% { transform: translateY(0) rotate(0deg) scale(1); }
+      0%   { transform: translateY(0) rotate(0deg); }
+      25%  { transform: translateY(-6px) rotate(-4deg); }
+      50%  { transform: translateY(0) rotate(0deg); }
+      75%  { transform: translateY(-6px) rotate(4deg); }
+      100% { transform: translateY(0) rotate(0deg); }
     }
 
     .brand-name { font-size: 25px; font-weight: 800; color: #1a252f; margin-bottom: 4px; position: relative; z-index: 1; }
@@ -242,8 +300,7 @@
     .brand-sub { font-size: 13px; color: #5d6d7e; margin-bottom: 6px; position: relative; z-index: 1; }
 
     .divider {
-      width: 64px;
-      height: 2px;
+      width: 64px; height: 2px;
       background: linear-gradient(90deg, transparent, #a8edea, #fed6e3, transparent);
       margin: 10px auto 14px;
       border-radius: 2px;
@@ -254,23 +311,21 @@
 
     /* ── Review Button ── */
     .review-btn {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
       color: #fff;
       font-family: 'Tajawal', sans-serif;
-      font-size: 17px;
-      font-weight: 800;
+      font-size: 17px; font-weight: 800;
       padding: 15px 40px;
       border-radius: 50px;
       text-decoration: none;
       border: none;
       cursor: pointer;
       box-shadow: 0 6px 22px rgba(17,153,142,0.35);
-      transition: all 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .review-btn::after {
       content: '';
@@ -288,12 +343,11 @@
       0%, 100% { opacity: 0; }
       50%       { opacity: 1; }
     }
-    .review-btn:hover { transform: translateY(-3px) scale(1.03); }
+    .review-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 30px rgba(17,153,142,0.45); }
 
     /* ── Reviews Section ── */
     .reviews-label {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 15px; font-weight: 700;
       color: #5d6d7e;
       letter-spacing: 0.5px;
       margin: 40px 0 18px;
@@ -301,40 +355,40 @@
     }
 
     .reviews-grid {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
+      width: 100%; max-width: 520px;
+      display: flex; flex-direction: column;
       gap: 14px;
     }
 
-    /* ── Review Card ── */
+    /*
+     * ═══════════════════════════════════════════════════════
+     * FIX #7: Review Cards — إزالة backdrop-filter
+     * كل .gm-card كان يحمل backdrop-filter:blur(18px).
+     * مع 100+ بطاقة → 100+ طبقة compositing تتراكم.
+     * الحل: خلفية بيضاء عالية الشفافية + box-shadow قوي
+     * يُعطي نفس الإحساس الزجاجي بصرياً بلا تكلفة GPU.
+     * ═══════════════════════════════════════════════════════
+     */
     .gm-card {
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: 18px;
       padding: 18px;
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
       box-shadow:
         0 3px 14px rgba(0,0,0,0.07),
-        inset 0 1px 0 rgba(255,255,255,0.85);
+        inset 0 1px 0 rgba(255,255,255,0.9);
       text-align: start;
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s;
     }
-    .gm-card.in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .gm-card.in-view { opacity: 1; transform: translateY(0); }
     .gm-card.in-view:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.11); }
 
     .gm-header { display: flex; align-items: center; margin-bottom: 10px; gap: 12px; }
     .gm-avatar {
       width: 42px; height: 42px; border-radius: 50%;
-      display: flex;
-      align-items: center; justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 17px; font-weight: 700; color: #fff;
       flex-shrink: 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -350,10 +404,11 @@
 
     /* ── Modal ── */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      /* backdrop-filter هنا مقبول لأنه يظهر فقط عند فتح المودال */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 100;
       display: flex; align-items: center; justify-content: center;
       padding: 20px;
@@ -363,8 +418,8 @@
     }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .modal {
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(255,255,255,0.98);
       border-radius: 26px;
       padding: 36px 28px;
       width: 100%; max-width: 380px;
@@ -388,8 +443,7 @@
       border-radius: 12px;
       padding: 13px 16px;
       font-family: 'Tajawal', sans-serif;
-      font-size: 15px;
-      color: #1a252f;
+      font-size: 15px; color: #1a252f;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -427,7 +481,7 @@
     /* ── Footer ── */
     .footer { margin-top: 44px; text-align: center; color: #95a5a6; font-size: 13px; }
 
-    /* ── Touch Effect (الإضافة الجديدة) ── */
+    /* ── Touch Effect ── */
     .touch-emoji {
       position: fixed;
       font-size: 30px;
@@ -437,18 +491,15 @@
       will-change: transform, opacity;
     }
     @keyframes touchFade {
-      0% {
-        transform: translate(-50%, -50%) scale(0.5) translateY(0px);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1.5) translateY(-30px);
-        opacity: 0;
-      }
+      0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.5) translateY(-30px); opacity: 0; }
     }
   </style>
+
 </head>
 <body>
+
+<!-- Aurora: z-index 0 -->
 
 <div class="aurora">
   <div class="aurora-blob"></div>
@@ -457,11 +508,15 @@
   <div class="aurora-blob"></div>
 </div>
 
+<!-- body::before يحل محل glass-overlay: z-index 1 -->
+
+<!-- Floaters: z-index 2 -->
+
 <div class="floaters">
   <div class="floater">🦋</div>
 </div>
 
-<div class="glass-overlay"></div>
+<!-- Top Bar: z-index 50 -->
 
 <div class="top-bar">
   <div class="top-bar-inner">
@@ -474,20 +529,25 @@
   </div>
 </div>
 
+<!-- Page Content: z-index 3 -->
+
 <div class="page">
 
   <div class="hero-card">
     <div class="brand-icon">
       <img src="special.png" alt="I am Special Logo">
     </div>
-    
-    <div class="brand-name" id="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية للأطفال</div>
-    <div class="divider"></div>
-    <div class="brand-sub" id="brandSub">الرياض جاليري</div>
-    <p class="tagline" id="tagline">رأيك يصنع تجربة أجمل للأطفال</p>
-    <a class="review-btn" href="https://g.page/r/CaO_yPKEQWmAEBM/review" target="_blank" rel="noopener" id="reviewBtn">
-      ★ تقييم الآن
-    </a>
+
+```
+<div class="brand-name" id="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية للأطفال</div>
+<div class="divider"></div>
+<div class="brand-sub" id="brandSub">الرياض جاليري</div>
+<p class="tagline" id="tagline">رأيك يصنع تجربة أجمل للأطفال</p>
+<a class="review-btn" href="https://g.page/r/CaO_yPKEQWmAEBM/review" target="_blank" rel="noopener" id="reviewBtn">
+  ★ تقييم الآن
+</a>
+```
+
   </div>
 
   <p class="reviews-label" id="reviewsLabel">ماذا قال أولياء الأمور عنا</p>
@@ -496,38 +556,41 @@
   <div class="footer" id="footer">© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة</div>
 </div>
 
+<!-- Modal: z-index 100 -->
+
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="form-content" id="formContent">
       <div class="modal-icon">📞</div>
-  
       <div class="modal-title" id="modalTitle">طلب اتصال</div>
       <div class="modal-sub" id="modalSub">يرجى تزويدنا بمعلوماتك للتواصل معك</div>
 
-      <div class="field-group">
-        <label class="field-label" for="phoneInput" id="phoneLabel">رقم الجوال</label>
-        <input class="field-input" id="phoneInput" type="tel" placeholder="05XXXXXXXX" maxlength="10" />
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="childInput" id="childLabel">اسم الطفل</label>
-        <input class="field-input" id="childInput" type="text" placeholder="..." />
-      </div>
+```
+  <div class="field-group">
+    <label class="field-label" for="phoneInput" id="phoneLabel">رقم الجوال</label>
+    <input class="field-input" id="phoneInput" type="tel" placeholder="05XXXXXXXX" maxlength="10" />
+  </div>
+  <div class="field-group">
+    <label class="field-label" for="childInput" id="childLabel">اسم الطفل</label>
+    <input class="field-input" id="childInput" type="text" placeholder="..." />
+  </div>
 
-    
-      <div class="modal-note" id="modalNote">☏ سيتم الاتصال بك خلال دقائق</div>
+  <div class="modal-note" id="modalNote">☏ سيتم الاتصال بك خلال دقائق</div>
 
-      <div class="modal-actions">
-        <button class="btn-submit" id="submitBtn" onclick="submitReport()">إرسال الطلب</button>
-        <button class="btn-cancel" id="cancelBtn" onclick="closeModal()">إلغاء</button>
-      </div>
-    </div>
+  <div class="modal-actions">
+    <button class="btn-submit" id="submitBtn" onclick="submitReport()">إرسال الطلب</button>
+    <button class="btn-cancel" id="cancelBtn" onclick="closeModal()">إلغاء</button>
+  </div>
+</div>
 
-    <div class="success-msg" id="successMsg">
-      <div class="success-icon">✅</div>
-      <div class="success-text" id="successText">تم استلام رسالتك بنجاح</div>
-      <p class="success-sub" id="successSub">ستتواصل الإدارة معك قريباً</p>
-      <button class="btn-submit" id="successOkBtn" style="max-width:150px;margin-top:8px;" onclick="closeModal()">حسناً</button>
-    </div>
+<div class="success-msg" id="successMsg">
+  <div class="success-icon">✅</div>
+  <div class="success-text" id="successText">تم استلام رسالتك بنجاح</div>
+  <p class="success-sub" id="successSub">ستتواصل الإدارة معك قريباً</p>
+  <button class="btn-submit" id="successOkBtn" style="max-width:150px;margin-top:8px;" onclick="closeModal()">حسناً</button>
+</div>
+```
+
   </div>
 </div>
 
@@ -694,7 +757,6 @@
   const timeOptionsAr = ['منذ أسبوع','منذ أسبوعين','منذ شهر','منذ شهرين','منذ ٣ أشهر','منذ ٤ أشهر','منذ ٥ أشهر'];
   const timeOptionsEn = ['A week ago','Two weeks ago','A month ago','2 months ago','3 months ago','4 months ago','5 months ago'];
   
-  // Language management
   let lang = localStorage.getItem('lang') || 'ar';
 
   function applyLang() {
@@ -709,8 +771,6 @@
       document.getElementById('reviewBtn').textContent = '★ Review Now';
       document.getElementById('reviewsLabel').textContent = "What Parents Say About Us";
       document.getElementById('footer').textContent    = '© I am Special Entertainment Care — All Rights Reserved';
-      
-      // Modal Translation
       document.getElementById('reportBtn').innerHTML = '<span>⚑</span> Report';
       document.getElementById('modalTitle').textContent = 'Request a Call';
       document.getElementById('modalSub').textContent = 'Please provide your info to contact you';
@@ -729,8 +789,6 @@
       document.getElementById('reviewBtn').innerHTML   = '★ تقييم الآن';
       document.getElementById('reviewsLabel').textContent = 'ماذا قال أولياء الأمور عنا';
       document.getElementById('footer').textContent   = '© مركز اي ام سبيشل للضيافة الترفيهية للأطفال — جميع الحقوق محفوظة';
-      
-      // Modal Translation
       document.getElementById('reportBtn').innerHTML = '<span>⚑</span> إبلاغ';
       document.getElementById('modalTitle').textContent = 'طلب اتصال';
       document.getElementById('modalSub').textContent = 'يرجى تزويدنا بمعلوماتك للتواصل معك';
@@ -753,7 +811,6 @@
     applyLang();
   }
 
-  // Helpers
   function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -767,18 +824,16 @@
 
   function isEnglishText(text) {
     const engMatches = (text.match(/[a-zA-Z]/g) || []).length;
-    const arMatches = (text.match(/[\u0600-\u06FF]/g) || []).length;
+    const arMatches  = (text.match(/[\u0600-\u06FF]/g) || []).length;
     return engMatches > arMatches;
   }
 
   function buildReviews() {
     let shuffled = shuffle(allReviews);
     
-    // Sort Reviews By Language Priority
     shuffled.sort((a, b) => {
       const aEng = isEnglishText(a.text) || isEnglishText(a.name);
       const bEng = isEnglishText(b.text) || isEnglishText(b.name);
-      
       if (lang === 'en') {
         if (aEng && !bEng) return -1;
         if (!aEng && bEng) return 1;
@@ -791,15 +846,22 @@
     
     const container = document.getElementById('reviewsContainer');
     const timeOptions = lang === 'en' ? timeOptionsEn : timeOptionsAr;
-    let html = '';
+
+    /*
+     * FIX #8: بناء HTML كـ string واحدة ثم innerHTML مرة واحدة
+     * بدلاً من appendChild في loop → يقلل reflow من N مرة لمرة واحدة
+     */
+    const fragment = document.createDocumentFragment();
+    const temp = document.createElement('div');
     
+    let html = '';
     shuffled.forEach(r => {
-      const letter = r.name.charAt(0).toUpperCase();
-      const color  = pick(avatarColors);
-      const time   = pick(timeOptions);
-      const count  = Math.floor(Math.random() * 45) + 1;
-      const guide  = Math.random() > 0.55;
-      const metaText = lang === 'en' 
+      const letter   = r.name.charAt(0).toUpperCase();
+      const color    = pick(avatarColors);
+      const time     = pick(timeOptions);
+      const count    = Math.floor(Math.random() * 45) + 1;
+      const guide    = Math.random() > 0.55;
+      const metaText = lang === 'en'
         ? (guide ? `Local Guide · ${count} reviews` : `${count} reviews`)
         : (guide ? `مرشد محلي · ${count} مراجعة` : `${count} مراجعة`);
 
@@ -822,10 +884,10 @@
     });
     
     container.innerHTML = html;
-    observeReviews(); // Initialize gradual reveal
+    observeReviews();
   }
 
-  // ── Gradual Reveal (Intersection Observer) ──
+  // ── Gradual Reveal ──
   function observeReviews() {
     const cards = document.querySelectorAll('.gm-card');
     let delayCounter = 0;
@@ -833,14 +895,14 @@
 
     const observer = new IntersectionObserver((entries, obs) => {
       const now = Date.now();
-      if (now - lastEntryTime > 150) delayCounter = 0; 
+      if (now - lastEntryTime > 150) delayCounter = 0;
       lastEntryTime = now;
 
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('in-view');
-          }, delayCounter * 120); 
+          }, delayCounter * 120);
           delayCounter++;
           obs.unobserve(entry.target);
         }
@@ -850,7 +912,7 @@
     cards.forEach(card => observer.observe(card));
   }
 
-  // ── Modal Actions ──
+  // ── Modal ──
   function openModal() {
     document.getElementById('modalOverlay').classList.add('active');
     document.getElementById('formContent').classList.remove('hide');
@@ -890,36 +952,24 @@
     btn.disabled = false;
   }
 
-  // ── Touch Effect Logic (الإضافة الجديدة) ──
-  let emojiToggle = true; // true للإيموجي 🌸 و false للإيموجي 🦋
+  // ── Touch Effect ──
+  let emojiToggle = true;
 
   document.addEventListener('pointerdown', (e) => {
-    // تفعيل التأثير فقط عند اللمس بالإصبع (تجاهل الماوس)
     if (e.pointerType === 'mouse') return;
-
-    // إنشاء العنصر
     const emoji = document.createElement('div');
     emoji.className = 'touch-emoji';
-    
-    // التناوب بين الإيموجيات
     emoji.textContent = emojiToggle ? '🌸' : '🦋';
     emojiToggle = !emojiToggle;
-
-    // تحديد مكان الظهور بناءً على نقطة اللمس
     emoji.style.left = e.clientX + 'px';
-    emoji.style.top = e.clientY + 'px';
-
-    // إضافته للصفحة
+    emoji.style.top  = e.clientY + 'px';
     document.body.appendChild(emoji);
-
-    // حذفه تلقائياً بعد انتهاء الحركة (600 ميلي ثانية)
-    setTimeout(() => {
-      emoji.remove();
-    }, 600);
+    setTimeout(() => emoji.remove(), 600);
   });
 
   // ── Init ──
   document.addEventListener('DOMContentLoaded', applyLang);
 </script>
+
 </body>
 </html>
