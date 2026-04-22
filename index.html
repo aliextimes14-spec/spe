@@ -29,7 +29,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 0;
+      z-index: -2;
       overflow: hidden;
     }
     .aurora-blob {
@@ -50,39 +50,53 @@
       100% { transform: translate(-20px, 50px) scale(0.95); }
     }
 
-    /* ── Floating Emojis (Butterflies & Flowers) ── */
+    /* ── Floating Emojis (Limited to 3 with calm irregular movement) ── */
     .floaters {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 0;
+      z-index: -1;
       overflow: hidden;
     }
     .floater {
       position: absolute;
-      font-size: 42px;
-      opacity: 0.55;
-      animation: floatUp linear infinite;
+      font-size: 70px;
+      opacity: 0.6;
       user-select: none;
     }
-    .floater:nth-child(1)  { left: 3%;   font-size: 50px; animation-duration: 14s; animation-delay: 0s;    }
-    .floater:nth-child(2)  { left: 10%;  font-size: 38px; animation-duration: 18s; animation-delay: -3s;   }
-    .floater:nth-child(3)  { left: 18%;  font-size: 56px; animation-duration: 12s; animation-delay: -7s;   }
-    .floater:nth-child(4)  { left: 27%;  font-size: 44px; animation-duration: 20s; animation-delay: -1s;   }
-    .floater:nth-child(5)  { left: 36%;  font-size: 48px; animation-duration: 16s; animation-delay: -9s;   }
-    .floater:nth-child(6)  { left: 45%;  font-size: 36px; animation-duration: 22s; animation-delay: -4s;   }
-    .floater:nth-child(7)  { left: 54%;  font-size: 52px; animation-duration: 15s; animation-delay: -6s;   }
-    .floater:nth-child(8)  { left: 63%;  font-size: 40px; animation-duration: 19s; animation-delay: -2s;   }
-    .floater:nth-child(9)  { left: 72%;  font-size: 58px; animation-duration: 13s; animation-delay: -11s;  }
-    .floater:nth-child(10) { left: 81%;  font-size: 42px; animation-duration: 17s; animation-delay: -5s;   }
-    .floater:nth-child(11) { left: 90%;  font-size: 46px; animation-duration: 21s; animation-delay: -8s;   }
-    .floater:nth-child(12) { left: 96%;  font-size: 34px; animation-duration: 24s; animation-delay: -14s;  }
+    
+    .floater:nth-child(1) { left: 15%; top: 100vh; animation: calmDrift1 45s ease-in-out infinite alternate; }
+    .floater:nth-child(2) { left: 50%; top: 100vh; animation: calmDrift2 55s ease-in-out infinite alternate; animation-delay: -15s; }
+    .floater:nth-child(3) { left: 85%; top: 100vh; animation: calmDrift3 65s ease-in-out infinite alternate; animation-delay: -30s; }
 
-    @keyframes floatUp {
-      0%   { transform: translateY(110vh) rotate(0deg)  scale(0.8); opacity: 0;    }
-      10%  { opacity: 0.55; }
-      90%  { opacity: 0.55; }
-      100% { transform: translateY(-20vh) rotate(360deg) scale(1.1); opacity: 0;   }
+    @keyframes calmDrift1 {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      33% { transform: translate(20vw, -35vh) scale(1.15) rotate(45deg); }
+      66% { transform: translate(-10vw, -70vh) scale(0.9) rotate(-20deg); }
+      100% { transform: translate(15vw, -110vh) scale(1.1) rotate(60deg); }
+    }
+    @keyframes calmDrift2 {
+      0% { transform: translate(0, 0) scale(0.9) rotate(0deg); }
+      33% { transform: translate(-20vw, -25vh) scale(1.1) rotate(-45deg); }
+      66% { transform: translate(10vw, -75vh) scale(1) rotate(30deg); }
+      100% { transform: translate(-15vw, -110vh) scale(1.2) rotate(-60deg); }
+    }
+    @keyframes calmDrift3 {
+      0% { transform: translate(0, 0) scale(1.1) rotate(0deg); }
+      33% { transform: translate(15vw, -45vh) scale(0.9) rotate(30deg); }
+      66% { transform: translate(-15vw, -65vh) scale(1.15) rotate(-10deg); }
+      100% { transform: translate(5vw, -110vh) scale(1) rotate(90deg); }
+    }
+
+    /* ── Frosted Glass Overlay ── */
+    .glass-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      backdrop-filter: blur(45px);
+      -webkit-backdrop-filter: blur(45px);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     /* ── Layout ── */
@@ -140,7 +154,7 @@
 
     /* ── Hero Card ── */
     .hero-card {
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.65);
       border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 28px;
       backdrop-filter: blur(32px) saturate(200%);
@@ -160,51 +174,63 @@
       to   { opacity: 1; transform: translateY(0)    scale(1);    }
     }
 
-    /* ── Brand Icon (Rose centered in circle) ── */
+    /* ── Brand Icon (Updated to Image with Dynamic Glow) ── */
     .brand-icon {
-      width: 88px;
-      height: 88px;
-      background: linear-gradient(135deg, #a8edea, #fed6e3);
-      border-radius: 50%;
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 18px;
-      box-shadow: 0 6px 24px rgba(168,237,234,0.5), inset 0 1px 0 rgba(255,255,255,0.8);
-      border: 2px solid rgba(255,255,255,0.85);
-      overflow: hidden;
-      flex-shrink: 0;
+      border-radius: 30px;
     }
-    .brand-icon-emoji {
-      font-size: 52px;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .brand-icon::before {
+      content: '';
+      position: absolute;
+      inset: -15px;
+      background: linear-gradient(-45deg, #a8edea, #fed6e3, #d4fc79, #fccb90);
+      background-size: 400% 400%;
+      animation: bgShift 18s ease infinite, pulseGlow 4s ease-in-out infinite alternate;
+      filter: blur(25px);
+      z-index: 0;
+      border-radius: inherit;
+    }
+    .brand-icon img {
       width: 100%;
       height: 100%;
-      animation: roseFloat 4s ease-in-out infinite;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 6px 15px rgba(0,0,0,0.15));
+      animation: roseFloat 5s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.5; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1.08); }
     }
     @keyframes roseFloat {
       0%, 100% { transform: translateY(0) scale(1); }
-      50%       { transform: translateY(-4px) scale(1.05); }
+      50%       { transform: translateY(-6px) scale(1.02); }
     }
 
-    .brand-name { font-size: 25px; font-weight: 800; color: #1a252f; margin-bottom: 4px; }
+    .brand-name { font-size: 25px; font-weight: 800; color: #1a252f; margin-bottom: 4px; position: relative; z-index: 1; }
     .brand-name span { color: #27ae60; }
-    .brand-sub { font-size: 13px; color: #5d6d7e; margin-bottom: 6px; }
+    .brand-sub { font-size: 13px; color: #5d6d7e; margin-bottom: 6px; position: relative; z-index: 1; }
 
     .divider {
       width: 64px; height: 2px;
       background: linear-gradient(90deg, transparent, #a8edea, #fed6e3, transparent);
       margin: 10px auto 14px;
       border-radius: 2px;
+      position: relative; z-index: 1;
     }
 
-    .tagline { font-size: 16px; font-weight: 500; color: #5d6d7e; line-height: 1.6; margin-bottom: 26px; }
+    .tagline { font-size: 16px; font-weight: 500; color: #5d6d7e; line-height: 1.6; margin-bottom: 26px; position: relative; z-index: 1; }
 
     /* ── Review Button ── */
     .review-btn {
+      position: relative; z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -220,9 +246,9 @@
       cursor: pointer;
       box-shadow: 0 6px 22px rgba(17,153,142,0.35);
       transition: all 0.3s;
-      animation: glowPulse 2.8s ease-in-out infinite;
+      animation: btnGlowPulse 2.8s ease-in-out infinite;
     }
-    @keyframes glowPulse {
+    @keyframes btnGlowPulse {
       0%, 100% { box-shadow: 0 6px 22px rgba(56,239,125,0.25); }
       50%       { box-shadow: 0 6px 34px rgba(56,239,125,0.55), 0 0 0 5px rgba(56,239,125,0.1); }
     }
@@ -244,12 +270,11 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      animation: floatIn 1s 0.25s cubic-bezier(0.22,1,0.36,1) both;
     }
 
-    /* ── Review Card (Google Maps style) ── */
+    /* ── Review Card (Google Maps style - Modified for gradual loading) ── */
     .gm-card {
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.88);
       border-radius: 18px;
       padding: 18px;
@@ -259,9 +284,16 @@
         0 3px 14px rgba(0,0,0,0.07),
         inset 0 1px 0 rgba(255,255,255,0.85);
       text-align: start;
-      transition: transform 0.2s, box-shadow 0.2s;
+      /* Default hidden state for gradual appearance */
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s;
     }
-    .gm-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.11); }
+    .gm-card.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .gm-card.in-view:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.11); }
 
     .gm-header { display: flex; align-items: center; margin-bottom: 10px; gap: 12px; }
     .gm-avatar {
@@ -360,7 +392,6 @@
 </head>
 <body>
 
-<!-- Aurora blobs -->
 <div class="aurora">
   <div class="aurora-blob"></div>
   <div class="aurora-blob"></div>
@@ -368,26 +399,17 @@
   <div class="aurora-blob"></div>
 </div>
 
-<!-- Floating butterflies & flowers -->
 <div class="floaters">
   <div class="floater">🦋</div>
   <div class="floater">🌸</div>
-  <div class="floater">🦋</div>
-  <div class="floater">🌺</div>
-  <div class="floater">🦋</div>
   <div class="floater">🌼</div>
-  <div class="floater">🦋</div>
-  <div class="floater">🌸</div>
-  <div class="floater">🌺</div>
-  <div class="floater">🦋</div>
-  <div class="floater">🌷</div>
-  <div class="floater">🦋</div>
 </div>
 
-<!-- Top Bar -->
+<div class="glass-overlay"></div>
+
 <div class="top-bar">
   <div class="top-bar-inner">
-    <button class="action-btn" onclick="openModal()">
+    <button class="action-btn" id="reportBtn" onclick="openModal()">
       <span>⚑</span> إبلاغ
     </button>
     <button class="action-btn" onclick="toggleLang()" id="langBtn" style="width:44px;padding:0;justify-content:center;font-size:17px;font-weight:700;">
@@ -396,13 +418,11 @@
   </div>
 </div>
 
-<!-- Main Page -->
 <div class="page">
 
-  <!-- Hero Card -->
   <div class="hero-card">
     <div class="brand-icon">
-      <div class="brand-icon-emoji">✿</div>
+      <img src="special.png" alt="I am Special Logo">
     </div>
     <div class="brand-name" id="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية للأطفال</div>
     <div class="divider"></div>
@@ -419,7 +439,6 @@
   <div class="footer" id="footer">© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة</div>
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="form-content" id="formContent">
@@ -440,15 +459,15 @@
 
       <div class="modal-actions">
         <button class="btn-submit" id="submitBtn" onclick="submitReport()">إرسال الطلب</button>
-        <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+        <button class="btn-cancel" id="cancelBtn" onclick="closeModal()">إلغاء</button>
       </div>
     </div>
 
     <div class="success-msg" id="successMsg">
       <div class="success-icon">✅</div>
-      <div class="success-text">تم استلام رسالتك بنجاح</div>
-      <p class="success-sub">ستتواصل الإدارة معك قريباً</p>
-      <button class="btn-submit" style="max-width:150px;margin-top:8px;" onclick="closeModal()">حسناً</button>
+      <div class="success-text" id="successText">تم استلام رسالتك بنجاح</div>
+      <p class="success-sub" id="successSub">ستتواصل الإدارة معك قريباً</p>
+      <button class="btn-submit" id="successOkBtn" style="max-width:150px;margin-top:8px;" onclick="closeModal()">حسناً</button>
     </div>
   </div>
 </div>
@@ -613,55 +632,13 @@
   ];
 
   const avatarColors = ['#e53935','#d81b60','#8e24aa','#5e35b1','#3949ab','#1e88e5','#039be5','#00acc1','#00897b','#43a047','#7cb342','#f4511e','#f6bf26','#0b8043','#3f51b5'];
-  const timeOptions   = ['منذ أسبوع','منذ أسبوعين','منذ شهر','منذ شهرين','منذ ٣ أشهر','منذ ٤ أشهر','منذ ٥ أشهر'];
+  const timeOptionsAr = ['منذ أسبوع','منذ أسبوعين','منذ شهر','منذ شهرين','منذ ٣ أشهر','منذ ٤ أشهر','منذ ٥ أشهر'];
+  const timeOptionsEn = ['A week ago','Two weeks ago','A month ago','2 months ago','3 months ago','4 months ago','5 months ago'];
 
-  // Fisher-Yates shuffle using Math.random (truly random each load)
-  function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
+  // Language management
+  let lang = localStorage.getItem('lang') || 'ar';
 
-  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-  function buildReviews() {
-    const shuffled = shuffle(allReviews);
-    const container = document.getElementById('reviewsContainer');
-    let html = '';
-    shuffled.forEach(r => {
-      const letter = r.name.charAt(0).toUpperCase();
-      const color  = pick(avatarColors);
-      const time   = pick(timeOptions);
-      const count  = Math.floor(Math.random() * 45) + 1;
-      const guide  = Math.random() > 0.55;
-      const meta   = guide ? `مرشد محلي · ${count} مراجعة` : `${count} مراجعة`;
-      html += `
-        <div class="gm-card">
-          <div class="gm-header">
-            <div class="gm-avatar" style="background:${color}">${letter}</div>
-            <div class="gm-user-info">
-              <div class="gm-name">${r.name}</div>
-              <div class="gm-meta">${meta}</div>
-            </div>
-            <div class="gm-menu">⋮</div>
-          </div>
-          <div class="gm-rating-row">
-            <div class="gm-stars">★★★★★</div>
-            <div class="gm-time">${time}</div>
-          </div>
-          <div class="gm-text">${r.text}</div>
-        </div>`;
-    });
-    container.innerHTML = html;
-  }
-
-  // ── Language Toggle ──
-  let lang = 'ar';
-  function toggleLang() {
-    lang = lang === 'ar' ? 'en' : 'ar';
+  function applyLang() {
     document.documentElement.lang = lang;
     document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
     document.getElementById('langBtn').textContent = lang === 'ar' ? 'E' : 'ع';
@@ -673,6 +650,19 @@
       document.getElementById('reviewBtn').textContent = '★ Review Now';
       document.getElementById('reviewsLabel').textContent = "What Parents Say About Us";
       document.getElementById('footer').textContent    = '© I am Special Entertainment Care — All Rights Reserved';
+      
+      // Modal Translation
+      document.getElementById('reportBtn').innerHTML = '<span>⚑</span> Report';
+      document.getElementById('modalTitle').textContent = 'Request a Call';
+      document.getElementById('modalSub').textContent = 'Please provide your info to contact you';
+      document.getElementById('phoneLabel').textContent = 'Phone Number';
+      document.getElementById('childLabel').textContent = 'Child Name';
+      document.getElementById('modalNote').textContent = '☏ You will be contacted in minutes';
+      document.getElementById('submitBtn').textContent = 'Submit Request';
+      document.getElementById('cancelBtn').textContent = 'Cancel';
+      document.getElementById('successText').textContent = 'Message Received Successfully';
+      document.getElementById('successSub').textContent = 'Management will contact you soon';
+      document.getElementById('successOkBtn').textContent = 'OK';
     } else {
       document.getElementById('brandName').innerHTML   = 'مركز <span>اي ام سبيشل</span> للضيافة الترفيهية';
       document.getElementById('brandSub').textContent  = 'الرياض جاليري';
@@ -680,10 +670,128 @@
       document.getElementById('reviewBtn').innerHTML   = '★ تقييم الآن';
       document.getElementById('reviewsLabel').textContent = 'ماذا قال أولياء الأمور عنا';
       document.getElementById('footer').textContent   = '© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة';
+
+      // Modal Translation
+      document.getElementById('reportBtn').innerHTML = '<span>⚑</span> إبلاغ';
+      document.getElementById('modalTitle').textContent = 'طلب اتصال';
+      document.getElementById('modalSub').textContent = 'يرجى تزويدنا بمعلوماتك للتواصل معك';
+      document.getElementById('phoneLabel').textContent = 'رقم الجوال';
+      document.getElementById('childLabel').textContent = 'اسم الطفل';
+      document.getElementById('modalNote').textContent = '☏ سيتم الاتصال بك خلال دقائق';
+      document.getElementById('submitBtn').textContent = 'إرسال الطلب';
+      document.getElementById('cancelBtn').textContent = 'إلغاء';
+      document.getElementById('successText').textContent = 'تم استلام رسالتك بنجاح';
+      document.getElementById('successSub').textContent = 'ستتواصل الإدارة معك قريباً';
+      document.getElementById('successOkBtn').textContent = 'حسناً';
     }
+    
+    buildReviews();
   }
 
-  // ── Modal ──
+  function toggleLang() {
+    lang = lang === 'ar' ? 'en' : 'ar';
+    localStorage.setItem('lang', lang);
+    applyLang();
+  }
+
+  // Helpers
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function isEnglishText(text) {
+    const engMatches = (text.match(/[a-zA-Z]/g) || []).length;
+    const arMatches = (text.match(/[\u0600-\u06FF]/g) || []).length;
+    return engMatches > arMatches;
+  }
+
+  function buildReviews() {
+    let shuffled = shuffle(allReviews);
+
+    // Sort Reviews By Language Priority
+    shuffled.sort((a, b) => {
+      const aEng = isEnglishText(a.text) || isEnglishText(a.name);
+      const bEng = isEnglishText(b.text) || isEnglishText(b.name);
+      
+      if (lang === 'en') {
+        if (aEng && !bEng) return -1;
+        if (!aEng && bEng) return 1;
+      } else {
+        if (!aEng && bEng) return -1;
+        if (aEng && !bEng) return 1;
+      }
+      return 0;
+    });
+
+    const container = document.getElementById('reviewsContainer');
+    const timeOptions = lang === 'en' ? timeOptionsEn : timeOptionsAr;
+    let html = '';
+    
+    shuffled.forEach(r => {
+      const letter = r.name.charAt(0).toUpperCase();
+      const color  = pick(avatarColors);
+      const time   = pick(timeOptions);
+      const count  = Math.floor(Math.random() * 45) + 1;
+      const guide  = Math.random() > 0.55;
+      const metaText = lang === 'en' 
+        ? (guide ? `Local Guide · ${count} reviews` : `${count} reviews`)
+        : (guide ? `مرشد محلي · ${count} مراجعة` : `${count} مراجعة`);
+
+      html += `
+        <div class="gm-card">
+          <div class="gm-header">
+            <div class="gm-avatar" style="background:${color}">${letter}</div>
+            <div class="gm-user-info">
+              <div class="gm-name">${r.name}</div>
+              <div class="gm-meta">${metaText}</div>
+            </div>
+            <div class="gm-menu">⋮</div>
+          </div>
+          <div class="gm-rating-row">
+            <div class="gm-stars">★★★★★</div>
+            <div class="gm-time">${time}</div>
+          </div>
+          <div class="gm-text">${r.text}</div>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
+    observeReviews(); // Initialize gradual reveal
+  }
+
+  // ── Gradual Reveal (Intersection Observer) ──
+  function observeReviews() {
+    const cards = document.querySelectorAll('.gm-card');
+    let delayCounter = 0;
+    let lastEntryTime = 0;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      const now = Date.now();
+      if (now - lastEntryTime > 150) delayCounter = 0; 
+      lastEntryTime = now;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('in-view');
+          }, delayCounter * 120); 
+          delayCounter++;
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+    cards.forEach(card => observer.observe(card));
+  }
+
+  // ── Modal Actions ──
   function openModal() {
     document.getElementById('modalOverlay').classList.add('active');
     document.getElementById('formContent').classList.remove('hide');
@@ -691,9 +799,11 @@
     document.getElementById('phoneInput').value = '';
     document.getElementById('childInput').value = '';
   }
+  
   function closeModal() {
     document.getElementById('modalOverlay').classList.remove('active');
   }
+  
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   document.getElementById('phoneInput').addEventListener('input', function() {
     this.style.borderColor = 'rgba(0,0,0,0.1)';
@@ -707,17 +817,20 @@
       return;
     }
     const btn = document.getElementById('submitBtn');
-    btn.textContent = 'جاري الإرسال...';
+    const originalText = btn.textContent;
+    btn.textContent = lang === 'en' ? 'Sending...' : 'جاري الإرسال...';
     btn.disabled = true;
+    
     await new Promise(r => setTimeout(r, 1000));
+    
     document.getElementById('formContent').classList.add('hide');
     document.getElementById('successMsg').classList.add('show');
-    btn.textContent = 'إرسال الطلب';
+    btn.textContent = originalText;
     btn.disabled = false;
   }
 
   // ── Init ──
-  buildReviews();
+  document.addEventListener('DOMContentLoaded', applyLang);
 </script>
 </body>
 </html>
