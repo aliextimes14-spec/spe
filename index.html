@@ -2,69 +2,90 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I am Special Center — التقييمات</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>I am Special — التقييمات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      /* Light Glassmorphism Palette */
-      --glass-bg: rgba(255, 255, 255, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --glass-shadow: rgba(0, 0, 0, 0.08);
-      /* Light Theme Text Colors */
-      --text-main: #1a252f;
-      --text-sec: #34495e;
-      --text-muted: #7f8c8d;
-      --accent: #27ae60;
-      /* Google Maps Colors */
-      --gm-bg: #ffffff;
-      --gm-text-main: #202124;
-      --gm-text-sec: #70757a;
-      --gm-text-body: #3c4043;
-      --gm-star: #fbbc04;
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Tajawal', sans-serif;
       min-height: 100vh;
-      /* خلفية حية متدرجة (Aurora) */
-      background: linear-gradient(-45deg, #eef2f3, #dbe6fb, #f8f9d2, #dcf2d1);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      position: relative;
+      background: linear-gradient(-45deg, #e8f5ff, #f0e8ff, #fff0f8, #e8fff4, #fffbe8);
+      background-size: 500% 500%;
+      animation: bgShift 18s ease infinite;
       overflow-x: hidden;
-      color: var(--text-main);
-      transition: all 0.3s ease;
+      color: #1a252f;
     }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Bokeh background for light mode - تعزيز الألوان بنسبة 20% وتحريكها */
-    body::before {
-      content: '';
+    /* ── Aurora Blobs ── */
+    .aurora {
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse 60% 60% at 20% 30%, rgba(40, 231, 234, 0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 50% at 80% 70%, rgba(255, 200, 54, 0.20) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 60% 10%, rgba(54, 255, 165, 0.15) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
-      animation: moveAurora 20s ease-in-out infinite alternate;
+      overflow: hidden;
+    }
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.35;
+      animation: blobMove 22s ease-in-out infinite alternate;
+    }
+    .aurora-blob:nth-child(1) { width: 500px; height: 500px; background: radial-gradient(circle, #a8edea, transparent); top: -10%; left: -10%; animation-duration: 20s; }
+    .aurora-blob:nth-child(2) { width: 400px; height: 400px; background: radial-gradient(circle, #fed6e3, transparent); top: 30%; right: -10%; animation-duration: 25s; animation-delay: -5s; }
+    .aurora-blob:nth-child(3) { width: 350px; height: 350px; background: radial-gradient(circle, #d4fc79, transparent); bottom: -10%; left: 20%; animation-duration: 18s; animation-delay: -8s; }
+    .aurora-blob:nth-child(4) { width: 300px; height: 300px; background: radial-gradient(circle, #fccb90, transparent); top: 60%; left: -5%; animation-duration: 30s; animation-delay: -3s; }
+
+    @keyframes blobMove {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(40px, 30px) scale(1.1); }
+      100% { transform: translate(-20px, 50px) scale(0.95); }
     }
 
-    @keyframes moveAurora {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.1) translate(2%, 3%); }
-      100% { transform: scale(1) translate(-2%, -3%); }
+    /* ── Floating Emojis (Butterflies & Flowers) ── */
+    .floaters {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .floater {
+      position: absolute;
+      font-size: 42px;
+      opacity: 0.55;
+      animation: floatUp linear infinite;
+      user-select: none;
+    }
+    .floater:nth-child(1)  { left: 3%;   font-size: 50px; animation-duration: 14s; animation-delay: 0s;    }
+    .floater:nth-child(2)  { left: 10%;  font-size: 38px; animation-duration: 18s; animation-delay: -3s;   }
+    .floater:nth-child(3)  { left: 18%;  font-size: 56px; animation-duration: 12s; animation-delay: -7s;   }
+    .floater:nth-child(4)  { left: 27%;  font-size: 44px; animation-duration: 20s; animation-delay: -1s;   }
+    .floater:nth-child(5)  { left: 36%;  font-size: 48px; animation-duration: 16s; animation-delay: -9s;   }
+    .floater:nth-child(6)  { left: 45%;  font-size: 36px; animation-duration: 22s; animation-delay: -4s;   }
+    .floater:nth-child(7)  { left: 54%;  font-size: 52px; animation-duration: 15s; animation-delay: -6s;   }
+    .floater:nth-child(8)  { left: 63%;  font-size: 40px; animation-duration: 19s; animation-delay: -2s;   }
+    .floater:nth-child(9)  { left: 72%;  font-size: 58px; animation-duration: 13s; animation-delay: -11s;  }
+    .floater:nth-child(10) { left: 81%;  font-size: 42px; animation-duration: 17s; animation-delay: -5s;   }
+    .floater:nth-child(11) { left: 90%;  font-size: 46px; animation-duration: 21s; animation-delay: -8s;   }
+    .floater:nth-child(12) { left: 96%;  font-size: 34px; animation-duration: 24s; animation-delay: -14s;  }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg)  scale(0.8); opacity: 0;    }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.55; }
+      100% { transform: translateY(-20vh) rotate(360deg) scale(1.1); opacity: 0;   }
     }
 
+    /* ── Layout ── */
     .page {
       position: relative;
       z-index: 1;
@@ -72,29 +93,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 90px 18px 60px;
-      /* زيادة المسافة العلوية لتعويض الشريط المثبت */
+      padding: 80px 18px 60px;
     }
 
-    /* ── Top Bar (Fixed) ── */
+    /* ── Top Bar ── */
     .top-bar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
+      top: 0; left: 0; right: 0;
+      height: 64px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 0 18px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
       z-index: 50;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
-
     .top-bar-inner {
       width: 100%;
       max-width: 520px;
@@ -103,11 +119,11 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .action-btn {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      color: #1a252f;
       font-family: 'Tajawal', sans-serif;
       font-size: 14px;
       font-weight: 600;
@@ -116,128 +132,109 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 7px;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      gap: 6px;
+      transition: all 0.25s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
-
-    .action-btn:hover {
-      background: #fff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    .action-btn span { font-size: 16px; }
+    .action-btn:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
 
     /* ── Hero Card ── */
     .hero-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 28px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 8px 32px var(--glass-shadow);
-      padding: 42px 32px 36px;
+      backdrop-filter: blur(32px) saturate(200%);
+      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        inset 0 -1px 0 rgba(255,255,255,0.4);
+      padding: 44px 32px 38px;
       width: 100%;
       max-width: 520px;
       text-align: center;
-      animation: floatIn 0.8s cubic-bezier(0.22,1,0.36,1) both;
+      animation: floatIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
     }
-
     @keyframes floatIn {
-      from { opacity: 0; transform: translateY(32px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      from { opacity: 0; transform: translateY(36px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
     }
 
+    /* ── Brand Icon (Rose centered in circle) ── */
     .brand-icon {
-      width: 72px;
-      height: 72px;
-      background: linear-gradient(135deg, #11998e, #38ef7d);
+      width: 88px;
+      height: 88px;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 85px; /* تكبير الوردة لتلامس الحواف */
+      margin: 0 auto 18px;
+      box-shadow: 0 6px 24px rgba(168,237,234,0.5), inset 0 1px 0 rgba(255,255,255,0.8);
+      border: 2px solid rgba(255,255,255,0.85);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .brand-icon-emoji {
+      font-size: 52px;
       line-height: 1;
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(56, 239, 125, 0.3);
-      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); /* ظل أبيض خفيف */
-      overflow: hidden; /* لضمان عدم خروج الوردة خارج الدائرة */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      animation: roseFloat 4s ease-in-out infinite;
+    }
+    @keyframes roseFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-4px) scale(1.05); }
     }
 
-    .brand-name {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
-    }
-    .brand-name span { color: var(--accent); }
-
-    .sub-brand {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-sec);
-      margin-bottom: 16px;
-    }
-
-    .tagline {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--text-sec);
-      line-height: 1.6;
-      margin: 18px 0 28px;
-    }
+    .brand-name { font-size: 25px; font-weight: 800; color: #1a252f; margin-bottom: 4px; }
+    .brand-name span { color: #27ae60; }
+    .brand-sub { font-size: 13px; color: #5d6d7e; margin-bottom: 6px; }
 
     .divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #38ef7d, transparent);
-      margin: 0 auto 10px;
+      width: 64px; height: 2px;
+      background: linear-gradient(90deg, transparent, #a8edea, #fed6e3, transparent);
+      margin: 10px auto 14px;
+      border-radius: 2px;
     }
+
+    .tagline { font-size: 16px; font-weight: 500; color: #5d6d7e; line-height: 1.6; margin-bottom: 26px; }
 
     /* ── Review Button ── */
     .review-btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #11998e 100%);
-      background-size: 200% auto;
+      gap: 8px;
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
       color: #fff;
       font-family: 'Tajawal', sans-serif;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
-      padding: 16px 44px;
+      padding: 15px 40px;
       border-radius: 50px;
+      text-decoration: none;
       border: none;
       cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(17, 153, 142, 0.3);
-      transition: all 0.35s ease;
-      letter-spacing: 0.5px;
-      animation: pulseGlow 2.5s ease-in-out infinite;
+      box-shadow: 0 6px 22px rgba(17,153,142,0.35);
+      transition: all 0.3s;
+      animation: glowPulse 2.8s ease-in-out infinite;
     }
-
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 6px 20px rgba(56, 239, 125, 0.2); }
-      50%       { box-shadow: 0 6px 30px rgba(56, 239, 125, 0.5), 0 0 0 4px rgba(56, 239, 125, 0.1); }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 6px 22px rgba(56,239,125,0.25); }
+      50%       { box-shadow: 0 6px 34px rgba(56,239,125,0.55), 0 0 0 5px rgba(56,239,125,0.1); }
     }
-
-    .review-btn:hover {
-      background-position: right center;
-      transform: translateY(-3px) scale(1.03);
-    }
-    .review-btn span { font-size: 18px; }
+    .review-btn:hover { transform: translateY(-3px) scale(1.03); }
 
     /* ── Reviews Section ── */
     .reviews-label {
-      color: var(--text-sec);
       font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      margin-top: 40px;
-      margin-bottom: 20px;
+      font-weight: 700;
+      color: #5d6d7e;
+      letter-spacing: 0.5px;
+      margin: 40px 0 18px;
       text-align: center;
     }
 
@@ -247,407 +244,407 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      animation: floatIn 1s 0.2s cubic-bezier(0.22,1,0.36,1) both;
+      animation: floatIn 1s 0.25s cubic-bezier(0.22,1,0.36,1) both;
     }
 
-    .gm-review-card {
-      background: var(--gm-bg);
-      border-radius: 16px;
+    /* ── Review Card (Google Maps style) ── */
+    .gm-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      border-radius: 18px;
       padding: 18px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      color: var(--gm-text-body);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      box-shadow:
+        0 3px 14px rgba(0,0,0,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.85);
       text-align: start;
-      transition: transform 0.2s ease;
-      border: 1px solid rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .gm-review-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .gm-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.11); }
 
-    .gm-header { display: flex; align-items: center; margin-bottom: 12px; }
+    .gm-header { display: flex; align-items: center; margin-bottom: 10px; gap: 12px; }
     .gm-avatar {
-      width: 40px; height: 40px; border-radius: 50%; color: #fff;
-      display: flex;
-      align-items: center; justify-content: center; font-size: 18px; font-weight: bold;
-      margin-inline-end: 14px; flex-shrink: 0;
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-    .gm-user-info { flex: 1; }
-    .gm-name { font-size: 15px; font-weight: 700; color: var(--gm-text-main);
-      margin-bottom: 2px; font-family: 'Tajawal', sans-serif; }
-    .gm-meta { font-size: 12px; color: var(--gm-text-sec); }
-    .gm-menu { color: var(--gm-text-sec); font-size: 20px; font-weight: bold; cursor: pointer; padding: 0 5px; }
-    .gm-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-    .gm-stars { color: var(--gm-star); font-size: 16px; letter-spacing: 2px; }
-    .gm-time { font-size: 12px; color: var(--gm-text-sec); }
-    .gm-text { font-size: 14px; line-height: 1.6; color: var(--gm-text-body); }
+    .gm-user-info { flex: 1; min-width: 0; }
+    .gm-name { font-size: 15px; font-weight: 700; color: #202124; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gm-meta { font-size: 12px; color: #70757a; margin-top: 1px; }
+    .gm-menu { color: #70757a; font-size: 20px; cursor: default; padding: 0 4px; }
+    .gm-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .gm-stars { color: #fbbc04; font-size: 16px; letter-spacing: 2px; }
+    .gm-time { font-size: 12px; color: #70757a; }
+    .gm-text { font-size: 14px; line-height: 1.65; color: #3c4043; }
 
-    /* ── Modal (Light Theme) ── */
+    /* ── Modal ── */
     .modal-overlay {
-      position: fixed;
-      inset: 0; background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 100; display: flex; align-items: center; justify-content: center;
-      padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
     }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
-
     .modal {
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(255, 255, 255, 1);
-      border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 380px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.95);
+      border-radius: 26px;
+      padding: 36px 28px;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.14);
       transform: scale(0.92) translateY(20px);
       transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
       text-align: center;
     }
     .modal-overlay.active .modal { transform: scale(1) translateY(0); }
 
-    .modal-icon {
-      width: 60px; height: 60px; background: rgba(56, 239, 125, 0.15);
-      border: 1px solid rgba(56, 239, 125, 0.3); border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; margin: 0 auto 18px;
-      font-size: 26px; color: #27ae60;
-    }
-
-    .modal-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
-    .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    .modal-icon { font-size: 36px; margin-bottom: 14px; }
+    .modal-title { font-size: 20px; font-weight: 700; color: #1a252f; margin-bottom: 5px; }
+    .modal-sub { font-size: 13px; color: #7f8c8d; margin-bottom: 22px; }
 
     .field-group { margin-bottom: 14px; text-align: start; }
-    .field-label {
-      display: block; font-size: 13px; font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 7px; letter-spacing: 0.5px;
-    }
+    .field-label { display: block; font-size: 13px; font-weight: 700; color: #27ae60; margin-bottom: 6px; }
     .field-input {
       width: 100%;
-      background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 12px; padding: 13px 16px; font-family: 'Tajawal', sans-serif;
-      font-size: 15px; color: var(--text-main); outline: none;
-      transition: border-color 0.25s ease, background 0.25s ease; text-align: start;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      color: #1a252f;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .field-input:focus { border-color: #27ae60; background: #fff;
-      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1); }
+    .field-input:focus { border-color: #27ae60; box-shadow: 0 0 0 3px rgba(39,174,96,0.1); background: #fff; }
     .field-input::placeholder { color: #aaa; }
 
-    .modal-note {
-      font-size: 13px; color: var(--text-muted); margin: 16px 0 22px;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .modal-note span { color: var(--accent); font-weight: 600; }
-
+    .modal-note { font-size: 13px; color: #7f8c8d; margin: 14px 0 20px; }
     .modal-actions { display: flex; gap: 10px; }
     .btn-submit {
-      flex: 1; background: linear-gradient(135deg, #11998e, #38ef7d);
+      flex: 1;
+      background: linear-gradient(135deg, #11998e, #38ef7d);
       color: #fff;
-      font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 800;
-      padding: 14px; border: none; border-radius: 12px; cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px; font-weight: 800;
+      padding: 13px; border: none; border-radius: 12px;
+      cursor: pointer; transition: opacity 0.2s, transform 0.2s;
     }
     .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
     .btn-cancel {
       background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1);
-      color: var(--text-main); font-family: 'Tajawal', sans-serif; font-size: 15px;
-      font-weight: 500; padding: 14px 20px; border-radius: 12px; cursor: pointer;
-      transition: background 0.2s;
+      color: #1a252f; font-family: 'Tajawal', sans-serif;
+      font-size: 15px; padding: 13px 18px; border-radius: 12px;
+      cursor: pointer; transition: background 0.2s;
     }
-    .btn-cancel:hover { background: rgba(0,0,0,0.08); }
+    .btn-cancel:hover { background: rgba(0,0,0,0.09); }
 
-    .success-msg { display: none; flex-direction: column; align-items: center;
-      gap: 12px; padding: 20px 0; }
+    .success-msg { display: none; flex-direction: column; align-items: center; gap: 12px; padding: 20px 0; }
     .success-msg.show { display: flex; }
     .form-content.hide { display: none; }
-    .success-icon { font-size: 48px; color: #27ae60; }
-    .success-text { font-size: 16px; font-weight: 600; color: var(--text-main); }
+    .success-icon { font-size: 50px; }
+    .success-text { font-size: 17px; font-weight: 700; color: #1a252f; }
+    .success-sub { font-size: 13px; color: #7f8c8d; }
 
-    .footer { margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 13px; }
+    /* ── Footer ── */
+    .footer { margin-top: 44px; text-align: center; color: #95a5a6; font-size: 13px; }
   </style>
 </head>
 <body>
 
+<!-- Aurora blobs -->
+<div class="aurora">
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+</div>
+
+<!-- Floating butterflies & flowers -->
+<div class="floaters">
+  <div class="floater">🦋</div>
+  <div class="floater">🌸</div>
+  <div class="floater">🦋</div>
+  <div class="floater">🌺</div>
+  <div class="floater">🦋</div>
+  <div class="floater">🌼</div>
+  <div class="floater">🦋</div>
+  <div class="floater">🌸</div>
+  <div class="floater">🌺</div>
+  <div class="floater">🦋</div>
+  <div class="floater">🌷</div>
+  <div class="floater">🦋</div>
+</div>
+
+<!-- Top Bar -->
 <div class="top-bar">
   <div class="top-bar-inner">
-    <button class="action-btn" onclick="openModal()" data-i18n="reportBtn">
-      <span>⚑</span> إبلاغ 
+    <button class="action-btn" onclick="openModal()">
+      <span>⚑</span> إبلاغ
     </button>
-    <button class="action-btn" onclick="toggleLanguage()" style="width: 44px; padding: 0; justify-content: center; font-size: 18px; font-weight: 700;">
+    <button class="action-btn" onclick="toggleLang()" id="langBtn" style="width:44px;padding:0;justify-content:center;font-size:17px;font-weight:700;">
       E
     </button>
   </div>
 </div>
 
+<!-- Main Page -->
 <div class="page">
+
+  <!-- Hero Card -->
   <div class="hero-card">
-    <div class="brand-icon">✿</div>
-    <div class="brand-name" data-i18n="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية</div>
+    <div class="brand-icon">
+      <div class="brand-icon-emoji">🌹</div>
+    </div>
+    <div class="brand-name" id="brandName">مركز <span>اي ام سبيشل</span> للضيافة الترفيهية</div>
     <div class="divider"></div>
-    <div class="sub-brand" data-i18n="brandSub">الرياض جاليري</div>
-    <p class="tagline" data-i18n="tagline"> رأيك يصنع تجربة أجمل للأطفال</p>
-    <a class="review-btn" href="https://g.page/r/CaO_yPKEQWmAEBM/review" target="_blank" rel="noopener" data-i18n="reviewBtn">
-      <span>★</span> تقييم الآن
+    <div class="brand-sub" id="brandSub">الرياض جاليري</div>
+    <p class="tagline" id="tagline">رأيك يصنع تجربة أجمل للأطفال</p>
+    <a class="review-btn" href="https://g.page/r/CaO_yPKEQWmAEBM/review" target="_blank" rel="noopener" id="reviewBtn">
+      ★ تقييم الآن
     </a>
   </div>
 
-  <p class="reviews-label" data-i18n="reviewsLabel">ماذا قال أولياء الأمور عنا</p>
-
+  <p class="reviews-label" id="reviewsLabel">ماذا قال أولياء الأمور عنا</p>
   <div class="reviews-grid" id="reviewsContainer"></div>
 
-  <div class="footer" data-i18n="footer">© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة</div>
+  <div class="footer" id="footer">© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة</div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="form-content" id="formContent">
-      <div class="modal-icon">⚑</div>
-      <div class="modal-title" data-i18n="modalTitle">إبلاغ</div>
-      <div class="modal-sub" data-i18n="modalSub">سنتصل بكل خلال دقائق</div>
+      <div class="modal-icon">📞</div>
+      <div class="modal-title" id="modalTitle">طلب اتصال</div>
+      <div class="modal-sub" id="modalSub">يرجى تزويدنا بمعلوماتك للتواصل معك</div>
 
       <div class="field-group">
-        <label class="field-label" for="phoneInput" data-i18n="phoneLabel">رقم الجوال</label>
+        <label class="field-label" for="phoneInput" id="phoneLabel">رقم الجوال</label>
         <input class="field-input" id="phoneInput" type="tel" placeholder="05XXXXXXXX" maxlength="10" />
       </div>
-
       <div class="field-group">
-        <label class="field-label" for="invoiceInput" data-i18n="invoiceLabel">أسم الطفل</label>
-        <input class="field-input" id="invoiceInput" type="text" placeholder="..." />
+        <label class="field-label" for="childInput" id="childLabel">اسم الطفل</label>
+        <input class="field-input" id="childInput" type="text" placeholder="..." />
       </div>
 
-      <div class="modal-note">
-        <span data-i18n="modalNote">☏ سيتم الاتصال بك خلال دقائق</span>
-      </div>
+      <div class="modal-note" id="modalNote">☏ سيتم الاتصال بك خلال دقائق</div>
 
       <div class="modal-actions">
-        <button class="btn-submit" id="submitBtn" onclick="submitReport()" data-i18n="btnSubmit">إرسال الطلب</button>
-        <button class="btn-cancel" onclick="closeModal()" data-i18n="btnCancel">إلغاء</button>
+        <button class="btn-submit" id="submitBtn" onclick="submitReport()">إرسال الطلب</button>
+        <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
       </div>
     </div>
 
     <div class="success-msg" id="successMsg">
-      <div class="success-icon">✓</div>
-      <div class="success-text" data-i18n="successText">سنتصل بك خلال دقائق</div>
-      <p style="font-size:13px;color:var(--text-muted);" data-i18n="successSub">تم تلقي البلاغ</p>
-      <button class="btn-submit" style="margin-top:8px;max-width:160px;" onclick="closeModal()" data-i18n="successBtn">حسناً</button>
+      <div class="success-icon">✅</div>
+      <div class="success-text">تم استلام رسالتك بنجاح</div>
+      <p class="success-sub">ستتواصل الإدارة معك قريباً</p>
+      <button class="btn-submit" style="max-width:150px;margin-top:8px;" onclick="closeModal()">حسناً</button>
     </div>
   </div>
 </div>
 
 <script>
-  // ── Dictionaries & Multilingual Setup ──
-  const translations = {
-    ar: {
-      reportBtn: "<span>⚑</span> إبلاغ",
-      brandName: "مركز <span>اي ام سبيشل</span> للضيافة الترفيهية",
-      brandSub: "الرياض جاليري",
-      tagline: "بيئة آمنة ومرحة لطفلك، شاركنا رأيك",
-      reviewBtn: "<span>★</span> تقييم الآن",
-      reviewsLabel: "ماذا قال أولياء الأمور عنا",
-      modalTitle: "طلب اتصال",
-      modalSub: "يرجى تزويدنا بمعلوماتك للتواصل معك",
-      phoneLabel: "رقم الجوال",
-      invoiceLabel: "رقم التسجيل / المشترك",
-      modalNote: "<span>☏</span> سيتم الاتصال بك خلال دقائق",
-      btnSubmit: "إرسال الطلب",
-      btnCancel: "إلغاء",
-      successText: "تم استلام رسالتك بنجاح",
-      successSub: "ستتواصل الإدارة معك قريباً",
-      successBtn: "حسناً",
-      footer: "© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة",
-      reviewMeta: "مراجعة",
-      localGuide: "مرشد محلي",
-      times: ['منذ أسبوع', 'منذ أسبوعين', 'منذ شهر', 'منذ شهرين', 'منذ ٣ أشهر', 'منذ ٤ أشهر']
-    },
-    en: {
-      reportBtn: "<span>⚑</span> Request Call",
-      brandName: "<span>I am Special</span> Entertainment Care",
-      brandSub: "Riyadh Gallery",
-      tagline: "We’d love to hear your feedback!",
-      reviewBtn: "<span>★</span> Review Now",
-      reviewsLabel: "What Parents Say About Us",
-      modalTitle: "Request a Call",
-      modalSub: "Please provide your details so we can contact you",
-      phoneLabel: "Phone Number",
-      invoiceLabel: "Registration / Subscriber ID",
-      modalNote: "<span>☏</span> You will be contacted within minutes",
-      btnSubmit: "Send Request",
-      btnCancel: "Cancel",
-      successText: "Message received successfully",
-      successSub: "Management will contact you shortly",
-      successBtn: "OK",
-      footer: "© I am Special Entertainment Care Center — All Rights Reserved",
-      reviewMeta: "reviews",
-      localGuide: "Local Guide",
-      times: ['A week ago', '2 weeks ago', 'A month ago', '2 months ago', '3 months ago', '4 months ago']
-    }
-  };
-  let currentLang = 'ar';
-
-  function toggleLanguage() {
-    currentLang = currentLang === 'ar' ? 'en' : 'ar';
-    document.documentElement.lang = currentLang;
-    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-    // التبديل بين E و ع
-    const langBtn = document.querySelector('.top-bar-inner button:nth-child(2)');
-    langBtn.innerHTML = currentLang === 'ar' ? 'E' : 'ع';
-
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (translations[currentLang][key]) {
-        el.innerHTML = translations[currentLang][key];
-      }
-    });
-    generateReviews();
-  }
-
-  // ── Modal & API Call Logic ──
-  function openModal() {
-    document.getElementById('modalOverlay').classList.add('active');
-    document.getElementById('formContent').classList.remove('hide');
-    document.getElementById('successMsg').classList.remove('show');
-    document.getElementById('phoneInput').value = '';
-    document.getElementById('invoiceInput').value = '';
-  }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  }
-
-  async function submitReport() {
-    const phone = document.getElementById('phoneInput').value.trim();
-    const invoice = document.getElementById('invoiceInput').value.trim();
-    if (!phone) {
-      document.getElementById('phoneInput').style.borderColor = '#ff6b6b';
-      document.getElementById('phoneInput').focus();
-      return;
-    }
-
-    const submitBtn = document.getElementById('submitBtn');
-    const originalText = submitBtn.innerText;
-    submitBtn.innerText = currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...';
-    submitBtn.disabled = true;
-
-    try {
-      const token = "$2y$10$1Tx/JZTT2R7qri9Dkb/uF.izXd2aQJXO4RJUlMLqD8N9vqsDyOF0m";
-      const targetPhone = "0559905345";
-      
-      /* * ملاحظة: يجب وضع رابط الـ API الصحيح في السطر التالي بدلاً من 'رابط_الـ_API_هنا'
-       * وكذلك تعديل الـ body ليتناسب مع البيانات المطلوبة في الـ API الخاص بك.
-       */
-      const apiUrl = 'رابط_الـ_API_هنا';
-      // مثال على كيفية الإرسال (قد تختلف حسب متطلبات مزود الخدمة)
-      /* const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({
-          target_number: targetPhone,
-          customer_phone: phone,
-          invoice_id: invoice,
-          token: token
-        })
-      });
-      */
-
-      // محاكاة نجاح الإرسال (قم بحذف هذه الـ setTimeout عند تفعيل الرابط الحقيقي)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      document.getElementById('formContent').classList.add('hide');
-      document.getElementById('successMsg').classList.add('show');
-    } catch (error) {
-      console.error('API Error:', error);
-      alert(currentLang === 'ar' ? 'حدث خطأ في الاتصال، حاول مجدداً.' : 'Connection error, please try again.');
-    } finally {
-      submitBtn.innerText = originalText;
-      submitBtn.disabled = false;
-    }
-  }
-
-  document.getElementById('phoneInput').addEventListener('input', function() {
-    this.style.borderColor = 'rgba(0,0,0,0.1)';
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // ── Random Review Generation ──
-  const namesAr = {
-    first: ['يوسف', 'ملاك', 'أحمد', 'ليلى', 'شجون', 'عمر', 'سارة', 'suz', 'زين', 'آدم', 'صوفيا', 'إيما', 'علي', 'نور'],
-    last: ['حداد', 'الشهري', 'اسماعيلي', 'مشاري', 'المصري', 'الموسى', '~', 'حسين', 'نواف', '']
-  };
-  const namesEn = {
-    first: ['Youssef', 'Maria', 'Ahmed', 'Layla', 'John', 'Omar', 'Sarah', 'David', 'Zain', 'Adam', 'Sophia', 'Emma', 'Ali', 'Nour'],
-    last: ['Haddad', 'Smith', 'Khoury', 'Johnson', 'El-Masry', 'Davis', 'Brown', 'Hussein', 'Miller', 'Wilson']
-  };
-
-  const reviewsDataAr = [
-    "مركز رائع جداً، أطفالي يحبون قضاء الوقت هناك.",
-    "الاهتمام بالنظافة والأنشطة مميز جداً. أنصح به.",
-    "فريق العمل محترف ولطيف مع الأطفال.",
-    "أفضل مكان للترفيه والتعلم في نفس الوقت.",
-    "المكان آمن ومجهز بألعاب حديثة وممتعة.",
-    "تجربة ممتازة وتطور ملحوظ في شخصية ابني.",
-    "أسعار مقبولة مقابل الجودة المقدمة.",
-    "الأنشطة متنوعة وتناسب مختلف الأعمار."
+  // ── Real Reviews Data ──
+  const allReviews = [
+    { name: "RAKAN AL-DWSARI",      text: "المكان حلو والاهتمام ممتاز، ينظفون المكان بشكل مستمر خلال اللعب. فيه مكان رمل ومكانين للكرات الملونة وغرفة لعبة المطبخ والليغو الجداري. رسوم الدخول تشمل اليوم كامل وليس ساعات محددة ويمكنك ترك أطفالك لدى المرافقات والتسوق بهدوء." },
+    { name: "Abdelrahman Awwad",     text: "مكان أكثر من رائع لرعاية الأطفال، اهتمامهم بالأمان عالي جداً والنظافة على أعلى مستوى. الواحد يطمن وهو مسلّم عياله عندهم. بصراحة صار الوجهة الأولى لبنتي، تعاملهم راقٍ وقلوبهم على الأطفال. الله يحفظهم ويجزاهم خير ❤️" },
+    { name: "ندى حافظي",             text: "المكان مرة جميل للاطفال وأمان لهم. الموظفات ما شاء الله عليهم متعاونات، تحطين عيالك عندهم وتتسوقين وانتي مرتاحة. وعندهم مواهب وشغلات تنمي الاطفال، والله كفو عليهم كثر من خمس نجوم يستاهلون." },
+    { name: "siy siy moon mose",     text: "المكان نظيف جداً والموظفات متعاونات. يستحق التجربة والوقت مفتوح، الطفل يقدر يدخل ويطلع طول اليوم. وفي هدية عند الخروج." },
+    { name: "romaissaa roma",        text: "The place is clean, the workers supervise the kids and don't let them fight or play roughly — they're kind and strict at the same time. You will also get a gift each time you go. I trust them very much. It's my favourite place." },
+    { name: "samaher hamed",         text: "ممتازين جداً، عندهم نشاطات ومهتمين بالأطفال. المكان نظيف وممتع. أنا دايم معاهم." },
+    { name: "Yara Alanazi",          text: "من أجمل الأماكن اللي ممكن أودي أطفالي لها. مكان آمن فعلاً وفيه أنشطة ممتعة لهم. والأجمل أنهم يعطون الطفل هدية لما يطلع، ووقت اللعب مفتوح. أنصح فيه كل أحد 👍" },
+    { name: "Ritzelline Valle",      text: "It's a really nice place for kids — safe, welcoming, and perfectly set up for little ones to have fun. The staff are very attentive and constantly checking on the kids, which made us feel comfortable." },
+    { name: "Haya Al nazhan",        text: "المكان رائع وممتع للاطفال وتعامل الموظفات جميل يعطهم العافية 🤍" },
+    { name: "Shrouk Ellahoony",      text: "Super amazing and professional staff, very helpful and friendly. The place is super clean and every time your kid gets in, they grant them a very nice toy. Thank you all and keep up the great work!" },
+    { name: "Sally Mohamed",         text: "المكان جميل جداً والعاملين فيه كويسين جداً ويحبون الاطفال ويعملون لهم أنشطة جميلة." },
+    { name: "Sarah Abdulrahman",     text: "المكان أكثر من رائع والبنات جداً سموحات ولطيفات مع الأطفال، الله يوفقهم يارب 🤍" },
+    { name: "ساره الدهامي",          text: "المكان حلو مناسب للأطفال وانبسطوا. الموظفات خلوقات الله يسعدهم ♥️" },
+    { name: "منى عبدالله",           text: "مكان جميل منظم والموظفات بشوشات ومتعاونات. الالعاب ممتعة وفي أكثر من فكرة كلها جميلة ومتنوعة. أشكر القائمين عليها والسعر ممتاز مقابل وقت مفتوح 😍🙏🏻" },
+    { name: "Junita FajarYura",      text: "Masyaallah, the games at I Am Special are great. The people are nice and friendly. It's perfect for kids, and you can win prizes." },
+    { name: "لطيفه خالد",            text: "صراحة من أمتع الأماكن اللي أحط عيالي فيها وأتسوق. حبيت حرصهم على تنظيف المكان وعلى الأطفال. الموظفات صراحة كلهم عسولات ومحترمات وعندهم فعاليات للاطفال. عيالي انبسطوا فيه. شكراً اي ام سبيشل 👌🏻" },
+    { name: "مرام العاني",            text: "المكان أكثر من رائع. المشرفات وديدين ومتعاونين. الأمان كامل في جميع أجزاء المكان. شكراً على الاهتمام في أولادنا." },
+    { name: "Dalal",                 text: "المكان جميل وآمن للأطفال. زرته أكثر من مرة والموظفات متعاونات جداً." },
+    { name: "أم سعد",               text: "المكان يجنن ومرتب والموظفات خدومات مع الاطفال ومرة أمان! وأحلى شي لما يطلعون الاطفال يوزعون هدايا، مبادرة حلوة 😍👏🏻" },
+    { name: "Ghada Mohammad",        text: "مكان نظيف وجميل وكادر مؤهل ومتعاون ولطيف جداً 💜 يعطيكم العافية." },
+    { name: "Latefah Alii",          text: "مرة المكان حلو وآمن للاطفال ما تندمون على الزيارة. برجع لهم إن شاء الله." },
+    { name: "نوف اللهيبي",           text: "المكان مرة حلو وممتع. طفلي سنة وشهر كان معه مرافقة ومرة استمتع. الحمدلله وحريصين كانوا على طفلي. شكراً لكم." },
+    { name: "Dimah Motlaq Alanazi",  text: "المكان مرة جميل ونظيف والموظفات مرة خدومات ويساعدون الاطفال." },
+    { name: "abeer moraya",          text: "حقيقة من أفضل الأماكن. تضمنين متعة وسلامة أطفالك من موظفات ونظافة مكان وحتى الفعاليات جداً ممتعة للأطفال. للأبد مكان أطفالي المفضل." },
+    { name: "Mariam AL-Mitwalli",    text: "متعاونين والمكان ممتع للاطفال. ويتصلون بالأهل عند الحاجة. ليست أول تجربة وإن شاء الله نكرر الزيارة." },
+    { name: "عبدالعزيز العبدالله",   text: "الطفل ٦٥ ريال. يتم تصوير وجه الطفل قبل الدخول ويعطونك فاتورة. يوجد مكان لبيع الأكل الخفيف. أنصح فيه إذا أردت التسوق وحط طفلك وأنت مطمئن. ألعاب حركية بعيد عن الألعاب الإلكترونية. عند خروج الطفل يختار الهدية التي تناسبه. عند أي ملاحظة يتواصلون معك بمكالمة." },
+    { name: "PInk StRawWberrRY",     text: "مرة حلوين الستاف، مرة لطيفين ومتفهمين. حجزنا وقت مفتوح والسعر مرة كويس. وبالأخير يعطون الطفل ألعاب." },
+    { name: "ABDULLAH ALYOUSEF",     text: "أشكر جميع العاملين على اهتمامهم وصنعهم أجواء رائعة للاطفال ومسابقات. أشكر الموظفات على حرصهم الزائد واهتمامهم في أطفالي." },
+    { name: "Yasmina Osman",         text: "المكان جميل وممتع للأطفال والستاف كلهم رائعين. الله يجزاهم خير يارب العالمين." },
+    { name: "Mais Alyahya",          text: "كل شيء جميل والموظفات عسوووولات جداً." },
+    { name: "Tagreed",               text: "يعطيكم العافية. أكثر من مرة أجيب بناتي. المكان جميل وتعاملكم أجمل. أخليهم بالمكان وأنا مرتاحة. ربي يسعدكم 🤍" },
+    { name: "Ghada Alshehri",        text: "جميل المكان مرة ممتع للاطفال الصغار وكمية الألعاب التي فيه ممتازة. رحته في وقت زحمة وما كان مزعج لي أبداً. سعر الدخول ٦٥ ويجلس الطفل الوقت الذي يريد. وبارجع له مرة ثانية." },
+    { name: "Nora Nana",             text: "Very nice place, all the staff are friendly and my daughter likes the place so much. We come here every week. Thank you so much." },
+    { name: "Um Helah",              text: "الحق ينقال ما لقيت أزين من هالمكان. يمسك عننا الاطفال شوي وما يقصرون. الموظفات فيهم الخير والبركة." },
+    { name: "Axhere Imeri",          text: "Very nice place for children to play. Very nice and friendly staff ☺️" },
+    { name: "Sarah sultan alqatahni", text: "This place was more than good and all the staff are nice. I love to come play here every time I have free time. Thank you for your kindness ❤️" },
+    { name: "Fathy Ezzat",           text: "مكان جميل جداً. يعطيكم ألف عافية على الاهتمام بالأطفال ونظافة المكان." },
+    { name: "eman kafyeh",           text: "مكان أكثر من رائع وآمن جداً للاطفال. ما شاء الله تبارك الرحمن. أشكر القائمين والعاملين على إنجاح هذا العمل وأتمنى لهم مزيداً من التوفيق." },
+    { name: "Manar Mohamed",         text: "من أفضل الأماكن في الرياض. ابني يحبه جداً. عيبه الوحيد أن سعره شوية ارتفع." },
+    { name: "ALJAWHARH",             text: "مكان لاستضافة الأطفال يوم كامل، لا يشمل نظام الساعات. المكان ممتع جداً للأطفال ونظيف. الموظفات قمة في الرقي وحسن التعامل ومهتمين لأمان الطفل في تسجيل الدخول والخروج 👍" },
+    { name: "Asmaa Alwani",          text: "البنات اللاتي جاءوا جداً متعاونات ولطيفات لأبعد حد. أخذ بنتي عليهم من عمرها سنة ونص والآن بنتي عمرها ٤ سنوات وتحبهم. والمكان جداً نظيف ومتجدد." },
+    { name: "alii leones",           text: "The workers are very accommodating, friendly and the place is mostly clean." },
+    { name: "nonah siraj",           text: "مكان نظيف ومناسب للأطفال. أشكر الموظفات على تعاملهم صراحة." },
+    { name: "Eman Sabb",             text: "جميل المكان وسعره جيد مقارنة بأماكن الألعاب الأخرى الغالية." },
+    { name: "رغد عبدالرحمن",         text: "جداً جميل ومناسب للاطفال." },
+    { name: "Ghalyah Alqahtani",     text: "ممتاز والعاملات فيه روعة. أخلاقهم حلوة وتعاملهم يجنن 👍👌" },
+    { name: "Mai Alfarra",           text: "المكان ممتاز ومنظم وكل منطقة لعب إلها بنت مخصصة تلاعبهم وتهتم فيهم. الموظفات كلهم نفسياتهم حلوة. تركت ابني ٣ ساعات وكان مستمتع جداً." },
+    { name: "Yara Albarghoti",       text: "مكان رائع للاطفال من عمر سنة. والذين يشتغلون مساعدين جداً." },
+    { name: "Nadia RA",              text: "مكان مرة حلو ومريح. تحطين طفلك وانتي مرتاحة. ولناس اللي نفس حالتي ما عندهم أحد يمسك عيالهم، حطيه وتقضي وتقهوي وروقي 🌝♥️" },
+    { name: "سحاب",                  text: "مكان لعب للاطفال جداً ممتاز. اهتمام بالاطفال والمكان مريح ونظيف. وغير كذا يسوون مسابقات ممتعة للاطفال. البنات الموجودين في المكان قمة في الأخلاق والرقي وتعاملهم جداً جميل." },
+    { name: "Abdullah Alangari",     text: "جينا أكثر من مرة. رهيبين جداً وحريصين جداً." },
+    { name: "So So",                 text: "مكان مميز وتعامل الأخوات رااقٍ. بارك الله فيكم." },
+    { name: "ABEER Fayez",           text: "دخلت بنتي اليوم الظهر وكان تعامل موظفة الريسبشن بأخلاق حلوة وروح لطيفة. بنتي تعلقت فيها 🌹" },
+    { name: "Manal Saleh",           text: "المكان جميل جداً والموظفات لطيفات جداً. ولكن في التجديد الذي صار ألغيتم ملعب الكورة. يا ليت ترجعونه." },
+    { name: "Asma Alshahrani",       text: "صراحة الموظفات قمة في الأخلاق. تحط الاطفال عندهم وأنت مرتاح. وأخص بالذكر الموظفة نهاد العتيبي ورغد، يعطيهم الف عافية. فعلاً مكسب للمكان 💐 شكراً من القلب." },
+    { name: "Rawan Alotaibi",        text: "لطيفين جداً والمكان نظيف ومرتب والألعاب مناسبة." },
+    { name: "Hanadi Jaber",          text: "ما شاء الله المكان نظيف والعاملات محترمات جداً. ابني كان مبسوط كثير." },
+    { name: "Xy-za Apasa",           text: "Place is nice and clean. Staff are friendly and approachable." },
+    { name: "Asma Harboosh",         text: "أشكر القائمين على المكان. لطيفات وبشوشات وبالهم طويل مع الأطفال." },
+    { name: "Ashwaq ghamdi",         text: "لطيفين جداً. أسلوبهم وتعاملهم في قمة الأدب والاحترام." },
+    { name: "نوره السبيعي",          text: "جميلة جداً والتعامل جداً راقٍ وأنصح بزيارتهم." },
+    { name: "Alaa Mobayed",          text: "مركز رائع بالتعامل مع الاطفال والنظافة." },
+    { name: "Hala Abdelhadi",        text: "المكان حلو ومناسب للأعمار الصغيرة. بنصح فيه بس أتمنى قسم المطبخ يحطوا فيه أدوات الطبخ بيطلع أحلى." },
+    { name: "Norah Moahmmad",        text: "المكان مرة جميل وآمن للاطفال." },
+    { name: "ريان عبدالعزيز",         text: "المحل جداً جميل ومتعاونين بالاطفال والمكان نظيف. أشكر الموظفات على حسن تعاملهم وأخلاقهم والله يجزاهم خير." },
+    { name: "Osman Mahmoud",         text: "It's the best place for kids at RUH." },
+    { name: "Gorgeous M.z",          text: "رائعين جداً ومنظمين. الله يبارك في الموظفات، أخلاق ورقي صراحة. ولدي مرة ارتاح. صرت أدور المكان الذي أخلاق الموظفات فيه راقية وتعاملهم مع الاطفال حنون." },
+    { name: "MOH Al-Qahtani",        text: "شكر خاص جداً للأخت فاتن على الفعاليات التي تقدمها للأطفال طوال فترة وجودهم في الألعاب." },
+    { name: "Fatimah",               text: "مكان آمن جداً للأطفال." },
+    { name: "Naifus Us",             text: "مناسب للأطفال والعاملين متميزين." },
+    { name: "Noura Yasser",          text: "ممتازة. المكان نظيف ويوجد مشرفات كثير ومهتمين بالاطفال جداً. وأهم شيء المكان فيه دورات مياه نظيفة." },
+    { name: "Mylien Tengco",         text: "Nice place, my daughter enjoyed it 😊" },
+    { name: "Asma M.",               text: "نظيف وجميل. يوجد حمام للاطفال بداخله. سعره جيد. الموظفات خلوقات ولكل طفل هدية عند خروجه." },
+    { name: "Enas Omar",             text: "المكان جميل ومناسب والموظفات خلوقات ولطيفات وحريصات جداً على الاطفال." },
+    { name: "دآلي",                  text: "ما شاء الله المكان مرة جميل ومرتب ويستاهل أكثر من نجمة. الموظفات محترمات جداً وخصوصاً الموظفة رقم 2 ما شاء الله، احترام ومنتظمة. تستحق الشكر والتميز 🤍" },
+    { name: "بشائر القحطاني",         text: "أعجبني نظافتهم واهتمامهم للأطفال." },
+    { name: "Sam",                   text: "فرع الرياض جاليري رحته أمس ومو أول تجربة. تعاملهم جميل ويقدمون هدايا للطفل عند خروجه ويتعاملون مع الطفل بأريحية ولطافة والموظفات خلوقات وصبورات." },
+    { name: "Sumayyah Khalid",       text: "تعامل رائع من الموظفات وحنونات على الاطفال. عجبني أنهم مطفين الشاشات وبدون أفلام كرتون عشان الاطفال يلعبون ويتكلمون. المكان نظيف جداً وريحته حلوة." },
+    { name: "Naya Ronald",           text: "Nice place to play for little kids. Lots of things to do — they have sand, softballs, puzzles and a small kitchen." },
+    { name: "Re",                    text: "المكان جميل جداً ومنظم والموظفات محترمات ومعاملتهم رائعة مع الاطفال. أنصح بزيارته 👍🏻" },
+    { name: "Wejdan Ahmed",          text: "المكان جميل جداً ومريح من ناحية الأطفال. الموظفات أحب تعاونهم واهتمامهم وحرصهم. ولدي حبّ المكان من نفسه وصرت أخليه وأنا متطمنة. يستاهلون كل ريال 🙏🏻 👍🏻" },
+    { name: "Awsaf Alqasem",         text: "مكان رائع للاطفال والموظفات عسسسل مرة. دايم أترك أختي وتنبسط مرة. وأكثر شيء كيوت يعطون هدية مجانية عند خروج الطفل 🤍" },
+    { name: "Sara H",                text: "جيته اليوم. للأمانة مكان جميل والمشرفات كلهم متعاونات وبشوشات وحلوة. فقرة عند الخروج يعطونهم هدية شيء مميز. الله يعطيهم العافية وإن شاء الله مو أول مرة." },
+    { name: "امنه أحمد",              text: "مكان جداً جميل. اليوم أول مرة أجيهم وبإذن الله مو آخر مرة. الموظفات كويسات وكلهم سعوديات هذا الشي الذي يعطيني دافع أخلي طفلي بأمان عندهم. وأسعدوا طفلي بهدية." },
+    { name: "Hajar A",               text: "شكر خاص لموظفات آي ام سبيشل فرع الرياض جاليري. أرجع لهذا الفرع أكثر من مرة بسبب تعامل الموظفات الرائع. الله يسعدهم، يحببونك في المكان ويخلونك متطمنة على طفلك. في قمة اللطف ويعاملون الأطفال كأنهم أمهاتهم ♥️" },
+    { name: "Rahaf",                 text: "المكان جميل للاطفال والخدمة رائعة والموظفات عندهم أمانة عالية. ما شاء الله تبارك الرحمن." },
+    { name: "أحمد",                  text: "شكر خاص للموظفات ومديرة المكان على حسن تعاملهم مع الأطفال والأهالي. وأشكر الحرص والأمانة في هذا المكان. فعلاً يخلونا نكرر الزيارة أكثر من مرة ❤️" },
+    { name: "Hanan Ezz alarab",      text: "مكان رائع والمعاملة حلوة." },
+    { name: "Haneen Mohammed",       text: "مكان ممتاز جداً 👍🏼" },
+    { name: "khulud Alghamdi",       text: "المكان رائع جداً ونظيف واهتمام وموظفات محترمات. فيه قسم للرمل وقسم كور وبيوت وقسم ملعب وقسم ألعاب مطبخ ومكعبات على الجدار. السعر للطفل ٨٩ والوقت مفتوح. الأمان ممتاز والطفل ما يطلع إلا بفاتورة 👍🏻" },
+    { name: "Daleen Algahtani",      text: "مكان جميل للاطفال وآمن. الواحد يرتاح وأطفاله فيه خصوصاً التيم الذي فيه رائع. من تعامل وأسلوب وأخلاق. فيه وحدة اسمها شيماء أحب تعاملها مع الطفل. شكراً لكم من القلب 🤍" },
+    { name: "َSmty Asq4",            text: "أسأل الله أن يرزق كل بنت في هذا المكان ويسعدها ويبارك لصاحبه. بنات في قمة الأدب والرقي والتعامل والرحمة رغم كثرة الأطفال. أراقب عيالي من برا وأشوف تعاملهم. والله إنهم مخلصات وأمينات ومكان يجنن. لو فيه ١٠ نجوم حطيت." },
+    { name: "Ikram Mahmoud",         text: "مرة شكراً للبنات على الذوق واهتمامهم بأدق التفاصيل لعيالي. الله يسعدهم يارب وحببوني بالمكان. أنتم غير والمكان غير. شكراً لليلى وفاتن وغرام وموضي وأسماء وياسمين ❤️" },
+    { name: "Um Saad",               text: "شكراً لكل الموظفات السعوديات هناك. كانوا مهتمين بكل شيء وصدورهم واسعة. الله يوفقهم جميعاً." },
+    { name: "دنيا الغلا",             text: "مكان روعة وجميل. تبارك الله. أهنيكم على الترتيب والنظافة وبشاشة الموظفات. تبارك الله على كثر الاطفال، إلا أنهم مبسوطات ويخدمون من قلب 😍" },
+    { name: "mon Mohammed",          text: "أهنيهم صراحة على المكان والتنوع بالأنشطة. دخلت أشوفه مع ولدي وأعجبني مرة. كذا نشاط يسوونه يعني يكون مبسوط الولد. يا ليت يفتحون فروع أكثر في المولات كلها." },
+    { name: "Reymark Fabian",        text: "Everything is amazing." },
+    { name: "فوز",                   text: "اهتمام الموظفات السعوديات أعجبني مرة. نظافة المكان مرة ممتازة. يا ليت يكون فيه عرض أو خصم للأخوان أو للعملاء." },
+    { name: "Nouf Als",              text: "المكان حلو والموظفات رائعات. أنفسهم جيدة ويعاملون الأطفال بشكل جيد ويسوون لهم فعاليات. رغد وغيد والمشرفة أروى كلهم حلوين." },
+    { name: "Sa",                    text: "أول مرة أجربه. الصراحة فوق الوصف. الموظفات أخلاق وتعامل وحرص على الاطفال. الله يسعدهم. والمكان جميل ونظيف والعاملة طول الوقت تنظف." },
+    { name: "Ahlam Saad",            text: "جربت فرع المملكة كانت تجربة رائعة. المكان نظيف وفيه عدد عاملات كبير مقارنة بالمساحة. الموظفات أغلبهم سعوديات مدربات للتعامل مع الأطفال. السعر معقول جداً والوقت مفتوح." },
+    { name: "Mai Naser",             text: "نظافة ولطافة واهتمام بالطفل. والبنات يعملون أنشطة للأطفال. الله يعطيهم العافية." },
+    { name: "Nuha Ahmad",            text: "بصراحة المكان جميل جداً جداً والموظفات فيه يجننون وحنونات على الأطفال." },
+    { name: "HUSSEIN YUSUF",         text: "Like no other. Terrific and awesome 👌" },
+    { name: "Sara Alghanim",         text: "المكان جداً رائع. متعودة أدخل ولدي بمولات ثانية أبداً مو نفس المكان من ناحية الاحتراف والأمان. راقيات الموظفات كلهم وبالأخص رغد. الله يوفقهم." },
+    { name: "Malak AlHamdan",        text: "حضانة متعاونة لأبعد الحدود وستاف جداً عسل. الله يوفقهم ويسعدهم. أنصح لكل أهل حابين يحطوا أطفالهم بين أيادٍ أمينة تفتح النفس وتدلع الأطفال وتسعد الأهالي ❤️" },
+    { name: "Sarah Fahd",            text: "ممتاز ونظيف جداً وممتع للاطفال. والمنظمات سعوديات حريصات جداً." },
+    { name: "دينا العلمي",            text: "أحسن مكان تحطون فيه أطفالكم بأمان. حتى الموظفات طيبات. أنصح فيه وسعره كويس." },
+    { name: "Rooka Sweet",           text: "المكان جميل جداً وأكثر ميزة بعد بدون موسيقى. يشكرون على هذا الشيء 💖 الموظفات خلوقات وحريصات في الاطفال. والمكان نظيف ومشرح 💕" },
+    { name: "mone mone",             text: "ما شاء الله مكان جداً جميل ومناسب لجميع الأعمار. حطيت بنتي عمرها ١٠ سنوات وانبسطت كثير بالأنشطة. تقييمي من ناحية النظافة ١٠/١٠ ومن ناحية الموظفات ١٠/١٠ 🌟" },
+    { name: "رهف",                   text: "ولدي مررة استأنس. أول مرة أدخله مكان الألعاب ويطلع مبسوط خصوصاً بعد الهدية. شكراً لكم من القلب 🤍🌹" },
+    { name: "Mashael A",             text: "المكان جداً رائع ونظيف والألعاب متنوعة. بنتي تجلس بالساعات ما تطفش. والموظفات يجننون، نفسياتهم وتعاملهم الله يسعدهم ❤️" },
+    { name: "خلود فراشه",             text: "مكان جميل وآمن جداً. الموظفات جداً متعاونات وراقيات. الله يسعدهم ما يقصرون بأي شيء. تعاملهم جداً ممتاز." },
+    { name: "Mohammed Ali",          text: "المكان ممتاز والموظفات متميزات بالهدوء وإفهام العميل بالشروط. كذلك العاملات تعاملهم مع الأطفال جيد." },
+    { name: "محمد العنزي",            text: "صراحة حلو والموظفات جداً مهتمات بالاطفال. لكن أقل من سنتين لازم أحد من عائلة الطفل يكون موجود. أسعارهم جداً ممتازة 👍🏻❤️🌹" },
+    { name: "Az",                    text: "مكان جداً رائع. أشكر جميع الموظفات والقائمين على هذه الحضانة ❤️" },
+    { name: "Sarah Salem",           text: "المكان جميل وولدي ما يريد يطلع منه ما شاء الله. تعرف على أصدقاء والموظفة متعاونة شكراً 😍" },
+    { name: "Reem",                  text: "أفضل حضانة مول جربتها. يسوون فعاليات ومسابقات للأطفال ويعطونهم هدية لعبة عند الخروج." },
+    { name: "Moon",                  text: "المكان جميل جداً، نظيف، أسعاره معقولة مقارنة بالاهتمام والنظافة والأمان. شكراً للقائمين على مكان زي كذا ❤️" },
+    { name: "N M",                   text: "المكان جميل والموظفات محترمات وتعاملهم ممتاز 🤍 أكرر الزيارة إن شاء الله." },
+    { name: "ام عزوز",               text: "المكان يجنن بمعنى الكلمة والسعر مناسب جداً. والموظفات يهبلون بصراحة. الله يسعدهم ويعطيهم العافية. قمة بالذوق واللطافة. راح أكرر الزيارة أسبوعياً 💕" },
+    { name: "beso kha",              text: "مكان جميل وآمن للاطفال. عندهم فقرة حركية جميلة مع الاطفال ومسابقات. الوقت مفتوح طوال اليوم." },
+    { name: "Mamary S.A",            text: "أجمل مكان وأأمن مكان في الرياض ومولاتها. فرع المملكة والبنات أمينات وخلوقات على عيال العالم ❤️ أشكرهم من قلبي على عملهم وجزاهم الله خير." },
+    { name: "Ommyasser Yasser",      text: "ما شاء الله تبارك الرحمن، أجمل وأحلى مكان للأطفال 💐🤍 الله يسعدهم ويبارك لهم ويوفقهم. شكراً أستاذة ليلى الشهري، الله يكثر من أمثالك ما قصرتي معنا." },
+    { name: "نهى عبدالله",            text: "من أفضل الأماكن للطفل وسعر ممتاز. يا ليت تفتحون في بنوراما مول." },
+    { name: "Aom abody A",           text: "روعة وقمة الروعة. نظافة وترتيب. تحطين طفلك وانتي متطمنة. العملات جداً لطيفات والموظفات محترمات." },
+    { name: "S & N Toys everyday",   text: "جربت فرع ذا فيو. المكان نظيف ومرتب والموظفات ما شاء الله متعاونات ولطيفات جداً. يحببون الولد بالمكان. الله يجزيهم الخير 💖" },
+    { name: "abdullah almansour",    text: "الموظفات السعوديات في هذا المكان غاية في الاهتمام والترتيب والمحافظة على سلامة الأطفال وإسعادهم. اترك أطفالك وأنت مطمئن." },
+    { name: "نور عبدالله",            text: "المكان جميل والموظفات خلوقات. ربي يسعدهم." },
+    { name: "WAFA 5",                text: "مكان رائع وجميل وكادر مؤهل ومتعاون ولطيف جداً. شكراً لكم 🤍" },
+    { name: "Afnan Ayman",           text: "ما شاء الله ممتازين." },
+    { name: "sarah A.G",             text: "مكان ممتاز. يا ليت يكون له فروع بجميع مولات الرياض الكبيرة. فرع السلام مول من ناحية الأسعار أرخص من الفروع الأخرى." },
+    { name: "jenan",                 text: "خيال المكان للاطفال. دايم أجيب عيالي له ❤️" },
+    { name: "BLESSY BELSSY NELSON",  text: "Good for children." },
+    { name: "Atheer",               text: "مكان آمن ونظيف للاطفال." },
+    { name: "3' Al-Otaibi",          text: "مكان آمن جداً جداً جداً. جميع الموظفات متميزين وخدومين ومتعاونات." },
+    { name: "SFANAA",                text: "مكان آمن، الموظفات متعاونات ❤️" },
+    { name: "Tahani Suluman",        text: "حلو أشوفه أفضل من فرع القصر. فيه وحدة من الموظفات مرة لطيفة وحنونة." },
+    { name: "Buthainah Aziz",        text: "من أحلى وأجمل الأماكن للأطفال 💞🌟" },
+    { name: "Alaa Yuseef",           text: "Great place." },
+    { name: "sara alharbi",          text: "أفضل مكان وآمن للطفل ❤️" },
+    { name: "Hend",                  text: "One of the best places. Nice games, nice crew, good prices and smart activities — drawing, playing. Keep up the good work." },
+    { name: "Ahlam",                 text: "المكان جميل والموظفين حريصين على الاطفال." },
+    { name: "weaam algarni",         text: "المكان رائع وآمن للاطفال والمنظمات محترمات جداً ومتعاونات. أتمنى تفتحون فروع بكل المملكة وأول فرع برا الرياض يكون في الدمام. وشكراً لكم." },
+    { name: "Esraa Elsayed",         text: "Supeeer!" },
+    { name: "afnan",                 text: "مكان نظيف ومرتب. ولدي دايم عنده بفرع سلام مول وغرناطة. الموظفات محترمات وحنونات مع الاطفال." },
+    { name: "Maricel Roxal",         text: "I love your place I Am Special. The kids enjoy a lot and it's very comfortable 😍🥰" },
+    { name: "Noura Khaled",          text: "دائماً أجيب ولدي. مرة متعاونين ولطيفات." },
+    { name: "عزيز الذراع",            text: "المكان رائع للاطفال. دايم أجيب عيالي فيه يطلعون مبسوطين. السعر معقول يوم كامل. ما يطلعون إلا بالفاتورة 🌹" },
+    { name: "Nouf Als",              text: "المكان حلو والموظفات رائعات وتعاملهم الله يسعدهم ❤️" },
+    { name: "Nora Nana",             text: "Very nice place, all the staff are friendly and my daughter likes the place so much. We come here every week." },
+    { name: "Maricel Roxal",         text: "I love it, the kids enjoy a lot and it's comfortable 😍" },
+    { name: "Dalal",                 text: "الموظفات عسل ربنا يديهم العافية." },
+    { name: "Reem",                  text: "أفضل حضانة مول جربتها. يسوون فعاليات ومسابقات للأطفال ويعطونهم هدية عند الخروج." }
   ];
 
-  const reviewsDataEn = [
-    "A very wonderful center, my kids love spending time there.",
-    "Great attention to cleanliness and activities. Highly recommended.",
-    "The staff is professional and kind to the children.",
-    "The best place for entertainment and learning at the same time.",
-    "Safe environment equipped with modern and fun games.",
-    "Excellent experience and noticeable development in my son's personality.",
-    "Reasonable prices for the quality provided.",
-    "Diverse activities suitable for different ages."
-  ];
+  const avatarColors = ['#e53935','#d81b60','#8e24aa','#5e35b1','#3949ab','#1e88e5','#039be5','#00acc1','#00897b','#43a047','#7cb342','#f4511e','#f6bf26','#0b8043','#3f51b5'];
+  const timeOptions   = ['منذ أسبوع','منذ أسبوعين','منذ شهر','منذ شهرين','منذ ٣ أشهر','منذ ٤ أشهر','منذ ٥ أشهر'];
 
-  const gmColors = ['#e53935', '#d81b60', '#8e24aa', '#5e35b1', '#3949ab', '#1e88e5', '#039be5', '#00acc1', '#00897b', '#43a047'];
-
-  function mulberry32(a) {
-    return function() {
-      var t = a += 0x6D2B79F5;
-      t = Math.imul(t ^ t >>> 15, t | 1);
-      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  // Fisher-Yates shuffle using Math.random (truly random each load)
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
     }
+    return a;
   }
 
-  function generateReviews() {
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function buildReviews() {
+    const shuffled = shuffle(allReviews);
     const container = document.getElementById('reviewsContainer');
     let html = '';
-    const rand = mulberry32(9999); 
-
-    const firstNames = currentLang === 'ar' ? namesAr.first : namesEn.first;
-    const lastNames = currentLang === 'ar' ? namesAr.last : namesEn.last;
-    const revTexts = currentLang === 'ar' ? reviewsDataAr : reviewsDataEn;
-    const times = translations[currentLang].times;
-
-    for (let i = 0; i < 200; i++) {
-      const fName = firstNames[Math.floor(rand() * firstNames.length)];
-      const lName = lastNames[Math.floor(rand() * lastNames.length)];
-      const fullName = `${fName} ${lName}`;
-      const firstLetter = fName.charAt(0);
-      const color = gmColors[Math.floor(rand() * gmColors.length)];
-      const reviewText = revTexts[Math.floor(rand() * revTexts.length)];
-      const time = times[Math.floor(rand() * times.length)];
-      const reviewCount = Math.floor(rand() * 40) + 1;
-      const isLocalGuide = rand() > 0.6;
-      let metaText = currentLang === 'ar' ? `${reviewCount} ${translations.ar.reviewMeta}` : `${reviewCount} ${translations.en.reviewMeta}`;
-      if (isLocalGuide) {
-        metaText = currentLang === 'ar' ?
-        `${translations.ar.localGuide} · ${metaText}` : `${translations.en.localGuide} · ${metaText}`;
-      }
-
+    shuffled.forEach(r => {
+      const letter = r.name.charAt(0).toUpperCase();
+      const color  = pick(avatarColors);
+      const time   = pick(timeOptions);
+      const count  = Math.floor(Math.random() * 45) + 1;
+      const guide  = Math.random() > 0.55;
+      const meta   = guide ? `مرشد محلي · ${count} مراجعة` : `${count} مراجعة`;
       html += `
-        <div class="gm-review-card">
+        <div class="gm-card">
           <div class="gm-header">
-            <div class="gm-avatar" style="background-color: ${color}">${firstLetter}</div>
+            <div class="gm-avatar" style="background:${color}">${letter}</div>
             <div class="gm-user-info">
-              <div class="gm-name">${fullName}</div>
-              <div class="gm-meta">${metaText}</div>
+              <div class="gm-name">${r.name}</div>
+              <div class="gm-meta">${meta}</div>
             </div>
             <div class="gm-menu">⋮</div>
           </div>
@@ -655,15 +652,72 @@
             <div class="gm-stars">★★★★★</div>
             <div class="gm-time">${time}</div>
           </div>
-          <div class="gm-text">${reviewText}</div>
-        </div>
-      `;
-    }
+          <div class="gm-text">${r.text}</div>
+        </div>`;
+    });
     container.innerHTML = html;
   }
 
-  window.addEventListener('DOMContentLoaded', generateReviews);
-</script>
+  // ── Language Toggle ──
+  let lang = 'ar';
+  function toggleLang() {
+    lang = lang === 'ar' ? 'en' : 'ar';
+    document.documentElement.lang = lang;
+    document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('langBtn').textContent = lang === 'ar' ? 'E' : 'ع';
 
+    if (lang === 'en') {
+      document.getElementById('brandName').innerHTML   = '<span>I am Special</span> Entertainment Care';
+      document.getElementById('brandSub').textContent  = 'Riyadh Gallery';
+      document.getElementById('tagline').textContent   = "Your feedback shapes a better experience for every child";
+      document.getElementById('reviewBtn').textContent = '★ Review Now';
+      document.getElementById('reviewsLabel').textContent = "What Parents Say About Us";
+      document.getElementById('footer').textContent    = '© I am Special Entertainment Care — All Rights Reserved';
+    } else {
+      document.getElementById('brandName').innerHTML   = 'مركز <span>اي ام سبيشل</span> للضيافة الترفيهية';
+      document.getElementById('brandSub').textContent  = 'الرياض جاليري';
+      document.getElementById('tagline').textContent   = 'رأيك يصنع تجربة أجمل للأطفال';
+      document.getElementById('reviewBtn').innerHTML   = '★ تقييم الآن';
+      document.getElementById('reviewsLabel').textContent = 'ماذا قال أولياء الأمور عنا';
+      document.getElementById('footer').textContent   = '© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة';
+    }
+  }
+
+  // ── Modal ──
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('formContent').classList.remove('hide');
+    document.getElementById('successMsg').classList.remove('show');
+    document.getElementById('phoneInput').value = '';
+    document.getElementById('childInput').value = '';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('phoneInput').addEventListener('input', function() {
+    this.style.borderColor = 'rgba(0,0,0,0.1)';
+  });
+
+  async function submitReport() {
+    const phone = document.getElementById('phoneInput').value.trim();
+    if (!phone) {
+      document.getElementById('phoneInput').style.borderColor = '#ff6b6b';
+      document.getElementById('phoneInput').focus();
+      return;
+    }
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'جاري الإرسال...';
+    btn.disabled = true;
+    await new Promise(r => setTimeout(r, 1000));
+    document.getElementById('formContent').classList.add('hide');
+    document.getElementById('successMsg').classList.add('show');
+    btn.textContent = 'إرسال الطلب';
+    btn.disabled = false;
+  }
+
+  // ── Init ──
+  buildReviews();
+</script>
 </body>
 </html>
