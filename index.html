@@ -8,232 +8,358 @@
   <style>
     :root {
       /* Light Glassmorphism Palette */
-      -[span_3](start_span)-glass-bg: rgba(255, 255, 255, 0.7);[span_3](end_span)
-      -[span_4](start_span)-glass-border: rgba(255, 255, 255, 0.8);[span_4](end_span)
-      -[span_5](start_span)-glass-shadow: rgba(0, 0, 0, 0.08);[span_5](end_span)
-
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --glass-shadow: rgba(0, 0, 0, 0.08);
       /* Light Theme Text Colors */
-      -[span_6](start_span)-text-main: #1a252f;[span_6](end_span)
-      -[span_7](start_span)-text-sec: #34495e;[span_7](end_span)
-      -[span_8](start_span)-text-muted: #7f8c8d;[span_8](end_span)
-      -[span_9](start_span)-accent: #27ae60;[span_9](end_span)
-
+      --text-main: #1a252f;
+      --text-sec: #34495e;
+      --text-muted: #7f8c8d;
+      --accent: #27ae60;
       /* Google Maps Colors */
-      -[span_10](start_span)-gm-bg: #ffffff;[span_10](end_span)
-      -[span_11](start_span)-gm-text-main: #202124;[span_11](end_span)
-      -[span_12](start_span)-gm-text-sec: #70757a;[span_12](end_span)
-      -[span_13](start_span)-gm-text-body: #3c4043;[span_13](end_span)
-      -[span_14](start_span)-gm-star: #fbbc04;[span_14](end_span)
+      --gm-bg: #ffffff;
+      --gm-text-main: #202124;
+      --gm-text-sec: #70757a;
+      --gm-text-body: #3c4043;
+      --gm-star: #fbbc04;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; [span_15](start_span)}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Tajawal', sans-serif;[span_15](end_span)
-      [span_16](start_span)min-height: 100vh;[span_16](end_span)
-      [span_17](start_span)position: relative;[span_17](end_span)
-      [span_18](start_span)overflow-x: hidden;[span_18](end_span)
-      [span_19](start_span)color: var(--text-main);[span_19](end_span)
-      [span_20](start_span)transition: all 0.3s ease;[span_20](end_span)
-      /* Animated Aurora Background - تعزيز الألوان بنسبة 20% */
-      background: linear-gradient(135deg, #dceef2 0%, #c4d6f5 45%, #f2f79e 100%);
+      font-family: 'Tajawal', sans-serif;
+      min-height: 100vh;
+      /* خلفية حية متدرجة (Aurora) */
+      background: linear-gradient(-45deg, #eef2f3, #dbe6fb, #f8f9d2, #dcf2d1);
       background-size: 400% 400%;
-      animation: auroraFlow 12s ease infinite;
+      animation: gradientBG 15s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+      color: var(--text-main);
+      transition: all 0.3s ease;
     }
 
-    @keyframes auroraFlow {
+    @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Bokeh background - شعور بالحيوية */
+    /* Bokeh background for light mode - تعزيز الألوان بنسبة 20% وتحريكها */
     body::before {
-      [span_21](start_span)content: '';[span_21](end_span)
-      [span_22](start_span)position: fixed;[span_22](end_span)
-      [span_23](start_span)inset: 0;[span_23](end_span)
+      content: '';
+      position: fixed;
+      inset: 0;
       background:
-        radial-gradient(ellipse 50% 50% at 20% 30%, rgba(34, 193, 195, 0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 80% 70%, rgba(253, 187, 45, 0.18) 0%, transparent 70%),
-        [span_24](start_span)radial-gradient(ellipse 30% 30% at 60% 10%, rgba(45, 253, 138, 0.15) 0%, transparent 70%);[span_24](end_span)
-      [span_25](start_span)pointer-events: none;[span_25](end_span)
-      [span_26](start_span)z-index: 0;[span_26](end_span)
-      animation: bokehFloat 15s infinite alternate ease-in-out;
+        radial-gradient(ellipse 60% 60% at 20% 30%, rgba(40, 231, 234, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 70%, rgba(255, 200, 54, 0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 60% 10%, rgba(54, 255, 165, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: moveAurora 20s ease-in-out infinite alternate;
     }
 
-    @keyframes bokehFloat {
-      from { transform: scale(1); }
-      to { transform: scale(1.15) translate(2%, 2%); }
+    @keyframes moveAurora {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.1) translate(2%, 3%); }
+      100% { transform: scale(1) translate(-2%, -3%); }
     }
 
     .page {
-      [span_27](start_span)position: relative;[span_27](end_span)
-      [span_28](start_span)z-index: 1;[span_28](end_span)
-      [span_29](start_span)min-height: 100vh;[span_29](end_span)
-      [span_30](start_span)display: flex;[span_30](end_span)
-      [span_31](start_span)flex-direction: column;[span_31](end_span)
-      [span_32](start_span)align-items: center;[span_32](end_span)
-      [span_33](start_span)padding: 90px 18px 60px;[span_33](end_span)
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 90px 18px 60px;
+      /* زيادة المسافة العلوية لتعويض الشريط المثبت */
     }
 
-    /* ── Top Bar ── */
+    /* ── Top Bar (Fixed) ── */
     .top-bar {
-      [span_34](start_span)position: fixed;[span_34](end_span)
-      [span_35](start_span)top: 0; left: 0; right: 0;[span_35](end_span)
-      [span_36](start_span)height: 70px;[span_36](end_span)
-      [span_37](start_span)display: flex;[span_37](end_span)
-      [span_38](start_span)justify-content: space-between;[span_38](end_span)
-      [span_39](start_span)align-items: center;[span_39](end_span)
-      [span_40](start_span)padding: 0 20px;[span_40](end_span)
-      [span_41](start_span)background: rgba(255, 255, 255, 0.5);[span_41](end_span)
-      [span_42](start_span)backdrop-filter: blur(16px);[span_42](end_span)
-      -[span_43](start_span)webkit-backdrop-filter: blur(16px);[span_43](end_span)
-      [span_44](start_span)border-bottom: 1px solid rgba(255, 255, 255, 0.8);[span_44](end_span)
-      [span_45](start_span)z-index: 50;[span_45](end_span)
-      [span_46](start_span)box-shadow: 0 4px 20px rgba(0,0,0,0.03);[span_46](end_span)
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
 
     .top-bar-inner {
-      [span_47](start_span)width: 100%;[span_47](end_span)
-      [span_48](start_span)max-width: 520px;[span_48](end_span)
-      [span_49](start_span)margin: 0 auto;[span_49](end_span)
-      [span_50](start_span)display: flex;[span_50](end_span)
-      [span_51](start_span)justify-content: space-between;[span_51](end_span)
-      [span_52](start_span)align-items: center;[span_52](end_span)
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .action-btn {
-      [span_53](start_span)background: rgba(255, 255, 255, 0.8);[span_53](end_span)
-      [span_54](start_span)border: 1px solid rgba(0, 0, 0, 0.08);[span_54](end_span)
-      [span_55](start_span)color: var(--text-main);[span_55](end_span)
-      [span_56](start_span)font-family: 'Tajawal', sans-serif;[span_56](end_span)
-      [span_57](start_span)font-size: 14px;[span_57](end_span)
-      [span_58](start_span)font-weight: 600;[span_58](end_span)
-      [span_59](start_span)padding: 8px 18px;[span_59](end_span)
-      [span_60](start_span)border-radius: 50px;[span_60](end_span)
-      [span_61](start_span)cursor: pointer;[span_61](end_span)
-      [span_62](start_span)display: flex;[span_62](end_span)
-      [span_63](start_span)align-items: center;[span_63](end_span)
-      [span_64](start_span)gap: 7px;[span_64](end_span)
-      [span_65](start_span)transition: all 0.3s ease;[span_65](end_span)
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: var(--text-main);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
 
-    /* زر اللغة - ملء الدائرة */
-    .lang-btn {
-      width: 42px;
-      height: 42px;
-      padding: 0;
-      justify-content: center;
-      font-size: 22px !important;
-      font-weight: 800 !important;
-      line-height: 1;
+    .action-btn:hover {
+      background: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
+    .action-btn span { font-size: 16px; }
 
     /* ── Hero Card ── */
     .hero-card {
-      [span_66](start_span)background: var(--glass-bg);[span_66](end_span)
-      [span_67](start_span)border: 1px solid var(--glass-border);[span_67](end_span)
-      [span_68](start_span)border-radius: 28px;[span_68](end_span)
-      [span_69](start_span)backdrop-filter: blur(24px);[span_69](end_span)
-      -[span_70](start_span)webkit-backdrop-filter: blur(24px);[span_70](end_span)
-      [span_71](start_span)box-shadow: 0 8px 32px var(--glass-shadow);[span_71](end_span)
-      [span_72](start_span)padding: 42px 32px 36px;[span_72](end_span)
-      [span_73](start_span)width: 100%;[span_73](end_span)
-      [span_74](start_span)max-width: 520px;[span_74](end_span)
-      [span_75](start_span)text-align: center;[span_75](end_span)
-      [span_76](start_span)animation: floatIn 0.8s cubic-bezier(0.22,1,0.36,1) both;[span_76](end_span)
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 8px 32px var(--glass-shadow);
+      padding: 42px 32px 36px;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      animation: floatIn 0.8s cubic-bezier(0.22,1,0.36,1) both;
     }
 
-    /* الوردة تملأ الدائرة وتلامس الحواف */
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(32px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     .brand-icon {
-      [span_77](start_span)width: 72px;[span_77](end_span)
-      [span_78](start_span)height: 72px;[span_78](end_span)
-      [span_79](start_span)background: linear-gradient(135deg, #11998e, #38ef7d);[span_79](end_span)
-      [span_80](start_span)border-radius: 50%;[span_80](end_span)
-      [span_81](start_span)display: flex;[span_81](end_span)
-      [span_82](start_span)align-items: center;[span_82](end_span)
-      [span_83](start_span)justify-content: center;[span_83](end_span)
-      [span_84](start_span)margin: 0 auto 16px;[span_84](end_span)
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #11998e, #38ef7d);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
       font-size: 85px; /* تكبير الوردة لتلامس الحواف */
-      [span_85](start_span)color: #fff;[span_85](end_span)
-      overflow: hidden; /* لضمان عدم خروجها عن الدائرة */
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); /* ظل أبيض خفيف */
-      [span_86](start_span)box-shadow: 0 4px 20px rgba(56, 239, 125, 0.3);[span_86](end_span)
+      line-height: 1;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(56, 239, 125, 0.3);
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); /* ظل أبيض خفيف */
+      overflow: hidden; /* لضمان عدم خروج الوردة خارج الدائرة */
     }
 
-    .brand-name { font-size: 26px; font-weight: 800; color: var(--text-main); margin-bottom: 2px; [span_87](start_span)}
-    .brand-name span { color: var(--accent); }[span_87](end_span)
-    .sub-brand { font-size: 13px; font-weight: 500; color: var(--text-sec); margin-bottom: 16px; [span_88](start_span)}
-    .tagline { font-size: 17px; font-weight: 600; color: var(--text-sec); line-height: 1.6; margin: 18px 0 28px; }[span_88](end_span)
-    .divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #38ef7d, transparent); margin: 0 auto 10px; [span_89](start_span)}
+    .brand-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .brand-name span { color: var(--accent); }
+
+    .sub-brand {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sec);
+      margin-bottom: 16px;
+    }
+
+    .tagline {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-sec);
+      line-height: 1.6;
+      margin: 18px 0 28px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38ef7d, transparent);
+      margin: 0 auto 10px;
+    }
 
     /* ── Review Button ── */
     .review-btn {
-      display: inline-flex;[span_89](end_span)
-      [span_90](start_span)align-items: center;[span_90](end_span)
-      [span_91](start_span)justify-content: center;[span_91](end_span)
-      [span_92](start_span)gap: 10px;[span_92](end_span)
-      [span_93](start_span)background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #11998e 100%);[span_93](end_span)
-      [span_94](start_span)background-size: 200% auto;[span_94](end_span)
-      [span_95](start_span)color: #fff;[span_95](end_span)
-      [span_96](start_span)font-family: 'Tajawal', sans-serif;[span_96](end_span)
-      [span_97](start_span)font-size: 18px;[span_97](end_span)
-      [span_98](start_span)font-weight: 800;[span_98](end_span)
-      [span_99](start_span)padding: 16px 44px;[span_99](end_span)
-      [span_100](start_span)border-radius: 50px;[span_100](end_span)
-      [span_101](start_span)border: none;[span_101](end_span)
-      [span_102](start_span)cursor: pointer;[span_102](end_span)
-      [span_103](start_span)text-decoration: none;[span_103](end_span)
-      [span_104](start_span)box-shadow: 0 6px 20px rgba(17, 153, 142, 0.3);[span_104](end_span)
-      [span_105](start_span)transition: all 0.35s ease;[span_105](end_span)
-      [span_106](start_span)animation: pulseGlow 2.5s ease-in-out infinite;[span_106](end_span)
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #11998e 100%);
+      background-size: 200% auto;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 16px 44px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(17, 153, 142, 0.3);
+      transition: all 0.35s ease;
+      letter-spacing: 0.5px;
+      animation: pulseGlow 2.5s ease-in-out infinite;
     }
 
     @keyframes pulseGlow {
       0%, 100% { box-shadow: 0 6px 20px rgba(56, 239, 125, 0.2); }
-      50% { box-shadow: 0 6px 30px rgba(56, 239, 125, 0.5), 0 0 0 4px rgba(56, 239, 125, 0.1); }
+      50%       { box-shadow: 0 6px 30px rgba(56, 239, 125, 0.5), 0 0 0 4px rgba(56, 239, 125, 0.1); }
     }
+
+    .review-btn:hover {
+      background-position: right center;
+      transform: translateY(-3px) scale(1.03);
+    }
+    .review-btn span { font-size: 18px; }
 
     /* ── Reviews Section ── */
-    .reviews-label { color: var(--text-sec); font-size: 15px; font-weight: 600; margin-top: 40px; margin-bottom: 20px; text-align: center; [span_107](start_span)}
-    .reviews-grid { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 14px; }[span_107](end_span)
+    .reviews-label {
+      color: var(--text-sec);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .reviews-grid {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      animation: floatIn 1s 0.2s cubic-bezier(0.22,1,0.36,1) both;
+    }
 
     .gm-review-card {
-      [span_108](start_span)background: var(--gm-bg);[span_108](end_span)
-      [span_109](start_span)border-radius: 16px;[span_109](end_span)
-      [span_110](start_span)padding: 18px;[span_110](end_span)
-      [span_111](start_span)box-shadow: 0 2px 12px rgba(0,0,0,0.06);[span_111](end_span)
-      [span_112](start_span)color: var(--gm-text-body);[span_112](end_span)
-      [span_113](start_span)text-align: start;[span_113](end_span)
-      [span_114](start_span)border: 1px solid rgba(0,0,0,0.04);[span_114](end_span)
+      background: var(--gm-bg);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      color: var(--gm-text-body);
+      text-align: start;
+      transition: transform 0.2s ease;
+      border: 1px solid rgba(0,0,0,0.04);
     }
+    .gm-review-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 
-    /* ── Modal ── */
-    .modal-overlay {
-      [span_115](start_span)position: fixed;[span_115](end_span)
-      [span_116](start_span)inset: 0; background: rgba(0, 0, 0, 0.4);[span_116](end_span)
-      backdrop-filter: blur(8px); -[span_117](start_span)webkit-backdrop-filter: blur(8px);[span_117](end_span)
-      [span_118](start_span)z-index: 100; display: flex; align-items: center; justify-content: center;[span_118](end_span)
-      [span_119](start_span)padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;[span_119](end_span)
+    .gm-header { display: flex; align-items: center; margin-bottom: 12px; }
+    .gm-avatar {
+      width: 40px; height: 40px; border-radius: 50%; color: #fff;
+      display: flex;
+      align-items: center; justify-content: center; font-size: 18px; font-weight: bold;
+      margin-inline-end: 14px; flex-shrink: 0;
     }
-    .modal-overlay.active { opacity: 1; pointer-events: all; [span_120](start_span)}
+    .gm-user-info { flex: 1; }
+    .gm-name { font-size: 15px; font-weight: 700; color: var(--gm-text-main);
+      margin-bottom: 2px; font-family: 'Tajawal', sans-serif; }
+    .gm-meta { font-size: 12px; color: var(--gm-text-sec); }
+    .gm-menu { color: var(--gm-text-sec); font-size: 20px; font-weight: bold; cursor: pointer; padding: 0 5px; }
+    .gm-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .gm-stars { color: var(--gm-star); font-size: 16px; letter-spacing: 2px; }
+    .gm-time { font-size: 12px; color: var(--gm-text-sec); }
+    .gm-text { font-size: 14px; line-height: 1.6; color: var(--gm-text-body); }
+
+    /* ── Modal (Light Theme) ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0; background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 100; display: flex; align-items: center; justify-content: center;
+      padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
 
     .modal {
-      background: rgba(255, 255, 255, 0.95);[span_120](end_span)
-      [span_121](start_span)border: 1px solid rgba(255, 255, 255, 1);[span_121](end_span)
-      [span_122](start_span)border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 380px;[span_122](end_span)
-      [span_123](start_span)box-shadow: 0 24px 60px rgba(0,0,0,0.15);[span_123](end_span)
-      [span_124](start_span)transform: scale(0.92) translateY(20px);[span_124](end_span)
-      [span_125](start_span)transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);[span_125](end_span)
-      [span_126](start_span)text-align: center;[span_126](end_span)
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 1);
+      border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 380px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      text-align: center;
+    }
+    .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+
+    .modal-icon {
+      width: 60px; height: 60px; background: rgba(56, 239, 125, 0.15);
+      border: 1px solid rgba(56, 239, 125, 0.3); border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; margin: 0 auto 18px;
+      font-size: 26px; color: #27ae60;
     }
 
-    .modal-icon { width: 60px; height: 60px; background: rgba(56, 239, 125, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 26px; color: #27ae60; [span_127](start_span)}
-    .field-input { width: 100%; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 13px 16px; font-family: 'Tajawal', sans-serif; font-size: 15px; outline: none; text-align: start; }[span_127](end_span)
-    .btn-submit { flex: 1; background: linear-gradient(135deg, #11998e, #38ef7d); color: #fff; font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 800; padding: 14px; border: none; border-radius: 12px; cursor: pointer; [span_128](start_span)}
-    .btn-cancel { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); color: var(--text-main); font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 500; padding: 14px 20px; border-radius: 12px; cursor: pointer; }[span_128](end_span)
+    .modal-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+    .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
 
-    .footer { margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 13px; [span_129](start_span)}
+    .field-group { margin-bottom: 14px; text-align: start; }
+    .field-label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 7px; letter-spacing: 0.5px;
+    }
+    .field-input {
+      width: 100%;
+      background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px; padding: 13px 16px; font-family: 'Tajawal', sans-serif;
+      font-size: 15px; color: var(--text-main); outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease; text-align: start;
+    }
+    .field-input:focus { border-color: #27ae60; background: #fff;
+      box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1); }
+    .field-input::placeholder { color: #aaa; }
+
+    .modal-note {
+      font-size: 13px; color: var(--text-muted); margin: 16px 0 22px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .modal-note span { color: var(--accent); font-weight: 600; }
+
+    .modal-actions { display: flex; gap: 10px; }
+    .btn-submit {
+      flex: 1; background: linear-gradient(135deg, #11998e, #38ef7d);
+      color: #fff;
+      font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 800;
+      padding: 14px; border: none; border-radius: 12px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-cancel {
+      background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1);
+      color: var(--text-main); font-family: 'Tajawal', sans-serif; font-size: 15px;
+      font-weight: 500; padding: 14px 20px; border-radius: 12px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cancel:hover { background: rgba(0,0,0,0.08); }
+
+    .success-msg { display: none; flex-direction: column; align-items: center;
+      gap: 12px; padding: 20px 0; }
+    .success-msg.show { display: flex; }
+    .form-content.hide { display: none; }
+    .success-icon { font-size: 48px; color: #27ae60; }
+    .success-text { font-size: 16px; font-weight: 600; color: var(--text-main); }
+
+    .footer { margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 13px; }
   </style>
 </head>
 <body>
@@ -243,7 +369,7 @@
     <button class="action-btn" onclick="openModal()" data-i18n="reportBtn">
       <span>⚑</span> إبلاغ 
     </button>
-    <button class="action-btn lang-btn" onclick="toggleLanguage()">
+    <button class="action-btn" onclick="toggleLanguage()" style="width: 44px; padding: 0; justify-content: center; font-size: 18px; font-weight: 700;">
       E
     </button>
   </div>
@@ -262,7 +388,9 @@
   </div>
 
   <p class="reviews-label" data-i18n="reviewsLabel">ماذا قال أولياء الأمور عنا</p>
+
   <div class="reviews-grid" id="reviewsContainer"></div>
+
   <div class="footer" data-i18n="footer">© مركز اي ام سبيشل للضيافة الترفيهية — جميع الحقوق محفوظة</div>
 </div>
 
@@ -272,14 +400,27 @@
       <div class="modal-icon">⚑</div>
       <div class="modal-title" data-i18n="modalTitle">إبلاغ</div>
       <div class="modal-sub" data-i18n="modalSub">سنتصل بكل خلال دقائق</div>
-      <div class="field-group"><label class="field-label" for="phoneInput" data-i18n="phoneLabel">رقم الجوال</label><input class="field-input" id="phoneInput" type="tel" placeholder="05XXXXXXXX" maxlength="10" /></div>
-      <div class="field-group"><label class="field-label" for="invoiceInput" data-i18n="invoiceLabel">أسم الطفل</label><input class="field-input" id="invoiceInput" type="text" placeholder="..." /></div>
-      <div class="modal-note"><span data-i18n="modalNote">☏ سيتم الاتصال بك خلال دقائق</span></div>
+
+      <div class="field-group">
+        <label class="field-label" for="phoneInput" data-i18n="phoneLabel">رقم الجوال</label>
+        <input class="field-input" id="phoneInput" type="tel" placeholder="05XXXXXXXX" maxlength="10" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="invoiceInput" data-i18n="invoiceLabel">أسم الطفل</label>
+        <input class="field-input" id="invoiceInput" type="text" placeholder="..." />
+      </div>
+
+      <div class="modal-note">
+        <span data-i18n="modalNote">☏ سيتم الاتصال بك خلال دقائق</span>
+      </div>
+
       <div class="modal-actions">
         <button class="btn-submit" id="submitBtn" onclick="submitReport()" data-i18n="btnSubmit">إرسال الطلب</button>
         <button class="btn-cancel" onclick="closeModal()" data-i18n="btnCancel">إلغاء</button>
       </div>
     </div>
+
     <div class="success-msg" id="successMsg">
       <div class="success-icon">✓</div>
       <div class="success-text" data-i18n="successText">سنتصل بك خلال دقائق</div>
@@ -290,6 +431,7 @@
 </div>
 
 <script>
+  // ── Dictionaries & Multilingual Setup ──
   const translations = {
     ar: {
       reportBtn: "<span>⚑</span> إبلاغ",
@@ -299,7 +441,7 @@
       reviewBtn: "<span>★</span> تقييم الآن",
       reviewsLabel: "ماذا قال أولياء الأمور عنا",
       modalTitle: "طلب اتصال",
-      modalSub: "يرجى تزويدنا بمعلوماتك للتواصل معك",[span_129](end_span)
+      modalSub: "يرجى تزويدنا بمعلوماتك للتواصل معك",
       phoneLabel: "رقم الجوال",
       invoiceLabel: "رقم التسجيل / المشترك",
       modalNote: "<span>☏</span> سيتم الاتصال بك خلال دقائق",
@@ -317,9 +459,9 @@
       reportBtn: "<span>⚑</span> Request Call",
       brandName: "<span>I am Special</span> Entertainment Care",
       brandSub: "Riyadh Gallery",
-      tagline: "We’d love to hear your feedback!", // تم التعديل بناءً على طلبك
+      tagline: "We’d love to hear your feedback!",
       reviewBtn: "<span>★</span> Review Now",
-      [span_130](start_span)reviewsLabel: "What Parents Say About Us",[span_130](end_span)
+      reviewsLabel: "What Parents Say About Us",
       modalTitle: "Request a Call",
       modalSub: "Please provide your details so we can contact you",
       phoneLabel: "Phone Number",
@@ -330,22 +472,21 @@
       successText: "Message received successfully",
       successSub: "Management will contact you shortly",
       successBtn: "OK",
-      [span_131](start_span)footer: "© I am Special Entertainment Care Center — All Rights Reserved",[span_131](end_span)
+      footer: "© I am Special Entertainment Care Center — All Rights Reserved",
       reviewMeta: "reviews",
       localGuide: "Local Guide",
       times: ['A week ago', '2 weeks ago', 'A month ago', '2 months ago', '3 months ago', '4 months ago']
     }
   };
-
-  [span_132](start_span)let currentLang = 'ar';[span_132](end_span)
+  let currentLang = 'ar';
 
   function toggleLanguage() {
-    currentLang = currentLang === 'ar' ? [span_133](start_span)'en' : 'ar';[span_133](end_span)
-    [span_134](start_span)document.documentElement.lang = currentLang;[span_134](end_span)
-    document.documentElement.dir = currentLang === 'ar' ? [span_135](start_span)'rtl' : 'ltr';[span_135](end_span)
-    
-    const langBtn = document.querySelector('.lang-btn');
-    langBtn.innerHTML = currentLang === 'ar' ? 'E' : 'ع'; // الحرف يملأ الزر بدون #
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    // التبديل بين E و ع
+    const langBtn = document.querySelector('.top-bar-inner button:nth-child(2)');
+    langBtn.innerHTML = currentLang === 'ar' ? 'E' : 'ع';
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
@@ -356,62 +497,173 @@
     generateReviews();
   }
 
-  function openModal() { document.getElementById('modalOverlay').classList.add('active'); document.getElementById('formContent').classList.remove('hide'); [span_136](start_span)}
-  function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }[span_136](end_span)
-  function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); [span_137](start_span)}
+  // ── Modal & API Call Logic ──
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('formContent').classList.remove('hide');
+    document.getElementById('successMsg').classList.remove('show');
+    document.getElementById('phoneInput').value = '';
+    document.getElementById('invoiceInput').value = '';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
 
   async function submitReport() {
-    const phone = document.getElementById('phoneInput').value.trim();[span_137](end_span)
-    if (!phone) { document.getElementById('phoneInput').style.borderColor = '#ff6b6b'; return; [span_138](start_span)}
+    const phone = document.getElementById('phoneInput').value.trim();
+    const invoice = document.getElementById('invoiceInput').value.trim();
+    if (!phone) {
+      document.getElementById('phoneInput').style.borderColor = '#ff6b6b';
+      document.getElementById('phoneInput').focus();
+      return;
+    }
 
     const submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerText = currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...';[span_138](end_span)
-    [span_139](start_span)submitBtn.disabled = true;[span_139](end_span)
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...';
+    submitBtn.disabled = true;
 
     try {
-      // محاكاة إرسال للـ API
-      [span_140](start_span)await new Promise(resolve => setTimeout(resolve, 1000));[span_140](end_span)
-      [span_141](start_span)document.getElementById('formContent').classList.add('hide');[span_141](end_span)
-      [span_142](start_span)document.getElementById('successMsg').classList.add('show');[span_142](end_span)
+      const token = "$2y$10$1Tx/JZTT2R7qri9Dkb/uF.izXd2aQJXO4RJUlMLqD8N9vqsDyOF0m";
+      const targetPhone = "0559905345";
+      
+      /* * ملاحظة: يجب وضع رابط الـ API الصحيح في السطر التالي بدلاً من 'رابط_الـ_API_هنا'
+       * وكذلك تعديل الـ body ليتناسب مع البيانات المطلوبة في الـ API الخاص بك.
+       */
+      const apiUrl = 'رابط_الـ_API_هنا';
+      // مثال على كيفية الإرسال (قد تختلف حسب متطلبات مزود الخدمة)
+      /* const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({
+          target_number: targetPhone,
+          customer_phone: phone,
+          invoice_id: invoice,
+          token: token
+        })
+      });
+      */
+
+      // محاكاة نجاح الإرسال (قم بحذف هذه الـ setTimeout عند تفعيل الرابط الحقيقي)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      document.getElementById('formContent').classList.add('hide');
+      document.getElementById('successMsg').classList.add('show');
+    } catch (error) {
+      console.error('API Error:', error);
+      alert(currentLang === 'ar' ? 'حدث خطأ في الاتصال، حاول مجدداً.' : 'Connection error, please try again.');
     } finally {
-      [span_143](start_span)submitBtn.disabled = false;[span_143](end_span)
+      submitBtn.innerText = originalText;
+      submitBtn.disabled = false;
     }
   }
 
-  // توليد المراجعات
-  [span_144](start_span)const namesAr = { first: ['يوسف', 'ملاك', 'أحمد', 'ليلى', 'شجون', 'عمر', 'سارة'], last: ['حداد', 'الشهري', 'مشاري', 'الموسى', 'حسين'] };[span_144](end_span)
-  [span_145](start_span)const namesEn = { first: ['Youssef', 'Maria', 'Ahmed', 'Layla', 'John', 'Omar'], last: ['Haddad', 'Smith', 'Khoury', 'Johnson', 'Davis'] };[span_145](end_span)
-  [span_146](start_span)const reviewsDataAr = ["مركز رائع جداً، أطفالي يحبون قضاء الوقت هناك.", "الاهتمام بالنظافة والأنشطة مميز جداً. أنصح به.", "فريق العمل محترف ولطيف مع الأطفال."];[span_146](end_span)
-  [span_147](start_span)const reviewsDataEn = ["A very wonderful center, my kids love spending time there.", "Great attention to cleanliness and activities.", "The staff is professional and kind."];[span_147](end_span)
-  [span_148](start_span)const gmColors = ['#e53935', '#d81b60', '#8e24aa', '#5e35b1', '#1e88e5'];[span_148](end_span)
+  document.getElementById('phoneInput').addEventListener('input', function() {
+    this.style.borderColor = 'rgba(0,0,0,0.1)';
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
 
-  function mulberry32(a) { return function() { var t = a += 0x6D2B79F5; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; [span_149](start_span)} }[span_149](end_span)
+  // ── Random Review Generation ──
+  const namesAr = {
+    first: ['يوسف', 'ملاك', 'أحمد', 'ليلى', 'شجون', 'عمر', 'سارة', 'suz', 'زين', 'آدم', 'صوفيا', 'إيما', 'علي', 'نور'],
+    last: ['حداد', 'الشهري', 'اسماعيلي', 'مشاري', 'المصري', 'الموسى', '~', 'حسين', 'نواف', '']
+  };
+  const namesEn = {
+    first: ['Youssef', 'Maria', 'Ahmed', 'Layla', 'John', 'Omar', 'Sarah', 'David', 'Zain', 'Adam', 'Sophia', 'Emma', 'Ali', 'Nour'],
+    last: ['Haddad', 'Smith', 'Khoury', 'Johnson', 'El-Masry', 'Davis', 'Brown', 'Hussein', 'Miller', 'Wilson']
+  };
+
+  const reviewsDataAr = [
+    "مركز رائع جداً، أطفالي يحبون قضاء الوقت هناك.",
+    "الاهتمام بالنظافة والأنشطة مميز جداً. أنصح به.",
+    "فريق العمل محترف ولطيف مع الأطفال.",
+    "أفضل مكان للترفيه والتعلم في نفس الوقت.",
+    "المكان آمن ومجهز بألعاب حديثة وممتعة.",
+    "تجربة ممتازة وتطور ملحوظ في شخصية ابني.",
+    "أسعار مقبولة مقابل الجودة المقدمة.",
+    "الأنشطة متنوعة وتناسب مختلف الأعمار."
+  ];
+
+  const reviewsDataEn = [
+    "A very wonderful center, my kids love spending time there.",
+    "Great attention to cleanliness and activities. Highly recommended.",
+    "The staff is professional and kind to the children.",
+    "The best place for entertainment and learning at the same time.",
+    "Safe environment equipped with modern and fun games.",
+    "Excellent experience and noticeable development in my son's personality.",
+    "Reasonable prices for the quality provided.",
+    "Diverse activities suitable for different ages."
+  ];
+
+  const gmColors = ['#e53935', '#d81b60', '#8e24aa', '#5e35b1', '#3949ab', '#1e88e5', '#039be5', '#00acc1', '#00897b', '#43a047'];
+
+  function mulberry32(a) {
+    return function() {
+      var t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ t >>> 15, t | 1);
+      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+  }
 
   function generateReviews() {
     const container = document.getElementById('reviewsContainer');
     let html = '';
-    [span_150](start_span)const rand = mulberry32(9999);[span_150](end_span)
+    const rand = mulberry32(9999); 
+
     const firstNames = currentLang === 'ar' ? namesAr.first : namesEn.first;
     const lastNames = currentLang === 'ar' ? namesAr.last : namesEn.last;
     const revTexts = currentLang === 'ar' ? reviewsDataAr : reviewsDataEn;
+    const times = translations[currentLang].times;
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 200; i++) {
       const fName = firstNames[Math.floor(rand() * firstNames.length)];
       const lName = lastNames[Math.floor(rand() * lastNames.length)];
+      const fullName = `${fName} ${lName}`;
+      const firstLetter = fName.charAt(0);
       const color = gmColors[Math.floor(rand() * gmColors.length)];
-      html += `<div class="gm-review-card">
+      const reviewText = revTexts[Math.floor(rand() * revTexts.length)];
+      const time = times[Math.floor(rand() * times.length)];
+      const reviewCount = Math.floor(rand() * 40) + 1;
+      const isLocalGuide = rand() > 0.6;
+      let metaText = currentLang === 'ar' ? `${reviewCount} ${translations.ar.reviewMeta}` : `${reviewCount} ${translations.en.reviewMeta}`;
+      if (isLocalGuide) {
+        metaText = currentLang === 'ar' ?
+        `${translations.ar.localGuide} · ${metaText}` : `${translations.en.localGuide} · ${metaText}`;
+      }
+
+      html += `
+        <div class="gm-review-card">
           <div class="gm-header">
-            <div class="gm-avatar" style="background-color: ${color}">${fName.charAt(0)}</div>
-            <div class="gm-user-info"><div class="gm-name">${fName} ${lName}</div></div>
+            <div class="gm-avatar" style="background-color: ${color}">${firstLetter}</div>
+            <div class="gm-user-info">
+              <div class="gm-name">${fullName}</div>
+              <div class="gm-meta">${metaText}</div>
+            </div>
+            <div class="gm-menu">⋮</div>
           </div>
-          <div class="gm-rating-row"><div class="gm-stars">★★★★★</div></div>
-          <div class="gm-text">${revTexts[Math.floor(rand() * revTexts.length)]}</div>
-        [span_151](start_span)</div>`;[span_151](end_span)
+          <div class="gm-rating-row">
+            <div class="gm-stars">★★★★★</div>
+            <div class="gm-time">${time}</div>
+          </div>
+          <div class="gm-text">${reviewText}</div>
+        </div>
+      `;
     }
-    [span_152](start_span)container.innerHTML = html;[span_152](end_span)
+    container.innerHTML = html;
   }
 
   window.addEventListener('DOMContentLoaded', generateReviews);
 </script>
+
 </body>
 </html>
